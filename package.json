@@ -1,0 +1,25 @@
+{
+  "name": "sb4",
+  "private": true,
+  "dependencies": {
+    "material-ui": "^1.0.0-beta.25",
+    "material-ui-icons": "^1.0.0-beta.17",
+    "next": "^2.0.0-beta",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-grid-layout": "^0.16.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "7.0.0",
+    "standard": "8.4.0"
+  },
+  "standard": {
+    "parser": "babel-eslint"
+  },
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "NODE_ENV=production next start",
+    "lint": "standard"
+  }
+}
