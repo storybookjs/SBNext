@@ -92,7 +92,7 @@ class NestedListItem extends React.Component {
       </Menu>
       <Collapse component="li" in={open} timeout="auto" unmountOnExit>
         <List disablePadding dense>
-          {items.map(item => <NestedListSubItem key={name} name={item} {...{classes, go}} />)}
+          {items.map((item, index) => <NestedListSubItem key={index} name={item} {...{classes, go}} />)}
         </List>
       </Collapse>
       </div>
