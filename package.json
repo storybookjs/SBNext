@@ -4,14 +4,14 @@
   "dependencies": {
     "material-ui": "^1.0.0-beta.25",
     "material-ui-icons": "^1.0.0-beta.17",
-    "next": "^2.0.0-beta",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
+    "next": "^4.2.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
     "react-grid-layout": "^0.16.2"
   },
   "devDependencies": {
-    "babel-eslint": "7.0.0",
-    "standard": "8.4.0"
+    "babel-eslint": "8.1.2",
+    "standard": "10.0.3"
   },
   "standard": {
     "parser": "babel-eslint"
