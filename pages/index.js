@@ -47,10 +47,7 @@ class Index extends Component {
           <Hierarchy go={target => this.go(target)} />
         )}
         main={(
-          <div>
-            <iframe src="/preview-1" className='iframe1' />
-            <iframe src="/preview-1" className='iframe2' />
-          </div>          
+          <Previews />          
         )}
       />
         <style>
@@ -58,37 +55,83 @@ class Index extends Component {
             padding: 0;
             margin: 0;
             overflow: hidden;
-          }`}
-        </style>
-
-        <style jsx>{`
-          .iframe1 {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 300px;
-            width: calc(40% - 300px);
-            height: calc(100vh - 64px);
-            margin: 0;
-            border: 0 none;
-            box-sizing: border-box;
-            overflow: auto;
-            box-shadow: inset 0 0 40vh rgba(0,0,0,0.2);
           }
-          .iframe2 {
+          .react-resizable {
+            position: relative;
+          }
+          .react-resizable-handle {
             position: absolute;
+            width: 20px;
+            height: 20px;
+            bottom: 0;
             right: 0;
+            background: orangered;
+            background-position: bottom right;
+            padding: 0 3px 3px 0;
+            background-repeat: no-repeat;
+            background-origin: content-box;
+            box-sizing: border-box;
+            cursor: se-resize;
+          }
+          .react-grid-layout {
+            position: absolute;
+            left: 300px;
             top: 0;
             bottom: 0;
-            width: calc(60% - 10px);
-            height: calc(100vh - 64px);
-            margin: 0;
-            border: 0 none;
-            box-sizing: border-box;
-            overflow: auto;
-            box-shadow: inset 0 0 40vh rgba(0,0,0,0.2);
+            height: 100%;
+            right: 0;
           }
-        `}</style>
+          .react-grid-item {
+            transition: all 200ms ease;
+            transition-property: left, top;
+          }
+          .react-grid-item.cssTransforms {
+            transition-property: transform;
+          }
+          .react-grid-item.resizing {
+            z-index: 1;
+            will-change: width, height;
+          }
+          
+          .react-grid-item.react-draggable-dragging {
+            transition: none;
+            z-index: 3;
+            will-change: transform;
+          }
+          
+          .react-grid-item.react-grid-placeholder {
+            background: red;
+            opacity: 0.2;
+            transition-duration: 100ms;
+            z-index: 2;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+          }
+          
+          .react-grid-item > .react-resizable-handle {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            bottom: 0;
+            right: 0;
+            cursor: se-resize;
+          }
+          
+          .react-grid-item > .react-resizable-handle::after {
+            content: "";
+            position: absolute;
+            right: 3px;
+            bottom: 3px;
+            width: 5px;
+            height: 5px;
+            border-right: 2px solid rgba(0, 0, 0, 0.4);
+            border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+          }
+          `}
+        </style>
         </div>
       </MuiThemeProvider>
     )
