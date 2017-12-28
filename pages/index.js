@@ -1,55 +1,31 @@
-import React, {Component, Fragment} from 'react';
-import Router from 'next/router';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import React, { Component, Fragment } from 'react';
 
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-
-import pink from 'material-ui/colors/pink';
-import green from 'material-ui/colors/green';
-import red from 'material-ui/colors/red';
+import { document } from 'global';
 
 import Layout from '../components/drawer';
 import Hierarchy from '../components/hierarchy';
 import Previews from '../components/previews';
 import withRoot from '../components/withRoot';
 
-const theme = createMuiTheme({
-  palette: {
-    primary: pink,
-    secondary: {
-      ...green,
-      A400: '#00e677',
-    },
-    error: red,
-  },
-});
-
 class Index extends Component {
-  static getInitialProps () {
+  static getInitialProps() {
     return {};
   }
 
   go(id) {
-    [...window.document.getElementsByTagName('iframe')]
+    [...document.getElementsByTagName('iframe')]
       .map(el => el.contentWindow)
-      .forEach(frame => frame.postMessage(id, 'http://localhost:1337'))
+      .forEach(frame => frame.postMessage(id, 'http://localhost:1337'));
   }
 
-  render () {
-    const { url } = this.props
-
+  render() {
     return (
-      <MuiThemeProvider theme={theme}>
-      <div>
-      <Layout
-        head={null}
-        aside={(
-          <Hierarchy go={target => this.go(target)} />
-        )}
-        main={(
-          <Previews />          
-        )}
-      />
+      <Fragment>
+        <Layout
+          head={null}
+          aside={<Hierarchy go={target => this.go(target)} />}
+          main={<Previews />}
+        />
         <style>
           {`body {
             padding: 0;
@@ -132,9 +108,8 @@ class Index extends Component {
           }
           `}
         </style>
-        </div>
-      </MuiThemeProvider>
-    )
+      </Fragment>
+    );
   }
 }
 

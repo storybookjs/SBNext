@@ -1,30 +1,27 @@
-import React, {Component} from 'react'
-import Router from 'next/router'
+import React, { Component } from 'react';
+import Router from 'next/router';
+
+import { window } from 'global';
 
 export default class extends Component {
-  postMessageListener = ({ data }) => this.go(data);
-
   componentDidMount() {
-    window.addEventListener("message", this.postMessageListener, false);
+    window.addEventListener('message', this.postMessageListener, false);
   }
   componentWillUnmount() {
-    window.removeEventListener("message", this.postMessageListener);
-  }
-  go (n) {
-    console.log(n);
-    Router.push(`/preview-${n}`)
+    window.removeEventListener('message', this.postMessageListener);
   }
 
-  render () {
-    const { url, photos } = this.props
+  postMessageListener = ({ data }) => this.go(data);
+  go(n) {
+    Router.push(`/preview-${n}`);
+  }
 
-    console.log('2');
-
+  render() {
     return (
       <div>
         <h1>Page 2</h1>
-        <button onClick={(e) => this.go(3)}>TEST</button>
+        <button onClick={() => this.go(3)}>TEST</button>
       </div>
-    )
+    );
   }
 }

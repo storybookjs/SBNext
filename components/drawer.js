@@ -98,7 +98,7 @@ const styles = theme => ({
     height: '100%',
     width: 300,
     overflow: 'auto',
-  }
+  },
 });
 
 class MiniDrawer extends React.Component {

@@ -1,8 +1,7 @@
-
 import React from 'react';
+
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import InboxIcon from 'material-ui-icons/Assignment';
-import DraftsIcon from 'material-ui-icons/Drafts';
+
 import DeveloperBoardIcon from 'material-ui-icons/DeveloperBoard';
 import DescriptionIcon from 'material-ui-icons/Description';
 import BubbleChartIcon from 'material-ui-icons/BubbleChart';

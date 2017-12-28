@@ -1,4 +1,5 @@
 import React from 'react';
+import { document } from 'global';
 import { withStyles, MuiThemeProvider } from 'material-ui/styles';
 import getContext from '../styles/getContext';
 

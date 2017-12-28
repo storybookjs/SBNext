@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ReactGridLayout from 'react-grid-layout';
 
 const iframeStyle = {
@@ -8,36 +8,37 @@ const iframeStyle = {
   bottom: 0,
   right: 0,
   width: '100%',
-  height: '100%',  
+  height: '100%',
   border: '3px solid pink',
   boxSizing: 'border-box',
-}
-
-class Previews extends Component {
-
-  render() {
-    
-    // layout is an array of objects, see the demo for more complete usage
-    var layout = [
-      {i: 'a', x: 0, y: 0, w: 3, h: 14},
-      {i: 'b', x: 3, y: 0, w: 9, h: 14},
-      {i: 'c', x: 0, y: 14, w: 12, h: 12}
-    ];
-    return (      
-      <ReactGridLayout className="layout" layout={layout} cols={12} rowHeight={30} width={867} margin={[0, 0]}>
-        <div className="react-grid-item react-draggable cssTransforms react-resizable" key="a">
-          <iframe src="/preview-1" style={iframeStyle} />
-        </div>
-        <div className="react-grid-item react-draggable cssTransforms react-resizable" key="b">
-          <iframe src="/preview-1"  style={iframeStyle} />
-        </div>
-        <div className="react-grid-item react-draggable cssTransforms react-resizable" key="c">
-          <iframe src="/preview-1"  style={iframeStyle} />
-        </div>
-      </ReactGridLayout>
-    );
-  }
 };
 
+const initialLayout = [
+  { i: 'a', x: 0, y: 0, w: 3, h: 14 },
+  { i: 'b', x: 3, y: 0, w: 9, h: 14 },
+  { i: 'c', x: 0, y: 14, w: 12, h: 12 },
+];
+
+const Previews = () => (
+  // TODO: would like to create a relative width/height variant
+  <ReactGridLayout
+    className="layout"
+    layout={initialLayout}
+    cols={12}
+    rowHeight={30}
+    width={867}
+    margin={[0, 0]}
+  >
+    <div className="react-grid-item react-draggable cssTransforms react-resizable" key="a">
+      <iframe src="/preview-1" style={iframeStyle} title="1" />
+    </div>
+    <div className="react-grid-item react-draggable cssTransforms react-resizable" key="b">
+      <iframe src="/preview-1" style={iframeStyle} title="2" />
+    </div>
+    <div className="react-grid-item react-draggable cssTransforms react-resizable" key="c">
+      <iframe src="/preview-1" style={iframeStyle} title="3" />
+    </div>
+  </ReactGridLayout>
+);
 
 export default Previews;
