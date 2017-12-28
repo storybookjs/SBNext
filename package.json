@@ -3,6 +3,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next",
+    "build": "next export",
     "lint": "eslint . --fix",
     "start": "NODE_ENV=production next start"
   },
