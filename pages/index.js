@@ -39,19 +39,19 @@ class Index extends Component {
             position: absolute;
             width: 20px;
             height: 20px;
-            bottom: 0;
-            right: 0;
-            background: orangered;
+            bottom: 0px;
+            right: 0px;
             background-position: bottom right;
-            padding: 0 3px 3px 0;
+            padding: 0 1px 1px 0;
             background-repeat: no-repeat;
             background-origin: content-box;
+            background: transparent;
             box-sizing: border-box;
             cursor: se-resize;
           }
           .react-grid-layout {
             position: absolute;
-            left: 300px;
+            left: 0;
             top: 0;
             bottom: 0;
             height: 100%;
