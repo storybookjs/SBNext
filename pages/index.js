@@ -15,7 +15,7 @@ class Index extends Component {
   go(id) {
     [...document.getElementsByTagName('iframe')]
       .map(el => el.contentWindow)
-      .forEach(frame => frame.postMessage(id, 'http://localhost:1337'));
+      .forEach(frame => frame.postMessage(id, document.location.origin));
   }
 
   render() {
