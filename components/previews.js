@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 import sizeMe from 'react-sizeme';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import { ListItemIcon, ListItemText } from 'material-ui/List';
-
-import styled from 'styled-jss';
+import Typography from 'material-ui/Typography';
 
 import MoreHorizIcon from 'material-ui-icons/MoreVert';
 import CloseIcon from 'material-ui-icons/Close';
@@ -19,7 +18,6 @@ const iframeStyle = {
   height: '100%',
   border: '0 none',
   boxSizing: 'border-box',
-  // border: '1px solid rgba(0, 0, 0, 0.12)',
 };
 
 const zoomedIframeStyle = {
@@ -72,10 +70,37 @@ const PointerOverlay = () => (
   />
 );
 
+class Preview extends Component {
+  state = {
+    zoom: 1,
+  };
+  render() {
+    const { id, isDragging } = this.props;
+    const { zoom } = this.state;
+
+    const zoomPercentage = `${100 * zoom}%`;
+
+    const style = {
+      ...zoomedIframeStyle,
+      width: zoomPercentage,
+      height: zoomPercentage,
+      transform: `scale(${1 / zoom})`,
+    };
+    return (
+      <Fragment>
+        {isDragging ? <PointerOverlay /> : null}
+        <Toolbar onZoomChange={val => this.setState({ zoom: zoom + val })}>
+          <Typography type="body2" gutterBottom>
+            ({parseFloat(100 / zoom).toFixed(0)}%)
+          </Typography>
+        </Toolbar>
+        <iframe src="/preview-1" style={style} title={id} />
+      </Fragment>
+    );
+  }
+}
 const itemStyles = {
-  // border: '1px solid white',
   borderTop: '32px solid white',
-  // borderRadius: 2,
   boxSizing: 'border-box',
   boxShadow:
     '0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)',
@@ -94,7 +119,7 @@ class Toolbar extends Component {
   };
 
   render() {
-    const { children } = this.props;
+    const { children, onZoomChange } = this.props;
     const { menu, anchorEl } = this.state;
     const action = () => console.log('action');
 
@@ -122,12 +147,12 @@ class Toolbar extends Component {
             </ListItemIcon>
             <ListItemText inset primary="Close" />
           </MenuItem>
-          <MenuItem onClick={action}>
-            <ListItemIcon>
+          <MenuItem>
+            <ListItemIcon onClick={() => onZoomChange(-0.25)}>
               <ZoomInIcon />
             </ListItemIcon>
             <ListItemText inset primary="Zoom" />
-            <ListItemIcon>
+            <ListItemIcon onClick={() => onZoomChange(0.25)}>
               <ZoomOutIcon style={{ marginRight: 0, marginLeft: 16 }} />
             </ListItemIcon>
           </MenuItem>
@@ -258,27 +283,21 @@ class Previews extends Component {
             key="a"
             style={itemStyles}
           >
-            {dragging ? <PointerOverlay /> : null}
-            <Toolbar />
-            <iframe src="/preview-1" style={iframeStyle} title="1" />
+            <Preview id={1} isDragging={dragging} />
           </div>
           <div
             className="react-grid-item react-draggable cssTransforms react-resizable"
             key="b"
             style={itemStyles}
           >
-            {dragging ? <PointerOverlay /> : null}
-            <Toolbar />
-            <iframe src="/preview-1" style={iframeStyle} title="2" />
+            <Preview id={2} isDragging={dragging} />
           </div>
           <div
             className="react-grid-item react-draggable cssTransforms react-resizable"
             key="c"
             style={itemStyles}
           >
-            {dragging ? <PointerOverlay /> : null}
-            <Toolbar>(50%)</Toolbar>
-            <iframe src="/preview-1" style={zoomedIframeStyle} title="3" />
+            <Preview id={3} isDragging={dragging} />
           </div>
         </ReactGridLayout>
       </Size>

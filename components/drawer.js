@@ -78,6 +78,7 @@ const styles = theme => ({
   drawerPaperClose: {
     width: 60,
     overflowX: 'hidden',
+    overflowY: 'auto',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -88,15 +89,13 @@ const styles = theme => ({
     width: drawerWidth,
     height: '100%',
     boxSizing: 'border-box',
-    paddingBottom: 50,
+    display: 'flex',
+    flexDirection: 'column',
   },
-  settings: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    width: '100%',
-    height: 'auto',
+  drawerTop: {
+    flex: 1,
   },
+  drawerBottom: {},
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',
@@ -220,56 +219,58 @@ class MiniDrawer extends React.Component {
                 </IconButton>
               </div>
               <Divider />
-              <List className={classes.list}>
-                <ListItem button onClick={() => this.handleAsideChange('components')}>
-                  <ListItemIcon>
-                    <DeveloperBoardIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Components" />
-                </ListItem>
-                <ListItem button onClick={() => this.handleAsideChange('documentation')}>
-                  <ListItemIcon>
-                    <DescriptionIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Documentation" />
-                </ListItem>
-                <ListItem button onClick={() => this.handleAsideChange('design')}>
-                  <ListItemIcon>
-                    <BubbleChartIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Designs" />
-                </ListItem>
-                <ListItem button onClick={() => this.handleAsideChange('issues')}>
-                  <ListItemIcon>
-                    <AnnouncementIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Issues" />
-                </ListItem>
-              </List>
-              <Divider />
-              <List className={classes.list}>
-                <ListItem button onClick={() => this.handleAsideChange('addon')}>
-                  <ListItemIcon>
-                    <AddonIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Panel addon 1" />
-                </ListItem>
-                <ListItem button onClick={() => this.handleAsideChange('addon')}>
-                  <ListItemIcon>
-                    <AddonIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Panel addon 2" />
-                </ListItem>
-                <ListItem button onClick={() => this.handleAsideChange('addon')}>
-                  <ListItemIcon>
-                    <Badge badgeContent={4} color="primary">
+              <div className={classes.drawerTop}>
+                <List className={classes.list}>
+                  <ListItem button onClick={() => this.handleAsideChange('components')}>
+                    <ListItemIcon>
+                      <DeveloperBoardIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Components" />
+                  </ListItem>
+                  <ListItem button onClick={() => this.handleAsideChange('documentation')}>
+                    <ListItemIcon>
+                      <DescriptionIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Documentation" />
+                  </ListItem>
+                  <ListItem button onClick={() => this.handleAsideChange('design')}>
+                    <ListItemIcon>
+                      <BubbleChartIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Designs" />
+                  </ListItem>
+                  <ListItem button onClick={() => this.handleAsideChange('issues')}>
+                    <ListItemIcon>
+                      <AnnouncementIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Issues" />
+                  </ListItem>
+                </List>
+                <Divider />
+                <List className={classes.list}>
+                  <ListItem button onClick={() => this.handleAsideChange('addon')}>
+                    <ListItemIcon>
                       <AddonIcon />
-                    </Badge>
-                  </ListItemIcon>
-                  <ListItemText primary="Panel addon 3" />
-                </ListItem>
-              </List>
-              <div className={classes.settings}>
+                    </ListItemIcon>
+                    <ListItemText primary="Panel addon 1" />
+                  </ListItem>
+                  <ListItem button onClick={() => this.handleAsideChange('addon')}>
+                    <ListItemIcon>
+                      <AddonIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Panel addon 2" />
+                  </ListItem>
+                  <ListItem button onClick={() => this.handleAsideChange('addon')}>
+                    <ListItemIcon>
+                      <Badge badgeContent={4} color="primary">
+                        <AddonIcon />
+                      </Badge>
+                    </ListItemIcon>
+                    <ListItemText primary="Panel addon 3" />
+                  </ListItem>
+                </List>
+              </div>
+              <div className={classes.drawerBottom}>
                 <Divider />
                 <ListItem button onClick={() => this.handleAsideChange('settings')}>
                   <ListItemIcon>
