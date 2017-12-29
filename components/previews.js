@@ -4,11 +4,13 @@ import sizeMe from 'react-sizeme';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import { ListItemIcon, ListItemText } from 'material-ui/List';
 import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
 
 import MoreHorizIcon from 'material-ui-icons/MoreVert';
 import CloseIcon from 'material-ui-icons/Close';
 import ZoomInIcon from 'material-ui-icons/ZoomIn';
 import ZoomOutIcon from 'material-ui-icons/ZoomOut';
+import AddIcon from 'material-ui-icons/Add';
 
 const iframeStyle = {
   position: 'absolute',
@@ -30,12 +32,6 @@ const zoomedIframeStyle = {
   transform: 'scale(0.5)',
   transformOrigin: 'top left',
 };
-
-const initialLayout = [
-  { i: 'a', x: 0, y: 0, w: 6, h: 30 },
-  { i: 'b', x: 6, y: 0, w: 18, h: 30 },
-  { i: 'c', x: 0, y: 14, w: 24, h: 34 },
-];
 
 const Size = ({ children, id }) => (
   <div
@@ -75,7 +71,7 @@ class Preview extends Component {
     zoom: 1,
   };
   render() {
-    const { id, isDragging } = this.props;
+    const { id, isDragging, onRemove } = this.props;
     const { zoom } = this.state;
 
     const zoomPercentage = `${100 * zoom}%`;
@@ -89,7 +85,10 @@ class Preview extends Component {
     return (
       <Fragment>
         {isDragging ? <PointerOverlay /> : null}
-        <Toolbar onZoomChange={val => this.setState({ zoom: zoom + val })}>
+        <Toolbar
+          onRemove={() => onRemove(id)}
+          onZoomChange={val => this.setState({ zoom: zoom + val })}
+        >
           <Typography type="body2" gutterBottom>
             ({parseFloat(100 / zoom).toFixed(0)}%)
           </Typography>
@@ -119,9 +118,8 @@ class Toolbar extends Component {
   };
 
   render() {
-    const { children, onZoomChange } = this.props;
+    const { children, onZoomChange, onRemove } = this.props;
     const { menu, anchorEl } = this.state;
-    const action = () => console.log('action');
 
     return (
       <div
@@ -141,7 +139,7 @@ class Toolbar extends Component {
         {children}
         <MoreHorizIcon onClick={e => this.menu(e)} />
         <Menu id="simple-menu" anchorEl={anchorEl} open={menu} onClose={this.menu}>
-          <MenuItem onClick={action}>
+          <MenuItem onClick={onRemove}>
             <ListItemIcon>
               <CloseIcon />
             </ListItemIcon>
@@ -165,22 +163,36 @@ class Toolbar extends Component {
 class Previews extends Component {
   state = {
     dragging: false,
+    items: [
+      { i: '1', x: 0, y: 0, w: 6, h: 30 },
+      { i: '2', x: 6, y: 0, w: 18, h: 30 },
+      { i: '3', x: 0, y: 14, w: 24, h: 34 },
+    ],
   };
   setDragging(val) {
     this.setState({
       dragging: val,
     });
   }
+  remove(id) {
+    this.setState({
+      items: this.state.items.filter(({ i }) => i !== id),
+    });
+  }
+  add() {
+    const id =
+      this.state.items.reduce((acc, { i }) => (acc > parseInt(i, 10) ? acc : parseInt(i, 10)), 0) +
+      1;
+    this.setState({
+      items: this.state.items.concat({ i: id, x: 0, y: 0, w: 6, h: 40 }),
+    });
+  }
   render() {
     const { width, height } = this.props.size;
-    const { dragging } = this.state;
+    const { dragging, items } = this.state;
 
     return (
-      <Size
-        id={element => {
-          this.element = element;
-        }}
-      >
+      <Size>
         <style jsx global>
           {`
             body {
@@ -267,7 +279,6 @@ class Previews extends Component {
 
         <ReactGridLayout
           className="layout"
-          layout={initialLayout}
           cols={24}
           rowHeight={10}
           preventCollision={false}
@@ -278,28 +289,26 @@ class Previews extends Component {
           onResizeStart={() => this.setDragging(true)}
           onResizeStop={() => this.setDragging(false)}
         >
-          <div
-            className="react-grid-item react-draggable cssTransforms react-resizable"
-            key="a"
-            style={itemStyles}
-          >
-            <Preview id={1} isDragging={dragging} />
-          </div>
-          <div
-            className="react-grid-item react-draggable cssTransforms react-resizable"
-            key="b"
-            style={itemStyles}
-          >
-            <Preview id={2} isDragging={dragging} />
-          </div>
-          <div
-            className="react-grid-item react-draggable cssTransforms react-resizable"
-            key="c"
-            style={itemStyles}
-          >
-            <Preview id={3} isDragging={dragging} />
-          </div>
+          {items.map(({ i, ...data }) => (
+            <div
+              className="react-grid-item react-draggable cssTransforms react-resizable"
+              key={i}
+              data-grid={data}
+              style={itemStyles}
+            >
+              <Preview id={i} isDragging={dragging} onRemove={() => this.remove(i)} />
+            </div>
+          ))}
         </ReactGridLayout>
+        <Button
+          onClick={() => this.add()}
+          fab
+          color="primary"
+          aria-label="add"
+          style={{ position: 'fixed', right: 20, bottom: 20 }}
+        >
+          <AddIcon />
+        </Button>
       </Size>
     );
   }

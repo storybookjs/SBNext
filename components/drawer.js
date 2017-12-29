@@ -76,7 +76,7 @@ const styles = theme => ({
     }),
   },
   drawerPaperClose: {
-    width: 60,
+    width: 56,
     overflowX: 'hidden',
     overflowY: 'auto',
     transition: theme.transitions.create('width', {
