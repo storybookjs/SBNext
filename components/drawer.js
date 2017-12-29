@@ -24,6 +24,7 @@ import AnnouncementIcon from 'material-ui-icons/Announcement';
 import AddonIcon from 'material-ui-icons/ChromeReaderMode';
 
 import Hierarchy from './hierarchy';
+import Previews from '../components/previews';
 
 import { mailFolderListItems, otherMailFolderListItems } from './tileData';
 
@@ -103,7 +104,7 @@ const styles = theme => ({
     padding: '0 8px',
     ...theme.mixins.toolbar,
   },
-  content: {
+  main: {
     position: 'relative',
     width: '100%',
     flexGrow: 1,
@@ -116,6 +117,13 @@ const styles = theme => ({
       marginTop: 64,
     },
   },
+  content: {
+    position: 'absolute',
+    top: 0,
+    left: 300,
+    bottom: 0,
+    right: 0,
+  },
   mypanel: {
     height: '100%',
     width: 300,
@@ -125,19 +133,37 @@ const styles = theme => ({
   },
 });
 
-const asides = {
-  components: ({ go }) => <Hierarchy go={target => go(target)} />,
-  documentation: () => <div>Documentation is important</div>,
-  design: () => <div>Design is awesome</div>,
-  issues: () => <div>Issues are bad</div>,
-  settings: () => <div>Settings are required</div>,
-  addon: () => <div>Addons are amazing</div>,
+const contents = {
+  components: ({ go }) => ({
+    content: <Previews />,
+    panel: <Hierarchy go={target => go(target)} />,
+  }),
+  documentation: () => ({
+    content: <div>Documentation content</div>,
+    panel: <div>Documentation is important</div>,
+  }),
+  design: () => ({
+    content: <Previews />,
+    panel: <div>Design is awesome</div>,
+  }),
+  issues: () => ({
+    content: <Previews />,
+    panel: <div>Issues are bad</div>,
+  }),
+  settings: () => ({
+    content: <Previews />,
+    panel: <div>Settings are required</div>,
+  }),
+  addon: () => ({
+    content: <Previews />,
+    panel: <div>Addons are amazing</div>,
+  }),
 };
 
 class MiniDrawer extends React.Component {
   state = {
     open: false,
-    aside: asides.components(this),
+    ...contents.components(this),
   };
 
   go(id) {
@@ -155,12 +181,12 @@ class MiniDrawer extends React.Component {
   };
 
   handleAsideChange = val => {
-    this.setState({ aside: asides[val](this) });
+    this.setState(contents[val](this));
   };
 
   render() {
-    const { classes, theme, head, main } = this.props;
-    const { aside } = this.state;
+    const { classes, theme } = this.props;
+    const { panel, content } = this.state;
 
     return (
       <div className={classes.root}>
@@ -178,7 +204,6 @@ class MiniDrawer extends React.Component {
               <Typography type="title" color="inherit" noWrap>
                 Storybook
               </Typography>
-              {head}
             </Toolbar>
           </AppBar>
           <Drawer
@@ -196,25 +221,25 @@ class MiniDrawer extends React.Component {
               </div>
               <Divider />
               <List className={classes.list}>
-                <ListItem button onClick={e => this.handleAsideChange('components')}>
+                <ListItem button onClick={() => this.handleAsideChange('components')}>
                   <ListItemIcon>
                     <DeveloperBoardIcon />
                   </ListItemIcon>
                   <ListItemText primary="Components" />
                 </ListItem>
-                <ListItem button onClick={e => this.handleAsideChange('documentation')}>
+                <ListItem button onClick={() => this.handleAsideChange('documentation')}>
                   <ListItemIcon>
                     <DescriptionIcon />
                   </ListItemIcon>
                   <ListItemText primary="Documentation" />
                 </ListItem>
-                <ListItem button onClick={e => this.handleAsideChange('design')}>
+                <ListItem button onClick={() => this.handleAsideChange('design')}>
                   <ListItemIcon>
                     <BubbleChartIcon />
                   </ListItemIcon>
                   <ListItemText primary="Designs" />
                 </ListItem>
-                <ListItem button onClick={e => this.handleAsideChange('issues')}>
+                <ListItem button onClick={() => this.handleAsideChange('issues')}>
                   <ListItemIcon>
                     <AnnouncementIcon />
                   </ListItemIcon>
@@ -223,19 +248,19 @@ class MiniDrawer extends React.Component {
               </List>
               <Divider />
               <List className={classes.list}>
-                <ListItem button onClick={e => this.handleAsideChange('addon')}>
+                <ListItem button onClick={() => this.handleAsideChange('addon')}>
                   <ListItemIcon>
                     <AddonIcon />
                   </ListItemIcon>
                   <ListItemText primary="Panel addon 1" />
                 </ListItem>
-                <ListItem button onClick={e => this.handleAsideChange('addon')}>
+                <ListItem button onClick={() => this.handleAsideChange('addon')}>
                   <ListItemIcon>
                     <AddonIcon />
                   </ListItemIcon>
                   <ListItemText primary="Panel addon 2" />
                 </ListItem>
-                <ListItem button onClick={e => this.handleAsideChange('addon')}>
+                <ListItem button onClick={() => this.handleAsideChange('addon')}>
                   <ListItemIcon>
                     <AddonIcon />
                   </ListItemIcon>
@@ -244,7 +269,7 @@ class MiniDrawer extends React.Component {
               </List>
               <div className={classes.settings}>
                 <Divider />
-                <ListItem button onClick={e => this.handleAsideChange('settings')}>
+                <ListItem button onClick={() => this.handleAsideChange('settings')}>
                   <ListItemIcon>
                     <SettingsIcon />
                   </ListItemIcon>
@@ -253,11 +278,11 @@ class MiniDrawer extends React.Component {
               </div>
             </div>
           </Drawer>
-          <main className={classes.content}>
+          <main className={classes.main}>
             <Paper className={classes.mypanel} elevation={4}>
-              {aside}
+              {panel}
             </Paper>
-            {main}
+            <div className={classes.content}>{content}</div>
           </main>
         </div>
       </div>

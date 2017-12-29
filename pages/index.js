@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
 import Layout from '../components/drawer';
-import Previews from '../components/previews';
 import withRoot from '../components/withRoot';
 
 class Index extends Component {
@@ -10,11 +9,7 @@ class Index extends Component {
   }
 
   render() {
-    return (
-      <Fragment>
-        <Layout head={null} main={<Previews />} />
-      </Fragment>
-    );
+    return <Layout />;
   }
 }
 
