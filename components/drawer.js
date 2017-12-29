@@ -11,6 +11,7 @@ import Paper from 'material-ui/Paper';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Typography from 'material-ui/Typography';
 import Divider from 'material-ui/Divider';
+import Badge from 'material-ui/Badge';
 
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
@@ -25,8 +26,7 @@ import AddonIcon from 'material-ui-icons/ChromeReaderMode';
 
 import Hierarchy from './hierarchy';
 import Previews from '../components/previews';
-
-import { mailFolderListItems, otherMailFolderListItems } from './tileData';
+import { Content as SettingsContent, Panel as SettingsPanel } from '../components/settings';
 
 const drawerWidth = 240;
 
@@ -151,8 +151,8 @@ const contents = {
     panel: <div>Issues are bad</div>,
   }),
   settings: () => ({
-    content: <Previews />,
-    panel: <div>Settings are required</div>,
+    content: <SettingsContent />,
+    panel: <SettingsPanel />,
   }),
   addon: () => ({
     content: <Previews />,
@@ -262,7 +262,9 @@ class MiniDrawer extends React.Component {
                 </ListItem>
                 <ListItem button onClick={() => this.handleAsideChange('addon')}>
                   <ListItemIcon>
-                    <AddonIcon />
+                    <Badge badgeContent={4} color="primary">
+                      <AddonIcon />
+                    </Badge>
                   </ListItemIcon>
                   <ListItemText primary="Panel addon 3" />
                 </ListItem>
