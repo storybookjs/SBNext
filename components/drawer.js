@@ -1,18 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { document } from 'global';
+
 import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Paper from 'material-ui/Paper';
-import List from 'material-ui/List';
+import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Typography from 'material-ui/Typography';
 import Divider from 'material-ui/Divider';
+
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import ChevronRightIcon from 'material-ui-icons/ChevronRight';
+import SettingsIcon from 'material-ui-icons/Settings';
+import DeveloperBoardIcon from 'material-ui-icons/DeveloperBoard';
+import DescriptionIcon from 'material-ui-icons/Description';
+import BubbleChartIcon from 'material-ui-icons/BubbleChart';
+import AnnouncementIcon from 'material-ui-icons/Announcement';
+import AddonIcon from 'material-ui-icons/ChromeReaderMode';
+
+import Hierarchy from './hierarchy';
+
 import { mailFolderListItems, otherMailFolderListItems } from './tileData';
 
 const drawerWidth = 240;
@@ -73,6 +85,16 @@ const styles = theme => ({
   drawerInner: {
     // Make the items inside not wrap when transitioning:
     width: drawerWidth,
+    height: '100%',
+    boxSizing: 'border-box',
+    paddingBottom: 50,
+  },
+  settings: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    width: '100%',
+    height: 'auto',
   },
   drawerHeader: {
     display: 'flex',
@@ -103,10 +125,26 @@ const styles = theme => ({
   },
 });
 
+const asides = {
+  components: ({ go }) => <Hierarchy go={target => go(target)} />,
+  documentation: () => <div>Documentation is important</div>,
+  design: () => <div>Design is awesome</div>,
+  issues: () => <div>Issues are bad</div>,
+  settings: () => <div>Settings are required</div>,
+  addon: () => <div>Addons are amazing</div>,
+};
+
 class MiniDrawer extends React.Component {
   state = {
     open: false,
+    aside: asides.components(this),
   };
+
+  go(id) {
+    [...document.getElementsByTagName('iframe')]
+      .map(el => el.contentWindow)
+      .forEach(frame => frame.postMessage(id, document.location.origin));
+  }
 
   handleDrawerOpen = () => {
     this.setState({ open: true });
@@ -116,8 +154,13 @@ class MiniDrawer extends React.Component {
     this.setState({ open: false });
   };
 
+  handleAsideChange = val => {
+    this.setState({ aside: asides[val](this) });
+  };
+
   render() {
-    const { classes, theme, head, main, aside } = this.props;
+    const { classes, theme, head, main } = this.props;
+    const { aside } = this.state;
 
     return (
       <div className={classes.root}>
@@ -152,9 +195,62 @@ class MiniDrawer extends React.Component {
                 </IconButton>
               </div>
               <Divider />
-              <List className={classes.list}>{mailFolderListItems}</List>
+              <List className={classes.list}>
+                <ListItem button onClick={e => this.handleAsideChange('components')}>
+                  <ListItemIcon>
+                    <DeveloperBoardIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Components" />
+                </ListItem>
+                <ListItem button onClick={e => this.handleAsideChange('documentation')}>
+                  <ListItemIcon>
+                    <DescriptionIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Documentation" />
+                </ListItem>
+                <ListItem button onClick={e => this.handleAsideChange('design')}>
+                  <ListItemIcon>
+                    <BubbleChartIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Designs" />
+                </ListItem>
+                <ListItem button onClick={e => this.handleAsideChange('issues')}>
+                  <ListItemIcon>
+                    <AnnouncementIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Issues" />
+                </ListItem>
+              </List>
               <Divider />
-              <List className={classes.list}>{otherMailFolderListItems}</List>
+              <List className={classes.list}>
+                <ListItem button onClick={e => this.handleAsideChange('addon')}>
+                  <ListItemIcon>
+                    <AddonIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Panel addon 1" />
+                </ListItem>
+                <ListItem button onClick={e => this.handleAsideChange('addon')}>
+                  <ListItemIcon>
+                    <AddonIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Panel addon 2" />
+                </ListItem>
+                <ListItem button onClick={e => this.handleAsideChange('addon')}>
+                  <ListItemIcon>
+                    <AddonIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Panel addon 3" />
+                </ListItem>
+              </List>
+              <div className={classes.settings}>
+                <Divider />
+                <ListItem button onClick={e => this.handleAsideChange('settings')}>
+                  <ListItemIcon>
+                    <SettingsIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Settings" />
+                </ListItem>
+              </div>
             </div>
           </Drawer>
           <main className={classes.content}>
