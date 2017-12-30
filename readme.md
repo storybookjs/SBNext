@@ -9,6 +9,7 @@ Provide a working prototype of the possibly future UI for SB.
 ### UI
 - [x] Multiple previews
 - [x] Add, move, resize, rescale previews
+- [ ] View all stories of component on 1 page
 - [x] Panels & Content
 - [x] Settings
 - [x] Keyboard shortcuts
