@@ -19,11 +19,16 @@ Provide a working prototype of the possibly future UI for SB.
 ### Architecture
 - [x] Lazy bundling
 - [ ] Create a package managing next.js
-- [ ] Addon API
 - [ ] Multiple frameworks
 - [ ] State management  
       *Redux or mobX, maybe mobx-state-tree*
 
+### Addon API
+- [ ] basics
+- [ ] ability to add panel & content
+- [ ] add search
+- [ ] add shortcuts
+- [ ] add settings
 
 ## Badges
 [![Greenkeeper badge](https://badges.greenkeeper.io/ndelangen/SB4.svg)](https://greenkeeper.io/)
