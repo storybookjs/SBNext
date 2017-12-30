@@ -24,6 +24,7 @@ import BubbleChartIcon from 'material-ui-icons/BubbleChart';
 import AnnouncementIcon from 'material-ui-icons/Announcement';
 import AddonIcon from 'material-ui-icons/ChromeReaderMode';
 
+import Search from './search';
 import Hierarchy from './hierarchy';
 import Previews from '../components/previews';
 import { Content as SettingsContent, Panel as SettingsPanel } from '../components/settings';
@@ -59,9 +60,15 @@ const styles = theme => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
+  appBarContent: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flex: 1,
+  },
   menuButton: {
     marginLeft: 12,
-    marginRight: 36,
+    marginRight: 12,
   },
   hide: {
     display: 'none',
@@ -200,9 +207,12 @@ class MiniDrawer extends React.Component {
               >
                 <MenuIcon />
               </IconButton>
-              <Typography type="title" color="inherit" noWrap>
-                Storybook
-              </Typography>
+              <div className={classes.appBarContent}>
+                <Typography type="title" color="inherit" noWrap>
+                  Storybook
+                </Typography>
+                <Search />
+              </div>
             </Toolbar>
           </AppBar>
           <Drawer
