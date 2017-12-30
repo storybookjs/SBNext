@@ -20,6 +20,7 @@
     "react-dom": "^16.2.0",
     "react-grid-layout": "^0.16.2",
     "react-jss": "^8.2.0",
+    "react-mousetrap": "^0.2.0",
     "react-resize-detector": "^1.1.0",
     "react-sizeme": "^2.3.6",
     "styled-jss": "^2.1.2"

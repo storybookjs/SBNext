@@ -60,9 +60,9 @@ class ControlledExpansionPanels extends React.Component {
         </ExpansionPanel>
         <ExpansionPanel expanded={expanded === 'panel2'} onChange={this.handleChange('panel2')}>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className={classes.heading}>Users</Typography>
+            <Typography className={classes.heading}>Search Settings</Typography>
             <Typography className={classes.secondaryHeading}>
-              You are currently not an owner
+              What the search at the top should suggest
             </Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
@@ -77,6 +77,20 @@ class ControlledExpansionPanels extends React.Component {
             <Typography className={classes.heading}>Advanced settings</Typography>
             <Typography className={classes.secondaryHeading}>
               Filtering has been entirely disabled for whole web server
+            </Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <Typography>
+              Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas
+              eros, vitae egestas augue. Duis vel est augue.
+            </Typography>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+        <ExpansionPanel expanded={expanded === 'panel4'} onChange={this.handleChange('panel4')}>
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography className={classes.heading}>Keyboard shortcut settings</Typography>
+            <Typography className={classes.secondaryHeading}>
+              Set keyboard shortcuts to your liking
             </Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>

@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { document } from 'global';
 
+import mouseTrap from 'react-mousetrap';
 import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
+
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
@@ -172,6 +174,54 @@ class MiniDrawer extends React.Component {
     ...contents.components(this),
   };
 
+  componentDidMount() {
+    this.props.bindShortcut(
+      'command+,',
+      e => {
+        e.stopPropagation();
+        e.preventDefault();
+        this.handleAsideChange('settings');
+      },
+      'keydown'
+    );
+    this.props.bindShortcut(
+      'command+1',
+      e => {
+        e.stopPropagation();
+        e.preventDefault();
+        this.handleAsideChange('components');
+      },
+      'keydown'
+    );
+    this.props.bindShortcut(
+      'command+2',
+      e => {
+        e.stopPropagation();
+        e.preventDefault();
+        this.handleAsideChange('documentation');
+      },
+      'keydown'
+    );
+    this.props.bindShortcut(
+      'command+3',
+      e => {
+        e.stopPropagation();
+        e.preventDefault();
+        this.handleAsideChange('design');
+      },
+      'keydown'
+    );
+    this.props.bindShortcut(
+      'command+4',
+      e => {
+        e.stopPropagation();
+        e.preventDefault();
+        this.handleAsideChange('issues');
+      },
+      'keydown'
+    );
+  }
+
   go(id) {
     [...document.getElementsByTagName('iframe')]
       .map(el => el.contentWindow)
@@ -308,4 +358,4 @@ MiniDrawer.propTypes = {
   theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(MiniDrawer);
+export default mouseTrap(withStyles(styles, { withTheme: true })(MiniDrawer));
