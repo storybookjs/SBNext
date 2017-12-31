@@ -28,7 +28,7 @@ import AddonIcon from 'material-ui-icons/ChromeReaderMode';
 
 import Search from './search';
 import Hierarchy from './hierarchy';
-import Previews from '../components/previews';
+import Previews from '../components/preview';
 import { Content as SettingsContent, Panel as SettingsPanel } from '../components/settings';
 
 const drawerWidth = 240;
@@ -153,11 +153,15 @@ const contents = {
     panel: () => <div>Documentation is important</div>,
   },
   design: {
-    content: () => <Previews />,
+    content: ({ state, onSwitchPreviewMode }) => (
+      <Previews previewMode={state.previewMode} {...{ onSwitchPreviewMode }} />
+    ),
     panel: () => <div>Design is awesome</div>,
   },
   issues: {
-    content: () => <Previews />,
+    content: ({ state, onSwitchPreviewMode }) => (
+      <Previews previewMode={state.previewMode} {...{ onSwitchPreviewMode }} />
+    ),
     panel: () => <div>Issues are bad</div>,
   },
   settings: {
