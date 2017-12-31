@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { document } from 'global';
 
@@ -28,7 +28,7 @@ import AddonIcon from 'material-ui-icons/ChromeReaderMode';
 
 import Search from './search';
 import Hierarchy from './hierarchy';
-import Previews from '../components/previews';
+import Previews from '../components/preview';
 import { Content as SettingsContent, Panel as SettingsPanel } from '../components/settings';
 
 const drawerWidth = 240;
@@ -142,36 +142,43 @@ const styles = theme => ({
 });
 
 const contents = {
-  components: ({ go }) => ({
-    content: <Previews />,
-    panel: <Hierarchy go={target => go(target)} />,
-  }),
-  documentation: () => ({
-    content: <div>Documentation content</div>,
-    panel: <div>Documentation is important</div>,
-  }),
-  design: () => ({
-    content: <Previews />,
-    panel: <div>Design is awesome</div>,
-  }),
-  issues: () => ({
-    content: <Previews />,
-    panel: <div>Issues are bad</div>,
-  }),
-  settings: () => ({
-    content: <SettingsContent />,
-    panel: <SettingsPanel />,
-  }),
-  addon: () => ({
-    content: <Previews />,
-    panel: <div>Addons are amazing</div>,
-  }),
+  components: {
+    content: ({ state, onSwitchPreviewMode }) => (
+      <Previews previewMode={state.previewMode} {...{ onSwitchPreviewMode }} />
+    ),
+    panel: ({ go, onSwitchPreviewMode }) => <Hierarchy {...{ go, onSwitchPreviewMode }} />,
+  },
+  documentation: {
+    content: () => <div>Documentation content</div>,
+    panel: () => <div>Documentation is important</div>,
+  },
+  design: {
+    content: ({ state, onSwitchPreviewMode }) => (
+      <Previews previewMode={state.previewMode} {...{ onSwitchPreviewMode }} />
+    ),
+    panel: () => <div>Design is awesome</div>,
+  },
+  issues: {
+    content: ({ state, onSwitchPreviewMode }) => (
+      <Previews previewMode={state.previewMode} {...{ onSwitchPreviewMode }} />
+    ),
+    panel: () => <div>Issues are bad</div>,
+  },
+  settings: {
+    content: () => <SettingsContent />,
+    panel: () => <SettingsPanel />,
+  },
+  addon: {
+    content: () => <Previews />,
+    panel: () => <div>Addons are amazing</div>,
+  },
 };
 
-class MiniDrawer extends React.Component {
+class MiniDrawer extends Component {
   state = {
     open: false,
-    ...contents.components(this),
+    previewMode: 'multi',
+    ...contents.components,
   };
 
   componentDidMount() {
@@ -237,7 +244,13 @@ class MiniDrawer extends React.Component {
   };
 
   handleAsideChange = val => {
-    this.setState(contents[val](this));
+    this.setState(contents[val]);
+  };
+
+  onSwitchPreviewMode = val => {
+    this.setState({
+      previewMode: val,
+    });
   };
 
   render() {
@@ -343,9 +356,9 @@ class MiniDrawer extends React.Component {
           </Drawer>
           <main className={classes.main}>
             <Paper className={classes.mypanel} elevation={4}>
-              {panel}
+              {panel(this)}
             </Paper>
-            <div className={classes.content}>{content}</div>
+            <div className={classes.content}>{content(this)}</div>
           </main>
         </div>
       </div>

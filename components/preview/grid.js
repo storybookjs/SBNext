@@ -1,164 +1,16 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 import sizeMe from 'react-sizeme';
-import Menu, { MenuItem } from 'material-ui/Menu';
-import { ListItemIcon, ListItemText } from 'material-ui/List';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
 
-import MoreHorizIcon from 'material-ui-icons/MoreVert';
-import CloseIcon from 'material-ui-icons/Close';
-import ZoomInIcon from 'material-ui-icons/ZoomIn';
-import ZoomOutIcon from 'material-ui-icons/ZoomOut';
-import AddIcon from 'material-ui-icons/Add';
+import Preview from './iframe';
+import { Size } from './index';
 
-const iframeStyle = {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  border: '0 none',
-  boxSizing: 'border-box',
-};
-
-const zoomedIframeStyle = {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  width: '200%',
-  height: '200%',
-  border: '0 none',
-  transform: 'scale(0.5)',
-  transformOrigin: 'top left',
-};
-
-const Size = ({ children, id }) => (
-  <div
-    ref={id}
-    style={{
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      bottom: 0,
-      right: 0,
-      background: 'rgba(0,0,0,0.03)',
-      overflow: 'auto',
-    }}
-  >
-    {children}
-  </div>
-);
-
-const PointerOverlay = () => (
-  <span
-    style={{
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      bottom: 0,
-      right: 0,
-      width: '100%',
-      height: '100%',
-      zIndex: 1,
-      background: 'rgba(255,255,255,0.05)',
-    }}
-  />
-);
-
-class Preview extends Component {
-  state = {
-    zoom: 1,
-  };
-  render() {
-    const { id, isDragging, onRemove } = this.props;
-    const { zoom } = this.state;
-
-    const zoomPercentage = `${100 * zoom}%`;
-
-    const style = {
-      ...zoomedIframeStyle,
-      width: zoomPercentage,
-      height: zoomPercentage,
-      transform: `scale(${1 / zoom})`,
-    };
-    return (
-      <Fragment>
-        {isDragging ? <PointerOverlay /> : null}
-        <Toolbar
-          onRemove={() => onRemove(id)}
-          onZoomChange={val => this.setState({ zoom: zoom + val })}
-        >
-          <Typography type="body2" gutterBottom>
-            ({parseFloat(100 / zoom).toFixed(0)}%)
-          </Typography>
-        </Toolbar>
-        <iframe src="/preview-1" style={style} title={id} />
-      </Fragment>
-    );
-  }
-}
 const itemStyles = {
   borderTop: '32px solid white',
   boxSizing: 'border-box',
   boxShadow:
     '0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)',
 };
-
-class Toolbar extends Component {
-  state = {
-    menu: false,
-    anchorEl: undefined,
-  };
-  menu = e => {
-    this.setState({
-      menu: !this.state.menu,
-      anchorEl: e.target,
-    });
-  };
-
-  render() {
-    const { children, onZoomChange, onRemove } = this.props;
-    const { menu, anchorEl } = this.state;
-
-    return (
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          position: 'absolute',
-          top: -32,
-          right: 0,
-          left: 0,
-          height: 32,
-          boxSizing: 'border-box',
-          padding: 4,
-          borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-        }}
-      >
-        {children}
-        <MoreHorizIcon onClick={e => this.menu(e)} />
-        <Menu id="simple-menu" anchorEl={anchorEl} open={menu} onClose={this.menu}>
-          <MenuItem onClick={onRemove}>
-            <ListItemIcon>
-              <CloseIcon />
-            </ListItemIcon>
-            <ListItemText inset primary="Close" />
-          </MenuItem>
-          <MenuItem>
-            <ListItemIcon onClick={() => onZoomChange(-0.25)}>
-              <ZoomInIcon />
-            </ListItemIcon>
-            <ListItemText inset primary="Zoom" />
-            <ListItemIcon onClick={() => onZoomChange(0.25)}>
-              <ZoomOutIcon style={{ marginRight: 0, marginLeft: 16 }} />
-            </ListItemIcon>
-          </MenuItem>
-        </Menu>
-      </div>
-    );
-  }
-}
 
 class Previews extends Component {
   state = {
@@ -169,6 +21,13 @@ class Previews extends Component {
       { i: '3', x: 0, y: 14, w: 24, h: 34 },
     ],
   };
+  componentDidMount() {
+    this.props.publisher.listen(data => {
+      if (data === 'add') {
+        this.add();
+      }
+    });
+  }
   setDragging(val) {
     this.setState({
       dragging: val,
@@ -300,18 +159,11 @@ class Previews extends Component {
             </div>
           ))}
         </ReactGridLayout>
-        <Button
-          onClick={() => this.add()}
-          fab
-          color="primary"
-          aria-label="add"
-          style={{ position: 'fixed', right: 20, bottom: 20 }}
-        >
-          <AddIcon />
-        </Button>
       </Size>
     );
   }
 }
 
-export default sizeMe({ monitorHeight: true })(Previews);
+const MultiPreview = sizeMe({ monitorHeight: true })(Previews);
+
+export default MultiPreview;
