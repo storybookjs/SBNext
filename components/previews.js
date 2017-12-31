@@ -11,25 +11,14 @@ import CloseIcon from 'material-ui-icons/Close';
 import ZoomInIcon from 'material-ui-icons/ZoomIn';
 import ZoomOutIcon from 'material-ui-icons/ZoomOut';
 import AddIcon from 'material-ui-icons/Add';
-
-const iframeStyle = {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  border: '0 none',
-  boxSizing: 'border-box',
-};
+import DashboardIcon from 'material-ui-icons/Dashboard';
+import FullscreenIcon from 'material-ui-icons/Fullscreen';
 
 const zoomedIframeStyle = {
   position: 'absolute',
   top: 0,
   left: 0,
-  width: '200%',
-  height: '200%',
   border: '0 none',
-  transform: 'scale(0.5)',
   transformOrigin: 'top left',
 };
 
@@ -169,6 +158,13 @@ class Previews extends Component {
       { i: '3', x: 0, y: 14, w: 24, h: 34 },
     ],
   };
+  componentDidMount() {
+    this.props.publisher.listen(data => {
+      if (data === 'add') {
+        this.add();
+      }
+    });
+  }
   setDragging(val) {
     this.setState({
       dragging: val,
@@ -300,18 +296,67 @@ class Previews extends Component {
             </div>
           ))}
         </ReactGridLayout>
-        <Button
-          onClick={() => this.add()}
-          fab
-          color="primary"
-          aria-label="add"
-          style={{ position: 'fixed', right: 20, bottom: 20 }}
-        >
-          <AddIcon />
-        </Button>
       </Size>
     );
   }
 }
 
-export default sizeMe({ monitorHeight: true })(Previews);
+const MultiPreview = sizeMe({ monitorHeight: true })(Previews);
+
+const getContent = type => {
+  const listeners = [];
+  const publisher = {
+    listen: fn => listeners.push(fn),
+    push: data => listeners.forEach(fn => fn(data)),
+  };
+
+  switch (type) {
+    case 'doc': {
+      return {
+        options: [],
+        Content: () => <div>TODO: build this type of preview</div>,
+      };
+    }
+    case 'isolated': {
+      return {
+        options: [],
+        Content: () => <div>TODO: build this type of preview</div>,
+      };
+    }
+    default: {
+      return {
+        options: [
+          <Button onClick={() => publisher.push('add')} fab color="primary" aria-label="add">
+            <AddIcon />
+          </Button>,
+        ],
+        Content: props => <MultiPreview {...{ ...props, publisher }} />,
+      };
+    }
+  }
+};
+
+const Options = ({ children }) => (
+  <div style={{ position: 'fixed', right: 20, bottom: 20 }}>{children}</div>
+);
+
+const Main = ({ previewMode, onSwitchPreviewMode }) => {
+  const { Content, options } = getContent(previewMode);
+
+  return (
+    <Size>
+      <Content />
+      <Options {...{ onSwitchPreviewMode }}>
+        <Button onClick={() => onSwitchPreviewMode('doc')} fab color="primary" aria-label="add">
+          <AddIcon />
+        </Button>
+        <Button onClick={() => onSwitchPreviewMode('multi')} fab color="primary" aria-label="add">
+          <DashboardIcon />
+        </Button>
+        {options}
+      </Options>
+    </Size>
+  );
+};
+
+export default Main;
