@@ -30,19 +30,17 @@ class Previews extends Component {
   previews = {};
 
   postMessageListener({ source, data: { size } }) {
-    console.log('postMessageListener', size);
     if (size) {
       const sourceKey = Object.keys(this.previews).find(
         key => this.previews[key].iframe.contentWindow === source
       );
 
       if (sourceKey) {
-        this.previews[sourceKey].element.style.height = `${size.height}px`;
+        this.previews[sourceKey].element.style.height = `${size.height + 33}px`;
       }
     }
   }
   registerPreview(id, element) {
-    console.log('registerPreview', element);
     if (window && element) {
       this.previews = {
         ...this.previews,
@@ -55,9 +53,6 @@ class Previews extends Component {
   }
 
   render() {
-    const { width, height } = this.props.size;
-    const { dragging, items } = this.state;
-
     return (
       <Size>
         <div style={{ padding: 20 }}>
@@ -66,12 +61,38 @@ class Previews extends Component {
           </Typography>
           <MetaData />
           <div ref={element => this.registerPreview(1, element)} style={{ margin: '20px 0' }}>
-            <Paper style={{ position: 'relative', height: 500 }}>
+            <Paper
+              style={{
+                position: 'relative',
+                height: 32,
+                overflow: 'hidden',
+                transition: 'height .3s ease-out',
+              }}
+            >
               <Preview />
             </Paper>
           </div>
           <div ref={element => this.registerPreview(2, element)} style={{ margin: '20px 0' }}>
-            <Paper style={{ position: 'relative', height: 500 }}>
+            <Paper
+              style={{
+                position: 'relative',
+                height: 32,
+                overflow: 'hidden',
+                transition: 'height .3s ease-out',
+              }}
+            >
+              <Preview />
+            </Paper>
+          </div>
+          <div ref={element => this.registerPreview(3, element)} style={{ margin: '20px 0' }}>
+            <Paper
+              style={{
+                position: 'relative',
+                height: 32,
+                overflow: 'hidden',
+                transition: 'height .3s ease-out',
+              }}
+            >
               <Preview />
             </Paper>
           </div>
@@ -81,6 +102,6 @@ class Previews extends Component {
   }
 }
 
-const MultiPreview = sizeMe({ monitorHeight: true })(Previews);
+const DocPreview = sizeMe({ monitorHeight: true })(Previews);
 
-export default MultiPreview;
+export default DocPreview;

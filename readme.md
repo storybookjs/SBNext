@@ -9,9 +9,11 @@ Provide a working prototype of the possibly future UI for SB.
 ### UI
 - [x] Multiple previews
 - [x] Add, move, resize, rescale previews
+- [ ] Auto size preview to fit content
+      *possibly use https://developer.mozilla.org/nl/docs/Web/API/MutationObserver*
 - [ ] View all stories of component on 1 page
 - [x] Panels & Content
-- [x] Settings
+- [x] Settings Panel
 - [x] Keyboard shortcuts
 - [ ] Support for (infinite) deep hierarchy
 - [ ] Search of components

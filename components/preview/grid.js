@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 import sizeMe from 'react-sizeme';
 
+import { MenuItem } from 'material-ui/Menu';
+import { ListItemIcon, ListItemText } from 'material-ui/List';
+import CloseIcon from 'material-ui-icons/Close';
+
 import Preview from './iframe';
 import { Size } from './index';
 
 const itemStyles = {
-  borderTop: '32px solid white',
   boxSizing: 'border-box',
   boxShadow:
     '0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)',
@@ -155,7 +158,18 @@ class Previews extends Component {
               data-grid={data}
               style={itemStyles}
             >
-              <Preview id={i} isDragging={dragging} onRemove={() => this.remove(i)} />
+              <Preview
+                id={i}
+                isDragging={dragging}
+                menuItems={[
+                  <MenuItem onClick={() => this.remove(i)}>
+                    <ListItemIcon>
+                      <CloseIcon />
+                    </ListItemIcon>
+                    <ListItemText inset primary="Close" />
+                  </MenuItem>,
+                ]}
+              />
             </div>
           ))}
         </ReactGridLayout>

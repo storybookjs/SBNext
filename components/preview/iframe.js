@@ -5,7 +5,6 @@ import { ListItemIcon, ListItemText } from 'material-ui/List';
 import Typography from 'material-ui/Typography';
 
 import MoreHorizIcon from 'material-ui-icons/MoreVert';
-import CloseIcon from 'material-ui-icons/Close';
 import ZoomInIcon from 'material-ui-icons/ZoomIn';
 import ZoomOutIcon from 'material-ui-icons/ZoomOut';
 
@@ -22,7 +21,7 @@ class Toolbar extends Component {
   };
 
   render() {
-    const { children, onZoomChange, onRemove } = this.props;
+    const { children, onZoomChange, menuItems } = this.props;
     const { menu, anchorEl } = this.state;
 
     return (
@@ -31,24 +30,20 @@ class Toolbar extends Component {
           display: 'flex',
           justifyContent: 'flex-end',
           position: 'absolute',
-          top: -32,
+          top: 0,
           right: 0,
           left: 0,
           height: 32,
           boxSizing: 'border-box',
           padding: 4,
           borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+          background: '#fff',
         }}
       >
         {children}
         <MoreHorizIcon onClick={e => this.menu(e)} />
         <Menu id="simple-menu" anchorEl={anchorEl} open={menu} onClose={this.menu}>
-          <MenuItem onClick={onRemove}>
-            <ListItemIcon>
-              <CloseIcon />
-            </ListItemIcon>
-            <ListItemText inset primary="Close" />
-          </MenuItem>
+          {menuItems}
           <MenuItem>
             <ListItemIcon onClick={() => onZoomChange(-0.25)}>
               <ZoomInIcon />
@@ -66,7 +61,7 @@ class Toolbar extends Component {
 
 const zoomedIframeStyle = {
   position: 'absolute',
-  top: 0,
+  top: 32,
   left: 0,
   border: '0 none',
   transformOrigin: 'top left',
@@ -93,7 +88,7 @@ class Preview extends Component {
     zoom: 1,
   };
   render() {
-    const { id, isDragging, onRemove } = this.props;
+    const { id, isDragging, menuItems } = this.props;
     const { zoom } = this.state;
 
     const zoomPercentage = `${100 * zoom}%`;
@@ -107,10 +102,7 @@ class Preview extends Component {
     return (
       <Fragment>
         {isDragging ? <PointerOverlay /> : null}
-        <Toolbar
-          onRemove={() => onRemove(id)}
-          onZoomChange={val => this.setState({ zoom: zoom + val })}
-        >
+        <Toolbar menuItems={menuItems} onZoomChange={val => this.setState({ zoom: zoom + val })}>
           <Typography type="body2" gutterBottom>
             ({parseFloat(100 / zoom).toFixed(0)}%)
           </Typography>
