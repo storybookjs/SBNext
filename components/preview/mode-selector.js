@@ -1,21 +1,37 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Button from 'material-ui/Button';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import { ListItemIcon, ListItemText } from 'material-ui/List';
 
-import AddIcon from 'material-ui-icons/Add';
-import DashboardIcon from 'material-ui-icons/Dashboard';
+import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
+import ViewDayIcon from 'material-ui-icons/ViewDay';
+import ViewQuiltIcon from 'material-ui-icons/ViewQuilt';
+
+export const previewModes = {
+  doc: {
+    icon: <ViewDayIcon />,
+    label: 'Documentation',
+  },
+  multi: {
+    icon: <ViewQuiltIcon />,
+    label: 'Multi preview',
+  },
+};
 
 const Item = ({ icon, action, label, handleClose }) => {
+  const clickHandler = () => {
+    handleClose();
+    action();
+  };
   if (icon) {
     return (
-      <MenuItem onClick={e => handleClose(e) && action(e)}>
+      <MenuItem onClick={clickHandler}>
         <ListItemIcon>{icon}</ListItemIcon>
         <ListItemText inset primary={label} />
       </MenuItem>
     );
   }
-  return <MenuItem onClick={e => handleClose(e) && action(e)}>{label}</MenuItem>;
+  return <MenuItem onClick={clickHandler}>{label}</MenuItem>;
 };
 
 class SimpleMenu extends Component {
@@ -33,23 +49,27 @@ class SimpleMenu extends Component {
   };
 
   render() {
-    const { items: list = [], children } = this.props;
+    const { items: list = [], selected } = this.props;
     const { open, anchorEl } = this.state;
-    const items = list.map(item => <Item {...item} handleClose={() => this.handleClose} />);
+    const items = list.map(item => <Item {...item} handleClose={() => this.handleClose()} />);
 
     return (
-      <div>
+      <Fragment>
         <Button
           aria-owns={open ? 'simple-menu' : null}
           aria-haspopup="true"
           onClick={this.handleClick}
+          raised
+          color="default"
         >
-          {children}
+          {previewModes[selected].icon}
+          <span style={{ padding: '0 12px' }}>{selected}</span>
+          <ExpandMoreIcon />
         </Button>
         <Menu id="preview-options-menu" anchorEl={anchorEl} open={open} onClose={this.handleClose}>
           {items}
         </Menu>
-      </div>
+      </Fragment>
     );
   }
 }

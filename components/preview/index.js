@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import Button from 'material-ui/Button';
+import { withStyles } from 'material-ui/styles';
+
+import IconButton from 'material-ui/IconButton';
 
 import AddIcon from 'material-ui-icons/Add';
-import DashboardIcon from 'material-ui-icons/Dashboard';
 
-import PreviewModeSelector from './mode-selector';
+import PreviewModeSelector, { previewModes } from './mode-selector';
 import MultiPreview from './grid';
+import DocsPreview from './doc';
 
 export const Size = ({ children, id }) => (
   <div
@@ -35,7 +37,7 @@ const getContent = type => {
     case 'doc': {
       return {
         options: [],
-        Content: () => <div>TODO: build this type of preview</div>,
+        Content: props => <DocsPreview {...{ ...props, publisher }} />,
       };
     }
     case 'isolated': {
@@ -47,9 +49,9 @@ const getContent = type => {
     default: {
       return {
         options: [
-          <Button onClick={() => publisher.push('add')} fab color="primary" aria-label="add">
+          <IconButton color="primary" onClick={() => publisher.push('add')}>
             <AddIcon />
-          </Button>,
+          </IconButton>,
         ],
         Content: props => <MultiPreview {...{ ...props, publisher }} />,
       };
@@ -57,38 +59,38 @@ const getContent = type => {
   }
 };
 
-const Options = ({ children }) => (
-  <div style={{ position: 'fixed', right: 20, bottom: 20, display: 'flex' }}>{children}</div>
-);
+const Options = withStyles({
+  root: {
+    position: 'fixed',
+    right: 20,
+    bottom: 20,
+    display: 'flex',
+    alignItems: 'center',
+    '& > *': {
+      marginLeft: 20,
+    },
+  },
+})(({ children, classes }) => <div className={classes.root}>{children}</div>);
 
 class Main extends Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    const { props, state } = this;
+  shouldComponentUpdate(nextProps) {
+    const { props } = this;
     return props.previewMode !== nextProps.previewMode;
   }
   render() {
     const { previewMode, onSwitchPreviewMode } = this.props;
     const { Content, options } = getContent(previewMode);
-
-    const previewModes = [
-      {
-        icon: <AddIcon />,
-        label: 'Option 1',
-        action: () => onSwitchPreviewMode('doc'),
-      },
-      {
-        icon: <DashboardIcon />,
-        label: 'Option 2',
-        action: () => onSwitchPreviewMode('multi'),
-      },
-    ];
+    const items = Object.keys(previewModes).map(key => ({
+      ...previewModes[key],
+      action: () => onSwitchPreviewMode(key),
+    }));
 
     return (
       <Size>
         <Content />
         <Options>
-          <PreviewModeSelector items={previewModes}>choose preview mode</PreviewModeSelector>
           {options}
+          <PreviewModeSelector items={items} selected={previewMode} />
         </Options>
       </Size>
     );

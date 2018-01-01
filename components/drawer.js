@@ -232,7 +232,7 @@ class MiniDrawer extends Component {
   go(id) {
     [...document.getElementsByTagName('iframe')]
       .map(el => el.contentWindow)
-      .forEach(frame => frame.postMessage(id, document.location.origin));
+      .forEach(frame => frame.postMessage({ go: id }, document.location.origin));
   }
 
   handleDrawerOpen = () => {
