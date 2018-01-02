@@ -4,13 +4,13 @@ import { withStyles } from 'material-ui/styles';
 import IconButton from 'material-ui/IconButton';
 
 import AddIcon from 'material-ui-icons/Add';
+import ZoomInIcon from 'material-ui-icons/ZoomIn';
+import ZoomOutIcon from 'material-ui-icons/ZoomOut';
 
 import PreviewModeSelector, { previewModes } from './mode-selector';
 import MultiPreview from './grid';
 import DocsPreview from './doc';
 import IsolatedPreview from './isolate';
-import ZoomInIcon from 'material-ui-icons/ZoomIn';
-import ZoomOutIcon from 'material-ui-icons/ZoomOut';
 
 export const Size = ({ children, id }) => (
   <div
@@ -45,10 +45,10 @@ const getContent = type => {
     case 'isolated': {
       return {
         options: [
-          <IconButton color="primary" onClick={() => publisher.push('zoom', 0.25)}>
+          <IconButton key="zoomout" color="primary" onClick={() => publisher.push('zoom', 0.25)}>
             <ZoomOutIcon />
           </IconButton>,
-          <IconButton color="primary" onClick={() => publisher.push('zoom', -0.25)}>
+          <IconButton key="zoomin" color="primary" onClick={() => publisher.push('zoom', -0.25)}>
             <ZoomInIcon />
           </IconButton>,
         ],
@@ -58,7 +58,7 @@ const getContent = type => {
     default: {
       return {
         options: [
-          <IconButton color="primary" onClick={() => publisher.push('add')}>
+          <IconButton key="add" color="primary" onClick={() => publisher.push('add')}>
             <AddIcon />
           </IconButton>,
         ],
@@ -90,6 +90,7 @@ class Main extends Component {
     const { previewMode, onSwitchPreviewMode } = this.props;
     const { Content, options } = getContent(previewMode);
     const items = Object.keys(previewModes).map(key => ({
+      key,
       ...previewModes[key],
       action: () => onSwitchPreviewMode(key),
     }));

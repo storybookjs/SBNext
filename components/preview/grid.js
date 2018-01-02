@@ -6,7 +6,7 @@ import { MenuItem } from 'material-ui/Menu';
 import { ListItemIcon, ListItemText } from 'material-ui/List';
 import CloseIcon from 'material-ui-icons/Close';
 
-import Preview from './iframe';
+import Iframe from './iframe';
 import { Size } from './index';
 
 const itemStyles = {
@@ -15,7 +15,7 @@ const itemStyles = {
     '0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)',
 };
 
-class Previews extends Component {
+class GridPreview extends Component {
   state = {
     dragging: false,
     items: [
@@ -55,7 +55,7 @@ class Previews extends Component {
 
     return (
       <Size>
-        <style jsx global>
+        <style>
           {`
             body {
               padding: 0;
@@ -158,11 +158,11 @@ class Previews extends Component {
               data-grid={data}
               style={itemStyles}
             >
-              <Preview
+              <Iframe
                 id={i}
                 isDragging={dragging}
                 menuItems={[
-                  <MenuItem onClick={() => this.remove(i)}>
+                  <MenuItem key="remove" onClick={() => this.remove(i)}>
                     <ListItemIcon>
                       <CloseIcon />
                     </ListItemIcon>
@@ -178,6 +178,6 @@ class Previews extends Component {
   }
 }
 
-const MultiPreview = sizeMe({ monitorHeight: true })(Previews);
+const MultiPreview = sizeMe({ monitorHeight: true })(GridPreview);
 
 export default MultiPreview;

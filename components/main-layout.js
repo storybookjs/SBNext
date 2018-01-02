@@ -174,7 +174,7 @@ const contents = {
   },
 };
 
-class MiniDrawer extends Component {
+class MainLayout extends Component {
   state = {
     open: false,
     previewMode: 'multi',
@@ -229,6 +229,12 @@ class MiniDrawer extends Component {
     );
   }
 
+  onSwitchPreviewMode = val => {
+    this.setState({
+      previewMode: val,
+    });
+  };
+
   go(id) {
     [...document.getElementsByTagName('iframe')]
       .map(el => el.contentWindow)
@@ -245,12 +251,6 @@ class MiniDrawer extends Component {
 
   handleAsideChange = val => {
     this.setState(contents[val]);
-  };
-
-  onSwitchPreviewMode = val => {
-    this.setState({
-      previewMode: val,
-    });
   };
 
   render() {
@@ -366,9 +366,9 @@ class MiniDrawer extends Component {
   }
 }
 
-MiniDrawer.propTypes = {
+MainLayout.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
 };
 
-export default mouseTrap(withStyles(styles, { withTheme: true })(MiniDrawer));
+export default mouseTrap(withStyles(styles, { withTheme: true })(MainLayout));

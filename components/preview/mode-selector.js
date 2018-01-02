@@ -39,7 +39,7 @@ const Item = ({ icon, action, label, handleClose }) => {
   return <MenuItem onClick={clickHandler}>{label}</MenuItem>;
 };
 
-class SimpleMenu extends Component {
+class ModeSelector extends Component {
   state = {
     anchorEl: null,
     open: false,
@@ -56,7 +56,9 @@ class SimpleMenu extends Component {
   render() {
     const { items: list = [], selected } = this.props;
     const { open, anchorEl } = this.state;
-    const items = list.map(item => <Item {...item} handleClose={() => this.handleClose()} />);
+    const items = list.map(item => (
+      <Item key={item.key} {...item} handleClose={() => this.handleClose()} />
+    ));
 
     return (
       <Fragment>
@@ -79,4 +81,4 @@ class SimpleMenu extends Component {
   }
 }
 
-export default SimpleMenu;
+export default ModeSelector;

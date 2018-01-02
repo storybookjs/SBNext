@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Layout from '../components/drawer';
+import MainLayout from '../components/main-layout';
 import withRoot from '../components/withRoot';
 
 class Index extends Component {
@@ -9,7 +9,7 @@ class Index extends Component {
   }
 
   render() {
-    return <Layout />;
+    return <MainLayout />;
   }
 }
 

@@ -17,6 +17,10 @@ const theme = createMuiTheme({
     },
     error: red,
   },
+  typography: {
+    fontFamily:
+      'Roboto, -apple-system, ".SFNSText-Regular", "San Francisco", BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", "Lucida Grande", Arial, sans-serif',
+  },
 });
 
 // Configure JSS

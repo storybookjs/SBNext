@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import sizeMe from 'react-sizeme';
 
 import { Size } from './index';
-import Preview from './iframe';
+import Iframe from './iframe';
 
 class Previews extends Component {
   state = {};
@@ -16,7 +16,7 @@ class Previews extends Component {
   render() {
     return (
       <Size>
-        <Preview toolbar={false} publisher={this.props.publisher} />
+        <Iframe toolbar={false} publisher={this.props.publisher} />
       </Size>
     );
   }

@@ -25,10 +25,6 @@ class MyDocument extends Document {
           <link rel="manifest" href="/static/manifest.json" />
           {/* PWA primary color */}
           <meta name="theme-color" content={this.props.stylesContext.theme.palette.primary[500]} />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
-          />
         </Head>
         <body>
           <Main />

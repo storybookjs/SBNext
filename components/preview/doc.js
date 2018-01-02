@@ -6,7 +6,7 @@ import Paper from 'material-ui/Paper';
 
 import { Size } from './index';
 import MetaData from './metadata';
-import Preview from './iframe';
+import Iframe from './iframe';
 
 class Previews extends Component {
   state = {};
@@ -33,7 +33,7 @@ class Previews extends Component {
           </div>
           <div style={{ margin: '20px 0' }}>
             <Paper>
-              <Preview absolute={false} />
+              <Iframe absolute={false} />
             </Paper>
           </div>
 
@@ -45,7 +45,7 @@ class Previews extends Component {
           </div>
           <div style={{ margin: '20px 0' }}>
             <Paper>
-              <Preview absolute={false} />
+              <Iframe absolute={false} />
             </Paper>
           </div>
 
@@ -57,7 +57,7 @@ class Previews extends Component {
           </div>
           <div style={{ margin: '20px 0' }}>
             <Paper>
-              <Preview absolute={false} />
+              <Iframe absolute={false} />
             </Paper>
           </div>
         </div>

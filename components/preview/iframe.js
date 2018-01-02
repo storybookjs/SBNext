@@ -94,7 +94,7 @@ const PointerOverlay = () => (
   />
 );
 
-const X = ({ children, height, zoom, getRef }) => (
+const WrapperA = ({ children, height, zoom, getRef }) => (
   <div
     ref={getRef}
     style={{
@@ -108,7 +108,9 @@ const X = ({ children, height, zoom, getRef }) => (
   </div>
 );
 
-class Preview extends Component {
+const WrapperB = ({ children }) => <Fragment>{children}</Fragment>;
+
+class Iframe extends Component {
   state = {
     zoom: 1,
     height: 0,
@@ -151,7 +153,7 @@ class Preview extends Component {
 
     const zoomPercentage = `${100 * zoom}%`;
 
-    const Wrapper = absolute ? Fragment : X;
+    const Wrapper = absolute ? WrapperB : WrapperA;
     const toolbarHeight = toolbar ? 32 : 0;
 
     const style = {
@@ -187,4 +189,4 @@ class Preview extends Component {
   }
 }
 
-export default Preview;
+export default Iframe;
