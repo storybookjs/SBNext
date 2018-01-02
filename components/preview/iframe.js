@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { window, document } from 'global';
 
 import Menu, { MenuItem } from 'material-ui/Menu';
 import { ListItemIcon, ListItemText } from 'material-ui/List';
@@ -84,15 +85,57 @@ const PointerOverlay = () => (
   />
 );
 
+const X = ({ children, height, zoom, getRef }) => (
+  <div
+    ref={getRef}
+    style={{
+      position: 'relative',
+      height: 32 + height / zoom,
+      overflow: 'hidden',
+      transition: 'height .15s ease-out',
+    }}
+  >
+    {children}
+  </div>
+);
+
 class Preview extends Component {
   state = {
     zoom: 1,
+    height: 0,
   };
+
+  componentDidMount() {
+    this.postMessageListener = ({ source, data: { size } }) => {
+      if (size && this.elements.iframe && this.elements.iframe.contentWindow === source) {
+        this.setState({ height: size.height });
+      }
+    };
+
+    window.addEventListener('message', this.postMessageListener, false);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('message', this.postMessageListener);
+  }
+
+  elements = {};
+
+  registerPreview(element) {
+    if (window && element) {
+      this.elements = {
+        container: element,
+        iframe: element.querySelector('iframe'),
+      };
+    }
+  }
+
   render() {
-    const { id, isDragging, menuItems = [] } = this.props;
-    const { zoom } = this.state;
+    const { id, isDragging, menuItems = [], absolute = true } = this.props;
+    const { zoom, height } = this.state;
 
     const zoomPercentage = `${100 * zoom}%`;
+
+    const Wrapper = absolute ? Fragment : X;
 
     const style = {
       ...zoomedIframeStyle,
@@ -101,7 +144,7 @@ class Preview extends Component {
       transform: `scale(${1 / zoom})`,
     };
     return (
-      <Fragment>
+      <Wrapper getRef={element => this.registerPreview(element)} {...{ zoom, height }}>
         {isDragging ? <PointerOverlay /> : null}
         <Toolbar menuItems={menuItems} onZoomChange={val => this.setState({ zoom: zoom + val })}>
           <Typography type="body2" gutterBottom>
@@ -109,7 +152,7 @@ class Preview extends Component {
           </Typography>
         </Toolbar>
         <iframe src="/preview-1" style={style} title={id} />
-      </Fragment>
+      </Wrapper>
     );
   }
 }
