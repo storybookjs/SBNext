@@ -7,12 +7,6 @@ import Iframe from './iframe';
 class Previews extends Component {
   state = {};
 
-  componentDidMount() {
-    this.props.publisher.listen(data => {
-      console.log(data);
-    });
-  }
-
   render() {
     return (
       <Size>

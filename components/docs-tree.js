@@ -10,7 +10,7 @@ import Divider from 'material-ui/Divider';
 
 import DashboardIcon from 'material-ui-icons/Dashboard';
 import FullscreenIcon from 'material-ui-icons/Fullscreen';
-import MoreVertIcon from 'material-ui-icons/MoreVert';
+import ChevronRightIcon from 'material-ui-icons/ChevronRight';
 
 const styles = theme => ({
   root: {
@@ -32,27 +32,20 @@ const NestedListSubItem = ({ name, classes, go }) => (
 
 class NestedListItem extends React.Component {
   static defaultProps: {
-    name: 'Unnamed Component',
-    items: ['story 1', 'story 2', 'story 3', 'story 4'],
+    name: 'Unnamed Page',
+    sections: [],
   };
   state = {
     open: false,
-    menu: false,
   };
 
   open = () => {
     this.setState({ open: !this.state.open });
   };
-  menu = e => {
-    this.setState({
-      menu: !this.state.menu,
-      anchorEl: e.target,
-    });
-  };
 
   render() {
-    const { classes, stories, sub = [], name, go } = this.props;
-    const { open, menu, anchorEl } = this.state;
+    const { classes, sections = [], sub = [], name, go } = this.props;
+    const { open } = this.state;
 
     const action = e => {
       this.menu(e);
@@ -60,37 +53,23 @@ class NestedListItem extends React.Component {
 
     return (
       <Fragment>
-        <ListItem button onClick={this.open}>
+        <ListItem button onClick={() => this.setState({ open: !this.state.open })}>
           <ListItemText primary={name} />
-          <MoreVertIcon onClick={e => e.stopPropagation() || this.menu(e)} />
+          <ChevronRightIcon />
         </ListItem>
-        <Menu id="simple-menu" anchorEl={anchorEl} open={menu} onClose={this.menu}>
-          <MenuItem onClick={action}>
-            <ListItemIcon className={classes.icon}>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText inset primary="View all" />
-          </MenuItem>
-          <MenuItem onClick={action}>
-            <ListItemIcon className={classes.icon}>
-              <FullscreenIcon />
-            </ListItemIcon>
-            <ListItemText inset primary="Isolation" />
-          </MenuItem>
-        </Menu>
         <Collapse component="li" in={open} timeout="auto" unmountOnExit>
           <List disablePadding dense>
+            {sections.map((item, index) => (
+              <NestedListSubItem key={index} name={item} {...{ classes, go }} />
+            ))}
             {sub.map((item, index) => (
               <NestedListItem
                 key={index}
                 name={item.name}
-                stories={item.stories}
+                sections={item.sections}
                 sub={item.sub}
                 {...{ classes, go }}
               />
-            ))}
-            {stories.map((item, index) => (
-              <NestedListSubItem key={index} name={item} {...{ classes, go }} />
             ))}
           </List>
         </Collapse>
@@ -99,32 +78,48 @@ class NestedListItem extends React.Component {
   }
 }
 
-const NestedList = ({ classes, go }) => (
+const DocsTree = ({ classes, go }) => (
   <Fragment>
     <List className={classes.root} subheader={<ListSubheader>Root Category 1</ListSubheader>}>
-      <NestedListItem stories={['1', '2', '3']} name="Component 1" {...{ classes, go }} />
-      <NestedListItem stories={['1', '2', '3']} name="Component 2" {...{ classes, go }} />
-      <NestedListItem stories={['1', '2', '3']} name="Component 3" {...{ classes, go }} />
+      <NestedListItem
+        sections={['intro', 'section A', 'Section B']}
+        name="Page 1"
+        {...{ classes, go }}
+      />
+      <NestedListItem
+        sections={['intro', 'section A', 'Section B']}
+        name="Page 2"
+        {...{ classes, go }}
+      />
+      <NestedListItem
+        sections={['intro', 'section A', 'Section B']}
+        name="Page 3"
+        {...{ classes, go }}
+      />
     </List>
     <Divider />
     <List className={classes.root} subheader={<ListSubheader>Root Category 2</ListSubheader>}>
-      <NestedListItem stories={['1', '2', '3']} name="Component 4" {...{ classes, go }} />
       <NestedListItem
-        stories={['1', '2', '3']}
+        sections={['intro', 'section A', 'Section B']}
+        name="Page 4"
+        {...{ classes, go }}
+      />
+      <NestedListItem
+        sections={['intro', 'section A', 'Section B']}
         sub={[
-          { stories: ['1', '2', '3'], name: 'Component 6' },
-          { stories: ['1', '2', '3'], name: 'Component 7' },
+          { stories: ['intro', 'section A', 'Section B'], name: 'Page 6' },
+          { stories: ['intro', 'section A', 'Section B'], name: 'Page 7' },
         ]}
-        name="Component 5"
+        name="Page 5"
         {...{ classes, go }}
       />
     </List>
   </Fragment>
 );
 
-NestedList.propTypes = {
+DocsTree.propTypes = {
   classes: PropTypes.object.isRequired,
   go: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(NestedList);
+export default withStyles(styles)(DocsTree);

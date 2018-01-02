@@ -28,6 +28,7 @@ import AddonIcon from 'material-ui-icons/ChromeReaderMode';
 
 import Search from './search';
 import Hierarchy from './hierarchy';
+import DocsTree from './docs-tree';
 import Previews from '../components/preview';
 import { Content as SettingsContent, Panel as SettingsPanel } from '../components/settings';
 
@@ -149,8 +150,20 @@ const contents = {
     panel: ({ go, onSwitchPreviewMode }) => <Hierarchy {...{ go, onSwitchPreviewMode }} />,
   },
   documentation: {
-    content: () => <div>Documentation content</div>,
-    panel: () => <div>Documentation is important</div>,
+    content: () => (
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Typography type="title">Documentation content...</Typography>
+      </div>
+    ),
+    panel: ({ go, onSwitchPreviewMode }) => <DocsTree {...{ go, onSwitchPreviewMode }} />,
   },
   design: {
     content: ({ state, onSwitchPreviewMode }) => (
