@@ -82,35 +82,54 @@ const DocsTree = ({ classes, go }) => (
   <Fragment>
     <List className={classes.root} subheader={<ListSubheader>Root Category 1</ListSubheader>}>
       <NestedListItem
+        name="Intro into this project"
         sections={['intro', 'section A', 'Section B']}
-        name="Page 1"
         {...{ classes, go }}
       />
       <NestedListItem
+        name="Installation"
         sections={['intro', 'section A', 'Section B']}
-        name="Page 2"
         {...{ classes, go }}
       />
       <NestedListItem
+        name="Important links"
         sections={['intro', 'section A', 'Section B']}
-        name="Page 3"
         {...{ classes, go }}
       />
+      <NestedListItem
+        name="Page 4 (has sub)"
+        sections={['intro', 'section A', 'Section B']}
+        sub={[
+          { stories: ['intro', 'section A', 'Section B'], name: 'Page 5' },
+          { stories: ['intro', 'section A', 'Section B'], name: 'Page 6' },
+        ]}
+        {...{ classes, go }}
+      />
+      <NestedListItem sections={[]} name="Page 7" {...{ classes, go }} />
+      <NestedListItem sections={[]} name="Page 8" {...{ classes, go }} />
     </List>
     <Divider />
     <List className={classes.root} subheader={<ListSubheader>Root Category 2</ListSubheader>}>
+      <NestedListItem sections={[]} name="Page 9" {...{ classes, go }} />
+      <NestedListItem sections={[]} name="Page 10" {...{ classes, go }} />
+      <NestedListItem sections={[]} name="Page 11" {...{ classes, go }} />
+      <NestedListItem sections={[]} name="Page 12" {...{ classes, go }} />
+      <NestedListItem sections={[]} name="Page 13" {...{ classes, go }} />
+    </List>
+    <Divider />
+    <List className={classes.root} subheader={<ListSubheader>Root Category 3</ListSubheader>}>
       <NestedListItem
         sections={['intro', 'section A', 'Section B']}
-        name="Page 4"
+        name="Page 14"
         {...{ classes, go }}
       />
       <NestedListItem
+        name="Page 15"
         sections={['intro', 'section A', 'Section B']}
         sub={[
           { stories: ['intro', 'section A', 'Section B'], name: 'Page 6' },
           { stories: ['intro', 'section A', 'Section B'], name: 'Page 7' },
         ]}
-        name="Page 5"
         {...{ classes, go }}
       />
     </List>
