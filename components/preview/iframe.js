@@ -38,6 +38,7 @@ class Toolbar extends Component {
           padding: 4,
           borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
           background: '#fff',
+          zIndex: 2,
         }}
       >
         {children}
@@ -88,7 +89,7 @@ class Preview extends Component {
     zoom: 1,
   };
   render() {
-    const { id, isDragging, menuItems } = this.props;
+    const { id, isDragging, menuItems = [] } = this.props;
     const { zoom } = this.state;
 
     const zoomPercentage = `${100 * zoom}%`;
