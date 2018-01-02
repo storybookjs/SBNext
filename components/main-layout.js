@@ -169,7 +169,7 @@ const contents = {
     panel: () => <SettingsPanel />,
   },
   addon: {
-    content: () => <Previews />,
+    content: ({ state }) => <Previews previewMode={state.previewMode} />,
     panel: () => <div>Addons are amazing</div>,
   },
 };
