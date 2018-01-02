@@ -161,6 +161,7 @@ class Iframe extends Component {
       width: zoomPercentage,
       height: zoomPercentage,
       transform: `scale(${1 / zoom})`,
+      transition: 'transform .4s ease-out, height .4s ease-out, width .4s ease-out',
     };
     return (
       <Wrapper getRef={element => this.registerPreview(element)} {...{ zoom, height }}>
