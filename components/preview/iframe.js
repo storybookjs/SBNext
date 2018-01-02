@@ -63,7 +63,7 @@ class Toolbar extends Component {
 
 const zoomedIframeStyle = {
   position: 'absolute',
-  top: 32,
+  top: 0,
   left: 0,
   border: '0 none',
   transformOrigin: 'top left',
@@ -151,7 +151,18 @@ class Preview extends Component {
             ({parseFloat(100 / zoom).toFixed(0)}%)
           </Typography>
         </Toolbar>
-        <iframe src="/preview-1" style={style} title={id} />
+        <div
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            top: 32,
+            height: 'calc(100% - 32px)',
+          }}
+        >
+          <iframe src="/preview-1" style={style} title={id} />
+        </div>
       </Wrapper>
     );
   }

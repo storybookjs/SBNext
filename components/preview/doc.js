@@ -26,14 +26,34 @@ class Previews extends Component {
           </Typography>
           <MetaData />
           <div style={{ margin: '20px 0' }}>
-            <Paper>
-              <Preview absolute={false} />
-            </Paper>
+            <Typography type="body1">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua.
+            </Typography>
           </div>
           <div style={{ margin: '20px 0' }}>
             <Paper>
               <Preview absolute={false} />
             </Paper>
+          </div>
+
+          <div style={{ margin: '20px 0' }}>
+            <Typography type="body1">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua.
+            </Typography>
+          </div>
+          <div style={{ margin: '20px 0' }}>
+            <Paper>
+              <Preview absolute={false} />
+            </Paper>
+          </div>
+
+          <div style={{ margin: '20px 0' }}>
+            <Typography type="body1">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua.
+            </Typography>
           </div>
           <div style={{ margin: '20px 0' }}>
             <Paper>
