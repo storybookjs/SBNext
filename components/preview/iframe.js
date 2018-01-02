@@ -37,7 +37,7 @@ class Toolbar extends Component {
           height: 32,
           boxSizing: 'border-box',
           padding: 4,
-          // borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+          borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
           background: '#fff',
           zIndex: 2,
         }}
