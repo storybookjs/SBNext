@@ -33,6 +33,10 @@ Provide a working prototype of the possibly future UI for SB.
 - [ ] add shortcuts
 - [ ] add settings
 
+## Notes
+For infrastructure this seems to be a good candidate to see how they've abstracted next.js:
+https://github.com/elmasse/nextein
+
 ## Badges
 [![Greenkeeper badge](https://badges.greenkeeper.io/ndelangen/SB4.svg)](https://greenkeeper.io/)
 
