@@ -6,15 +6,20 @@ import { ListItemIcon, ListItemText } from 'material-ui/List';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import ViewDayIcon from 'material-ui-icons/ViewDay';
 import ViewQuiltIcon from 'material-ui-icons/ViewQuilt';
+import FullscreenIcon from 'material-ui-icons/Fullscreen';
 
 export const previewModes = {
   doc: {
     icon: <ViewDayIcon />,
     label: 'Documentation',
   },
+  isolated: {
+    icon: <FullscreenIcon />,
+    label: 'Isolated',
+  },
   multi: {
     icon: <ViewQuiltIcon />,
-    label: 'Multi preview',
+    label: 'Multi',
   },
 };
 

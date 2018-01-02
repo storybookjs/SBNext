@@ -8,6 +8,9 @@ import AddIcon from 'material-ui-icons/Add';
 import PreviewModeSelector, { previewModes } from './mode-selector';
 import MultiPreview from './grid';
 import DocsPreview from './doc';
+import IsolatedPreview from './isolate';
+import ZoomInIcon from 'material-ui-icons/ZoomIn';
+import ZoomOutIcon from 'material-ui-icons/ZoomOut';
 
 export const Size = ({ children, id }) => (
   <div
@@ -30,7 +33,7 @@ const getContent = type => {
   const listeners = [];
   const publisher = {
     listen: fn => listeners.push(fn),
-    push: data => listeners.forEach(fn => fn(data)),
+    push: (...any) => listeners.forEach(fn => fn(...any)),
   };
 
   switch (type) {
@@ -42,8 +45,15 @@ const getContent = type => {
     }
     case 'isolated': {
       return {
-        options: [],
-        Content: () => <div>TODO: build this type of preview</div>,
+        options: [
+          <IconButton color="primary" onClick={() => publisher.push('zoom', 0.25)}>
+            <ZoomOutIcon />
+          </IconButton>,
+          <IconButton color="primary" onClick={() => publisher.push('zoom', -0.25)}>
+            <ZoomInIcon />
+          </IconButton>,
+        ],
+        Content: props => <IsolatedPreview {...{ ...props, publisher }} />,
       };
     }
     default: {
@@ -67,7 +77,7 @@ const Options = withStyles({
     display: 'flex',
     alignItems: 'center',
     '& > *': {
-      marginLeft: 20,
+      marginLeft: 10,
     },
   },
 })(({ children, classes }) => <div className={classes.root}>{children}</div>);

@@ -37,7 +37,7 @@ class Toolbar extends Component {
           height: 32,
           boxSizing: 'border-box',
           padding: 4,
-          borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+          // borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
           background: '#fff',
           zIndex: 2,
         }}
@@ -67,6 +67,15 @@ const zoomedIframeStyle = {
   left: 0,
   border: '0 none',
   transformOrigin: 'top left',
+  background: '#f4f4f4',
+  backgroundSize: '100px 100px, 100px 100px, 20px 20px, 20px 20px',
+  backgroundPosition: '-2px -2px, -2px -2px, -1px -1px, -1px -1px',
+
+  backgroundImage: `
+    linear-gradient(rgba(0,0,0,0.05) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(0,0,0,0.05) 2px, transparent 2px),
+    linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)`,
 };
 
 const PointerOverlay = () => (
@@ -112,6 +121,13 @@ class Preview extends Component {
       }
     };
 
+    if (this.props.publisher) {
+      this.props.publisher.listen((command, ...args) => {
+        if (command === 'zoom') {
+          this.setState({ zoom: this.state.zoom + args[0] });
+        }
+      });
+    }
     window.addEventListener('message', this.postMessageListener, false);
   }
   componentWillUnmount() {
@@ -130,12 +146,13 @@ class Preview extends Component {
   }
 
   render() {
-    const { id, isDragging, menuItems = [], absolute = true } = this.props;
+    const { id, isDragging, menuItems = [], absolute = true, toolbar = true } = this.props;
     const { zoom, height } = this.state;
 
     const zoomPercentage = `${100 * zoom}%`;
 
     const Wrapper = absolute ? Fragment : X;
+    const toolbarHeight = toolbar ? 32 : 0;
 
     const style = {
       ...zoomedIframeStyle,
@@ -146,19 +163,21 @@ class Preview extends Component {
     return (
       <Wrapper getRef={element => this.registerPreview(element)} {...{ zoom, height }}>
         {isDragging ? <PointerOverlay /> : null}
-        <Toolbar menuItems={menuItems} onZoomChange={val => this.setState({ zoom: zoom + val })}>
-          <Typography type="body2" gutterBottom>
-            ({parseFloat(100 / zoom).toFixed(0)}%)
-          </Typography>
-        </Toolbar>
+        {toolbar ? (
+          <Toolbar menuItems={menuItems} onZoomChange={val => this.setState({ zoom: zoom + val })}>
+            <Typography type="body2" gutterBottom>
+              ({parseFloat(100 / zoom).toFixed(0)}%)
+            </Typography>
+          </Toolbar>
+        ) : null}
         <div
           style={{
             position: 'absolute',
             left: 0,
             right: 0,
             bottom: 0,
-            top: 32,
-            height: 'calc(100% - 32px)',
+            top: toolbarHeight,
+            height: `calc(100% - ${toolbarHeight}px)`,
           }}
         >
           <iframe src="/preview-1" style={style} title={id} />
