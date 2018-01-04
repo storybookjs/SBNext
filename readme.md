@@ -41,6 +41,8 @@ Provide a working prototype of the possibly future UI for SB.
 For infrastructure this seems to be a good candidate to see how they've abstracted next.js:
 https://github.com/elmasse/nextein
 
+> I have a WIP branch that has taken the source of nextein, a nextein demo and the current ui, and placed them in a monorepo.
+
 ## Badges
 [![Greenkeeper badge](https://badges.greenkeeper.io/ndelangen/SB4.svg)](https://greenkeeper.io/)
 
