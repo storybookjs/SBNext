@@ -24,7 +24,11 @@ Provide a working prototype of the possibly future UI for SB.
 - [ ] Create a package managing next.js
 - [ ] Multiple frameworks
 - [ ] State management  
-      *Redux or mobX, maybe mobx-state-tree*
+      <details>
+       - Redux or mobX, maybe mobx-state-tree?
+       - a system for addons to have their state managed via this
+       - allow addons to access this state, possibly via a Provider component we provide
+      </details>
 
 ### Addon API
 - [ ] basics
