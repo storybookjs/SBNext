@@ -47,8 +47,10 @@ exports.default = function (original) {
 
       return (0, _extends4.default)({}, our, their);
     },
-    exportPathMap: function () {
-      var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
+    exportPathMap: function exportPathMap() {
+      var _this = this;
+
+      return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
         var our, their;
         return _regenerator2.default.wrap(function _callee$(_context) {
           while (1) {
@@ -80,20 +82,14 @@ exports.default = function (original) {
                 return _context.stop();
             }
           }
-        }, _callee, this);
-      }));
-
-      function exportPathMap() {
-        return _ref.apply(this, arguments);
-      }
-
-      return exportPathMap;
-    }()
+        }, _callee, _this);
+      }))();
+    }
   });
 };
 
-var _webpack = function _webpack(config, _ref2) {
-  var dev = _ref2.dev;
+var _webpack = function _webpack(config, _ref) {
+  var dev = _ref.dev;
 
   config.node = {
     fs: 'empty'
@@ -115,7 +111,7 @@ var _webpack = function _webpack(config, _ref2) {
 
 exports.webpack = _webpack;
 var _exportPathMap = function () {
-  var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
+  var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
     var entries, map;
     return _regenerator2.default.wrap(function _callee2$(_context2) {
       while (1) {
@@ -126,8 +122,8 @@ var _exportPathMap = function () {
 
           case 2:
             entries = _context2.sent;
-            map = entries.reduce(function (prev, _ref4) {
-              var data = _ref4.data;
+            map = entries.reduce(function (prev, _ref3) {
+              var data = _ref3.data;
               var url = data.url,
                   page = data.page,
                   _entry = data._entry;
@@ -148,7 +144,7 @@ var _exportPathMap = function () {
   }));
 
   return function _exportPathMap() {
-    return _ref3.apply(this, arguments);
+    return _ref2.apply(this, arguments);
   };
 }();
 exports.exportPathMap = _exportPathMap;

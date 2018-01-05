@@ -3,7 +3,7 @@ import React from 'react';
 import withPosts, { inCategory, sortByDate } from '@sb/serve/posts';
 
 import PostListEntry from '../components/post-list-entry';
-import SBHello from '../components/@sb/serve-hello';
+import SBHello from '../components/sb-hello';
 import Navigation from '../components/navigation';
 
 const Index = ({ posts }) => {

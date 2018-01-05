@@ -4,9 +4,10 @@ import 'source-map-support/register';
 import { resolve } from 'path';
 import parseArgs from 'minimist';
 import { readFileSync } from 'fs';
-import Server from '../server';
 import pkgUp from 'pkg-up';
 import chokidar from 'chokidar';
+
+import Server from '../server';
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 

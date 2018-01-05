@@ -1,78 +1,73 @@
+import loadEntries from './entries/load';
+import Uglify from 'uglifyjs-webpack-plugin';
 
-import loadEntries from './entries/load'
-import Uglify from 'uglifyjs-webpack-plugin'
-
-export default (original) => {
-  const {
-    webpack: oWebpack,
-    exportPathMap: oExportPathMap
-  } = original
+export default original => {
+  const { webpack: oWebpack, exportPathMap: oExportPathMap } = original;
 
   return {
     ...original,
-    webpack: function (...args) {
-      const our = webpack(...args)
-      let their
+    webpack(...args) {
+      const our = webpack(...args);
+      let their;
 
       if (oWebpack) {
-        their = oWebpack(...args)
+        their = oWebpack(...args);
       }
 
       return {
         ...our,
-        ...their
-      }
+        ...their,
+      };
     },
-    exportPathMap: async function () {
-      const our = await exportPathMap()
-      let their
+    async exportPathMap() {
+      const our = await exportPathMap();
+      let their;
       if (oExportPathMap) {
-        their = await oExportPathMap()
+        their = await oExportPathMap();
       }
 
       return {
         ...our,
-        ...their
-      }
-    }
-  }
-}
+        ...their,
+      };
+    },
+  };
+};
 
 export const webpack = (config, { dev }) => {
   config.node = {
-    fs: 'empty'
-  }
+    fs: 'empty',
+  };
 
-  config.plugins = config.plugins.filter(plugin => {
-    return plugin.constructor.name !== 'UglifyJsPlugin'
-  })
+  config.plugins = config.plugins.filter(plugin => plugin.constructor.name !== 'UglifyJsPlugin');
 
   if (!dev) {
     config.plugins.push(
       new Uglify({
         parallel: true,
-        sourceMap: true
+        sourceMap: true,
       })
-    )
+    );
   }
 
-  return config
-}
+  return config;
+};
 
 export const exportPathMap = async () => {
-  const entries = await loadEntries()
-  const map = entries
-    .reduce((prev, { data }) => {
-      const { url, page, _entry } = data
-      const query = _entry ? { _entry } : undefined
-      return page ? {
-        ...prev,
-        [url]: { page: `/${page}`, query }
-      } : prev
-    }, {})
+  const entries = await loadEntries();
+  const map = entries.reduce((prev, { data }) => {
+    const { url, page, _entry } = data;
+    const query = _entry ? { _entry } : undefined;
+    return page
+      ? {
+          ...prev,
+          [url]: { page: `/${page}`, query },
+        }
+      : prev;
+  }, {});
 
   return {
     '/': { page: '/' },
-    ...map
-  }
-}
+    ...map,
+  };
+};

@@ -1,53 +1,49 @@
 /* global __NEXT_DATA__ */
-import glob from 'glob'
-import { sep } from 'path'
-import fetch from 'unfetch'
+import glob from 'glob';
+import { sep } from 'path';
+import fetch from 'unfetch';
 
-import { isServer } from './env'
-import processEntries from './process'
+import { isServer } from './env';
+import processEntries from './process';
 
-export default async (path = 'posts') => {
-  return (isServer() ? fromServer(path) : fromClient(path))
-}
+export default async (path = 'posts') => (isServer() ? fromServer(path) : fromClient(path));
 
-const fromServer = async (entriesPath) => {
-  const paths = glob.sync(`${entriesPath}/**/*.md`, { root: process.cwd() })
+const fromServer = async entriesPath => {
+  const paths = glob.sync(`${entriesPath}/**/*.md`, { root: process.cwd() });
 
-  return processEntries(paths, entriesPath)
-    .filter(({data}) => data.published !== false)
-}
+  return processEntries(paths, entriesPath).filter(({ data }) => data.published !== false);
+};
 
-const fromClient = async (path) => {
+const fromClient = async path => {
   // in safari the popstate event is fired when user press back and
   // causes the getInitialProps to be called in the SSR version
   // This will pickup the current props and return it as a workaround
   // https://github.com/zeit/next.js/issues/2360
   if (__NEXT_DATA__.nextExport) {
-    return __NEXT_DATA__.props.posts
+    return __NEXT_DATA__.props.posts;
   }
-  const resp = await fetch('/_load_entries')
-  return resp.json()
-}
+  const resp = await fetch('/_load_entries');
+  return resp.json();
+};
 
-export const byFileName = async (path, root = 'posts') => {
-  return isServer() ? byFileNameFromServer(path, root) : byFileNameFromClient(path)
-}
+export const byFileName = async (path, root = 'posts') =>
+  isServer() ? byFileNameFromServer(path, root) : byFileNameFromClient(path);
 
-const byFileNameFromServer = (path, entriesPath) => {
-  return processEntries([path], entriesPath).pop()
-}
+const byFileNameFromServer = (path, entriesPath) => processEntries([path], entriesPath).pop();
 
-const byFileNameFromClient = async (path) => {
+const byFileNameFromClient = async path => {
   // this is used to make next.js Link to work on exported sites.
   if (__NEXT_DATA__.nextExport) {
-    return findPostFromNextCache(path)
+    return findPostFromNextCache(path);
   }
-  const resp = await fetch(`/_load_entry/${path.replace(sep, '/')}`)
-  return resp.json()
-}
+  const resp = await fetch(`/_load_entry/${path.replace(sep, '/')}`);
+  return resp.json();
+};
 
-const findPostFromNextCache = (path) => {
-  const { post, posts } = __NEXT_DATA__.props
+const findPostFromNextCache = path => {
+  const { post, posts } = __NEXT_DATA__.props;
 
-  return (post && post.data._entry === path) ? post : posts.filter((p) => p.data._entry === path).reduce(v => v)
-}
+  return post && post.data._entry === path
+    ? post
+    : posts.filter(p => p.data._entry === path).reduce(v => v);
+};

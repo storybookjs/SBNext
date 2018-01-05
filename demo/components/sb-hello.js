@@ -7,7 +7,6 @@ const Hello = ({ title }) => (
     </h1>
     {!title && (
       <p>
-        {' '}
         A Blog / Static site generator based in <strong>Next.js</strong>
       </p>
     )}

@@ -67,54 +67,57 @@ var Server = function () {
                 parsedUrl = (0, _url.parse)(req.url, true);
                 pathname = parsedUrl.pathname;
                 customRoute = exportPathMap[pathname];
+
+                console.log(customRoute);
+
                 matchEntry = (0, _pathMatch2.default)()('/_load_entry/:path+');
                 entryParam = matchEntry(pathname);
 
                 if (!(pathname === '/_load_entries')) {
-                  _context.next = 9;
+                  _context.next = 10;
                   break;
                 }
 
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 return _context.abrupt('return', res.end(_this.entriesAsJSON()));
 
-              case 9:
+              case 10:
                 if (!entryParam) {
-                  _context.next = 17;
+                  _context.next = 18;
                   break;
                 }
 
                 path = entryParam.path.join(_path.sep);
 
                 if (!path) {
-                  _context.next = 17;
+                  _context.next = 18;
                   break;
                 }
 
-                _context.next = 14;
+                _context.next = 15;
                 return (0, _load.byFileName)(path);
 
-              case 14:
+              case 15:
                 e = _context.sent;
 
 
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 return _context.abrupt('return', res.end(JSON.stringify(e)));
 
-              case 17:
+              case 18:
                 if (!customRoute) {
-                  _context.next = 20;
+                  _context.next = 21;
                   break;
                 }
 
                 page = customRoute.page, query = customRoute.query;
                 return _context.abrupt('return', app.render(req, res, page, query));
 
-              case 20:
+              case 21:
 
                 app.handleRequest(req, res, parsedUrl);
 
-              case 21:
+              case 22:
               case 'end':
                 return _context.stop();
             }
