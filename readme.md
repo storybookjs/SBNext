@@ -36,6 +36,14 @@ Provide a working prototype of the possibly future UI for SB.
 - [ ] add search
 - [ ] add shortcuts
 - [ ] add settings
+- [ ] add sections to documentation view
+
+### Bonus
+- [ ] dependency graph for components
+- [ ] visualisation for dependency graph
+      <details>
+      http://js.cytoscape.org/demos/cose-bilkent-layout-compound/
+      </details>
 
 ## Notes
 For infrastructure this seems to be a good candidate to see how they've abstracted next.js:
