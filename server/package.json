@@ -1,13 +1,15 @@
 {
   "name": "@sb/serve",
   "version": "1.0.0",
+  "license": "MIT",
+  "author": "Norbert de Langen <ndelangen@me.com>",
   "description": "",
   "files": [
     "dist",
     "config.js",
     "link.js",
-    "posts.js",
-    "post.js"
+    "docs.js",
+    "doc.js"
   ],
   "main": "index.js",
   "bin": {
@@ -19,6 +21,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@sb/ui": "^1.0.0",
     "chokidar": "^2.0.0",
     "cross-spawn": "^5.1.0",
     "frontmatter": "^0.0.3",
@@ -53,12 +56,5 @@
     "node": ">=8.0.0",
     "yarn": ">=1.0.0"
   },
-  "private": true,
-  "jest": {
-    "testEnvironment": "node",
-    "roots": [
-      "test/"
-    ],
-    "testRegex": "(/^test/.*|\\.(test|spec))\\.(js)$"
-  }
+  "private": true
 }

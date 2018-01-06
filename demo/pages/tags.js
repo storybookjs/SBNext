@@ -1,23 +1,23 @@
 import React from 'react';
 
-import withPosts, { inCategory, sortByDate } from '@sb/serve/posts';
+import withDocs, { inCategory, sortByDate } from '@sb/serve/docs';
 
-import PostListEntry from '../components/post-list-entry';
+import DocListEntry from '../components/doc-list-entry';
 import SBHello from '../components/sb-hello';
 import Navigation from '../components/navigation';
 
-const containsTag = tag => post => {
-  const tags = [].concat(post.data.tag);
+const containsTag = tag => doc => {
+  const tags = [].concat(doc.data.tag);
   return tags.indexOf(tag) != -1;
 };
 
 const unique = arr => [...new Set(arr)];
 
-const Index = ({ posts }) => {
+const Index = ({ docs }) => {
   const tags = unique(
-    posts
-      .filter(p => p.data.tag) // remove posts without tags
-      .map(post => [].concat(post.data.tag)) // tags to array
+    docs
+      .filter(p => p.data.tag) // remove docs without tags
+      .map(doc => [].concat(doc.data.tag)) // tags to array
       .reduce((c, p = []) => p.concat(...c)) // flatten array
       .sort()
   );
@@ -28,12 +28,12 @@ const Index = ({ posts }) => {
       <SBHello title="Tags" />
       <section style={styles.section}>
         {tags.map(tag => {
-          const inTag = posts.filter(containsTag(tag));
+          const inTag = docs.filter(containsTag(tag));
 
           return (
             <div key={`tag-${tag}`}>
               <h1>{tag}</h1>
-              {inTag.map((post, idx) => <PostListEntry key={`post-${idx}`} {...post} />)}
+              {inTag.map((doc, idx) => <DocListEntry key={`doc-${idx}`} {...doc} />)}
             </div>
           );
         })}
@@ -42,7 +42,7 @@ const Index = ({ posts }) => {
   );
 };
 
-export default withPosts(Index);
+export default withDocs(Index);
 
 const styles = {
   main: {

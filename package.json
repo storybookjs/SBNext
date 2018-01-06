@@ -11,7 +11,8 @@
     "dev": "next",
     "export": "next export",
     "lint": "eslint . --fix",
-    "start": "NODE_ENV=production next start"
+    "start": "NODE_ENV=production next start",
+    "test": "NODE_ENV=test jest"
   },
   "devDependencies": {
     "@taskr/babel": "^1.1.0",
@@ -76,6 +77,19 @@
     "yarn": ">=1.0.0"
   },
   "private": true,
+  "jest": {
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "dist",
+      "node_modules",
+      ".next"
+    ],
+    "roots": [
+      "demo/",
+      "server/",
+      "ui/"
+    ]
+  },
   "workspaces": [
     "demo",
     "server",

@@ -45,22 +45,9 @@ if (argv.help) {
   process.exit(0);
 }
 
-const dir = resolve(argv._[0] || '.');
+// TODO: should implement the option to pass in a different 'dir'
 
-// // Check if pages dir exists and warn if not
-// if (!existsSync(dir)) {
-//   printAndExit(`> No such directory exists as the project root: ${dir}`)
-// }
-
-// if (!existsSync(join(dir, 'pages'))) {
-//   if (existsSync(join(dir, '..', 'pages'))) {
-//     printAndExit('> No `pages` directory found. Did you mean to run `next` in the parent (`../`) directory?')
-//   }
-
-//   printAndExit('> Couldn\'t find a `pages` directory. Please create one under the project root')
-// }
-
-const srv = new Server({ dir, dev: true });
+const srv = new Server({ dev: true });
 srv
   .start(argv.port, argv.hostname)
   .then(async () => {
@@ -84,12 +71,12 @@ srv
     process.nextTick(() => process.exit(1));
   });
 
-const hmr_posts = (type, path) => {
+const hmr_docs = (type, path) => {
   console.log(`${type}: ${path}`);
-  srv.hotReloadPosts();
+  srv.hotReloadDocs();
 };
 
 chokidar
-  .watch(resolve(process.cwd(), 'posts'), { ignoreInitial: true })
-  .on('change', hmr_posts)
-  .on('unlink', hmr_posts);
+  .watch(resolve(process.cwd(), 'docs'), { ignoreInitial: true })
+  .on('change', hmr_docs)
+  .on('unlink', hmr_docs);

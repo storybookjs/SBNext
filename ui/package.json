@@ -1,5 +1,8 @@
 {
   "name": "@sb/ui",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Norbert de Langen <ndelangen@me.com>",
   "scripts": {
     "build": "next build",
     "dev": "next",
@@ -24,6 +27,9 @@
     "react-resize-detector": "^1.1.0",
     "react-sizeme": "^2.3.6",
     "styled-jss": "^2.1.2"
+  },
+  "peerDependencies": {
+    "@sb/serve": "^1.0.0"
   },
   "engines": {
     "node": ">=8.0.0",

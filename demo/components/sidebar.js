@@ -4,9 +4,9 @@ import Link from '@sb/serve/link';
 
 export default ({ items }) => (
   <div>
-    {items.map((post, idx) => (
-      <Link {...post} key={`sidebar-post-${idx}`}>
-        <a>{post.data.title}</a>
+    {items.map((doc, idx) => (
+      <Link {...doc} key={`sidebar-doc-${idx}`}>
+        <a>{doc.data.title}</a>
       </Link>
     ))})}
   </div>

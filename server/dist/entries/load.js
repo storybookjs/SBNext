@@ -33,7 +33,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = function () {
   var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
-    var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'posts';
+    var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'docs';
     return _regenerator2.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -92,7 +92,7 @@ var fromClient = function () {
               break;
             }
 
-            return _context3.abrupt('return', __NEXT_DATA__.props.posts);
+            return _context3.abrupt('return', __NEXT_DATA__.props.docs);
 
           case 2:
             _context3.next = 4;
@@ -117,7 +117,7 @@ var fromClient = function () {
 
 var byFileName = exports.byFileName = function () {
   var _ref5 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(path) {
-    var root = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'posts';
+    var root = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'docs';
     return _regenerator2.default.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
@@ -153,7 +153,7 @@ var byFileNameFromClient = function () {
               break;
             }
 
-            return _context5.abrupt('return', findPostFromNextCache(path));
+            return _context5.abrupt('return', findDocFromNextCache(path));
 
           case 2:
             _context5.next = 4;
@@ -176,13 +176,13 @@ var byFileNameFromClient = function () {
   };
 }();
 
-var findPostFromNextCache = function findPostFromNextCache(path) {
+var findDocFromNextCache = function findDocFromNextCache(path) {
   var _NEXT_DATA__$props = __NEXT_DATA__.props,
-      post = _NEXT_DATA__$props.post,
-      posts = _NEXT_DATA__$props.posts;
+      doc = _NEXT_DATA__$props.doc,
+      docs = _NEXT_DATA__$props.docs;
 
 
-  return post && post.data._entry === path ? post : posts.filter(function (p) {
+  return doc && doc.data._entry === path ? doc : docs.filter(function (p) {
     return p.data._entry === path;
   }).reduce(function (v) {
     return v;

@@ -35,14 +35,14 @@ There are a few steps you have to follow to get your site up and running with `S
 
         import React from 'react'
 
-        import withPosts from 'SB/posts'
-        import { Content } from 'SB/post'
+        import withDocs from 'SB/docs'
+        import { Content } from 'SB/doc'
 
-        export default withPosts( ({ posts }) => {
+        export default withDocs( ({ docs }) => {
             return (
                 <section>
                 {
-                    posts.map(post => <Content {...post} />)
+                    docs.map(doc => <Content {...doc} />)
                 }
                 </section>
 
@@ -50,12 +50,12 @@ There are a few steps you have to follow to get your site up and running with `S
         })
 
     ```
-- Create a `markdown` post entry under `posts` folder (`posts/my-first-post.md`)
+- Create a `markdown` doc entry under `docs` folder (`docs/my-first-doc.md`)
 
     ```md
     ---
-    title: First Post
-    category: post
+    title: First Doc
+    category: doc
     ---
 
     This is the first paragraph and it will be used as an excerpt when loaded in a `<Content excerpt />` tag.
@@ -91,119 +91,119 @@ see [SB-example](https://github.com/elmasse/SB-example) for a working example
 
 ## Documentation
 
-### `withPosts`
+### `withDocs`
 
-HOC for `/pages` components that renders a list of posts. It makes the post list available thru the `posts` property.
+HOC for `/pages` components that renders a list of docs. It makes the doc list available thru the `docs` property.
 
 ```js
-import withPosts from 'SB/posts'
+import withDocs from 'SB/docs'
 
-export default withPosts( ({ posts }) => { /* render your posts here */ } )
+export default withDocs( ({ docs }) => { /* render your docs here */ } )
 
 ```
 
 ### `inCategory(category, options)`
 
-Filter function to be applied to posts to retrieve posts in a given category.
+Filter function to be applied to docs to retrieve docs in a given category.
 
 - `category`: `{String}` The category to filter results.
 - `options` : `{Object}` Optional
-    - `includeSubCategories:` `Boolean` true to include posts in sub categories. Default: `false`
+    - `includeSubCategories:` `Boolean` true to include docs in sub categories. Default: `false`
 
-Categories are resolved by the folder structure by default. This means that a post located at `posts/categoryA/subOne` will have a category `categoryA/subOne` unless you specify the category name in frontmatter. 
+Categories are resolved by the folder structure by default. This means that a doc located at `docs/categoryA/subOne` will have a category `categoryA/subOne` unless you specify the category name in frontmatter. 
 
 ```js
-import withPosts, { inCategory } from 'SB/posts'
+import withDocs, { inCategory } from 'SB/docs'
 
-export default withPosts( ({ posts }) => { 
-    const homePosts = posts.filter(inCategory('home'))
-    /* render your homePosts here */ 
+export default withDocs( ({ docs }) => { 
+    const homeDocs = docs.filter(inCategory('home'))
+    /* render your homeDocs here */ 
 } )
 
 ```
 
-If you want to retrieve all posts under a certain category, let's say `categoryA` which will include all those under `subOne`, use the options `includeSubCategories: true`. 
+If you want to retrieve all docs under a certain category, let's say `categoryA` which will include all those under `subOne`, use the options `includeSubCategories: true`. 
 
 ```js
-import withPosts, { inCategory } from 'SB/posts'
+import withDocs, { inCategory } from 'SB/docs'
 
-export default withPosts( ({ posts }) => { 
-    const categoryAPosts = posts
+export default withDocs( ({ docs }) => { 
+    const categoryADocs = docs
         .filter(inCategory('categoryA', { includeSubCategories: true }))
-    /* render your categoryAPostsmePosts here */ 
+    /* render your categoryADocsmeDocs here */ 
 } )
 
 ```
 
-### `withPostsFilterBy(filter)`
+### `withDocsFilterBy(filter)`
 
-Returns an HOC that gets all posts filtered out by the given filter function. This can be used in conjunction with `inCategory` to get only the desired posts in a certain category.
+Returns an HOC that gets all docs filtered out by the given filter function. This can be used in conjunction with `inCategory` to get only the desired docs in a certain category.
 
  ```js
-import { withPostsFilterBy, inCategory } from 'SB/posts'
+import { withDocsFilterBy, inCategory } from 'SB/docs'
 
-const withCategoryAPosts = withPostsFilterBy(inCategory('categoryA'))
+const withCategoryADocs = withDocsFilterBy(inCategory('categoryA'))
 
-export default withCategoryAPosts(({ posts }) => { 
-    /* render your posts here */ 
+export default withCategoryADocs(({ docs }) => { 
+    /* render your docs here */ 
 })
 
 ```
 
 ### `sortByDate`
 
-Sort function to be applied to posts to sort by date (newest on top). This requires the post contains a `date` in `frontmatter` or in the file name (ala jekyll)
+Sort function to be applied to docs to sort by date (newest on top). This requires the doc contains a `date` in `frontmatter` or in the file name (ala jekyll)
 
 ```js
-import withPosts, { sortByDate } from 'SB/posts'
+import withDocs, { sortByDate } from 'SB/docs'
 
-export default withPosts( ({ posts }) => { 
-    posts.sort(sortByDate)
-    /* render your posts here */ 
+export default withDocs( ({ docs }) => { 
+    docs.sort(sortByDate)
+    /* render your docs here */ 
 } )
 
 ```
 
-### `withPost`
+### `withDoc`
 
-HOC for `/pages` components that renders a single post. It makes the post available thru the `post` property.
+HOC for `/pages` components that renders a single doc. It makes the doc available thru the `doc` property.
 
 ```js
-import withPost from 'SB/post'
+import withDoc from 'SB/doc'
 
-export default withPost( ({ post }) => { /* render your post here */ } )
+export default withDoc( ({ doc }) => { /* render your doc here */ } )
 
 ```
 
 ### `Content`
 
-Component to render a `post` object. This component receive the `content` from the post as a property.
-Use the `excerpt` property to only render the first paragraph (this is useful when rendering a list of posts).
+Component to render a `doc` object. This component receive the `content` from the doc as a property.
+Use the `excerpt` property to only render the first paragraph (this is useful when rendering a list of docs).
 
-- `content`: `{String}` Markdown content to be render. This is provided by `post.content`
+- `content`: `{String}` Markdown content to be render. This is provided by `doc.content`
 - `excerpt`: `{Boolean}` true to only render the first paragraph. Optional. Default: `false`
 - `renderers`: `{Object}` A set of custom renderers for Markdown elements with the form of `[tagName]: renderer`.
 - `prefix`: `{String}` Prefix to use for the generated React elements. Optional. Default: `'entry-'`
 
 
 ```js
-import withPost, { Content } from 'SB/post'
+import withDoc, { Content } from 'SB/doc'
 
-export default withPost( ({ post }) => { return (<Content {...post} />) } )
+export default withDoc( ({ doc }) => { return (<Content {...doc} />) } )
 
 ```
 
 Using the `excerpt` property
 
 ```js
-import withPosts, {inCategory} from 'SB/posts'
+import withDocs, {inCategory} from 'SB/docs'
 
-export default withPosts( ({ posts }) => { 
-    const homePosts = posts.filter(inCategory('home'))
+export default withDocs( ({ docs }) => { 
+    const homeDocs = docs.filter(inCategory('home'))
     return (
         <section>
         {
-            homePosts.map( (post, idx) => <Content key={idx} {...post} excerpt/> )
+            homeDocs.map( (doc, idx) => <Content key={idx} {...doc} excerpt/> )
         }
         </section>
     )
@@ -214,9 +214,9 @@ export default withPosts( ({ posts }) => {
 Using `renderers` to change/style the `<p>` tag
 
 ```js
-export default withPost( ({ post }) => { 
+export default withDoc( ({ doc }) => { 
     return (
-        <Content {...post} 
+        <Content {...doc} 
             renderers={{
                 p: Paragraph 
             }}
@@ -232,26 +232,26 @@ const Paragraph = ({ children }) => (<p style={{padding:10, background: 'silver'
 
 ### `Link`
 
-`next/link` will work out of the box. You can use `SB/link` instead with the exact same parameters. This component wraps the `next/link` one to simplify creating a _Link_ for a given post object.
+`next/link` will work out of the box. You can use `SB/link` instead with the exact same parameters. This component wraps the `next/link` one to simplify creating a _Link_ for a given doc object.
 
-- `data`: `{Object}` Post frontmatter object. This is provided by `post.data`
+- `data`: `{Object}` Doc frontmatter object. This is provided by `doc.data`
 
 
 ```js
-import withPosts from 'SB/posts'
+import withDocs from 'SB/docs'
 import Link from 'SB/link'
 
 
-export default withPosts( ({ posts }) => { 
+export default withDocs( ({ docs }) => { 
     return (
         <section>
         {
-            posts.map( (post, idx) => {
+            docs.map( (doc, idx) => {
                 return (
                     <div>
-                        <h1>{post.data.title}</h1>
-                        <Content key={idx} {...post} excerpt/>
-                        <Link {...post}><a>Read More...</a></Link>
+                        <h1>{doc.data.title}</h1>
+                        <Content key={idx} {...doc} excerpt/>
+                        <Link {...doc}><a>Read More...</a></Link>
                     </div>
                     )
             })    
@@ -263,17 +263,17 @@ export default withPosts( ({ posts }) => {
 
 ```
 
-### `post`
+### `doc`
 
-- `data` is the frontmatter object containig the post meta information (title, page, category, etc)
-    - `data.url` is the generated url for the post
-    - `data.category` is the post's category. When not specified, if the post is inside a folder, the directory structure under `posts` will be used. 
+- `data` is the frontmatter object containig the doc meta information (title, page, category, etc)
+    - `data.url` is the generated url for the doc
+    - `data.category` is the doc's category. When not specified, if the doc is inside a folder, the directory structure under `docs` will be used. 
     - `data.date`: JSON date from frontmatter's date or date in file name or file creation date
-- `content` is markdown content of the post
+- `content` is markdown content of the doc
 
 ```js
 
-{ data, content } = post
+{ data, content } = doc
 
 ```
 
@@ -283,23 +283,23 @@ There are only a few defined properties in the frontmatter metadata that is used
 
 ```md
 ---
-page: my-awesome-post
+page: my-awesome-doc
 category: categoryOne
 date: 2017-06-23
 
 ---
 
-Post Content...
+Doc Content...
 
 ```
 
-- `page`: the component under `/pages` that will be used to render the post (default to `post` which reads `/pages/post` component) **Note:** If you have an entry that should not be rendered by its own page (such as a part of an index file only) use `page: false` to avoid generating the url and exporting entry.
+- `page`: the component under `/pages` that will be used to render the doc (default to `doc` which reads `/pages/doc` component) **Note:** If you have an entry that should not be rendered by its own page (such as a part of an index file only) use `page: false` to avoid generating the url and exporting entry.
 - `category`: the category name (optional)
-- `date`: date string in YYYY-MM-DD format. Used to sort posts list. (optional)
-- `published`: Set to `false` to remove this post from entries.
+- `date`: date string in YYYY-MM-DD format. Used to sort docs list. (optional)
+- `published`: Set to `false` to remove this doc from entries.
 - `permalink`: Set the url using any parameter in the frontmatter object. Default value `/:category?/:name`. The `?` means the parameter will be optional.
-- `name`: **Read Only** The post file name. Date is removed from name if present.
-- `url`: **Read Only** The post url.
+- `name`: **Read Only** The doc file name. Date is removed from name if present.
+- `url`: **Read Only** The doc url.
 
 
 ### `SBConfig`

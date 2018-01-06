@@ -6,9 +6,11 @@ import { join, relative, sep } from 'path';
 
 import loadEntries, { byFileName } from './entries/load';
 
+const uiPath = join(__dirname, '../../ui');
+
 export default class Server {
-  constructor({ dir = '.', dev = true }) {
-    this.app = next({ dev });
+  constructor({ dir = uiPath, dev = true }) {
+    this.app = next({ dev, dir });
   }
 
   async readEntries() {
@@ -37,7 +39,7 @@ export default class Server {
     const parsedUrl = parse(req.url, true);
     const { pathname } = parsedUrl;
     const customRoute = exportPathMap[pathname];
-    console.log(customRoute);
+    console.log(pathname);
 
     const matchEntry = route()('/_load_entry/:path+');
     const entryParam = matchEntry(pathname);
@@ -45,6 +47,10 @@ export default class Server {
     if (pathname === '/_load_entries') {
       res.writeHead(200, { 'Content-Type': 'application/json' });
       return res.end(this.entriesAsJSON());
+    }
+
+    if (pathname === '/iframe') {
+      return res.end('Hello from iframe');
     }
 
     if (entryParam) {
@@ -78,7 +84,7 @@ export default class Server {
     });
   }
 
-  async hotReloadPosts() {
+  async hotReloadDocs() {
     const hotReloader = this.app.hotReloader;
     hotReloader.webpackDevMiddleware.invalidate();
     await this.readEntries();

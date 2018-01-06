@@ -51,7 +51,7 @@ class NestedListItem extends React.Component {
   };
 
   render() {
-    const { classes, stories, sub = [], name, go } = this.props;
+    const { classes, docs, sub = [], name, go } = this.props;
     const { open, menu, anchorEl } = this.state;
 
     const action = e => {
@@ -84,12 +84,12 @@ class NestedListItem extends React.Component {
               <NestedListItem
                 key={index}
                 name={item.name}
-                stories={item.stories}
+                docs={item.docs}
                 sub={item.sub}
                 {...{ classes, go }}
               />
             ))}
-            {stories.map((item, index) => (
+            {docs.map((item, index) => (
               <NestedListSubItem key={index} name={item} {...{ classes, go }} />
             ))}
           </List>
@@ -102,18 +102,18 @@ class NestedListItem extends React.Component {
 const NestedList = ({ classes, go }) => (
   <Fragment>
     <List className={classes.root} subheader={<ListSubheader>Root Category 1</ListSubheader>}>
-      <NestedListItem stories={['1', '2', '3']} name="Component 1" {...{ classes, go }} />
-      <NestedListItem stories={['1', '2', '3']} name="Component 2" {...{ classes, go }} />
-      <NestedListItem stories={['1', '2', '3']} name="Component 3" {...{ classes, go }} />
+      <NestedListItem docs={['1', '2', '3']} name="Component 1" {...{ classes, go }} />
+      <NestedListItem docs={['1', '2', '3']} name="Component 2" {...{ classes, go }} />
+      <NestedListItem docs={['1', '2', '3']} name="Component 3" {...{ classes, go }} />
     </List>
     <Divider />
     <List className={classes.root} subheader={<ListSubheader>Root Category 2</ListSubheader>}>
-      <NestedListItem stories={['1', '2', '3']} name="Component 4" {...{ classes, go }} />
+      <NestedListItem docs={['1', '2', '3']} name="Component 4" {...{ classes, go }} />
       <NestedListItem
-        stories={['1', '2', '3']}
+        docs={['1', '2', '3']}
         sub={[
-          { stories: ['1', '2', '3'], name: 'Component 6' },
-          { stories: ['1', '2', '3'], name: 'Component 7' },
+          { docs: ['1', '2', '3'], name: 'Component 6' },
+          { docs: ['1', '2', '3'], name: 'Component 7' },
         ]}
         name="Component 5"
         {...{ classes, go }}

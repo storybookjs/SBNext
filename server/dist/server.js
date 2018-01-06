@@ -46,12 +46,14 @@ var _load2 = _interopRequireDefault(_load);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var uiPath = (0, _path.join)(__dirname, '../../ui');
+
 var Server = function () {
   function Server(_ref) {
     var _this = this;
 
     var _ref$dir = _ref.dir,
-        dir = _ref$dir === undefined ? '.' : _ref$dir,
+        dir = _ref$dir === undefined ? uiPath : _ref$dir,
         _ref$dev = _ref.dev,
         dev = _ref$dev === undefined ? true : _ref$dev;
     (0, _classCallCheck3.default)(this, Server);
@@ -68,7 +70,7 @@ var Server = function () {
                 pathname = parsedUrl.pathname;
                 customRoute = exportPathMap[pathname];
 
-                console.log(customRoute);
+                console.log(pathname);
 
                 matchEntry = (0, _pathMatch2.default)()('/_load_entry/:path+');
                 entryParam = matchEntry(pathname);
@@ -82,42 +84,50 @@ var Server = function () {
                 return _context.abrupt('return', res.end(_this.entriesAsJSON()));
 
               case 10:
+                if (!(pathname === '/iframe')) {
+                  _context.next = 12;
+                  break;
+                }
+
+                return _context.abrupt('return', res.end('Hello from iframe'));
+
+              case 12:
                 if (!entryParam) {
-                  _context.next = 18;
+                  _context.next = 20;
                   break;
                 }
 
                 path = entryParam.path.join(_path.sep);
 
                 if (!path) {
-                  _context.next = 18;
+                  _context.next = 20;
                   break;
                 }
 
-                _context.next = 15;
+                _context.next = 17;
                 return (0, _load.byFileName)(path);
 
-              case 15:
+              case 17:
                 e = _context.sent;
 
 
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 return _context.abrupt('return', res.end(JSON.stringify(e)));
 
-              case 18:
+              case 20:
                 if (!customRoute) {
-                  _context.next = 21;
+                  _context.next = 23;
                   break;
                 }
 
                 page = customRoute.page, query = customRoute.query;
                 return _context.abrupt('return', app.render(req, res, page, query));
 
-              case 21:
+              case 23:
 
                 app.handleRequest(req, res, parsedUrl);
 
-              case 22:
+              case 24:
               case 'end':
                 return _context.stop();
             }
@@ -130,7 +140,7 @@ var Server = function () {
       };
     }();
 
-    this.app = (0, _next2.default)({ dev: dev });
+    this.app = (0, _next2.default)({ dev: dev, dir: dir });
   }
 
   (0, _createClass3.default)(Server, [{
@@ -233,7 +243,7 @@ var Server = function () {
       return start;
     }()
   }, {
-    key: 'hotReloadPosts',
+    key: 'hotReloadDocs',
     value: function () {
       var _ref5 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4() {
         var hotReloader;
@@ -288,11 +298,11 @@ var Server = function () {
         }, _callee4, this);
       }));
 
-      function hotReloadPosts() {
+      function hotReloadDocs() {
         return _ref5.apply(this, arguments);
       }
 
-      return hotReloadPosts;
+      return hotReloadDocs;
     }()
   }]);
   return Server;

@@ -32,7 +32,7 @@ exports.default = function (props) {
 
   if (data) {
     var _data$page = data.page,
-        page = _data$page === undefined ? 'post' : _data$page,
+        page = _data$page === undefined ? 'doc' : _data$page,
         _entry = data._entry,
         url = data.url;
 

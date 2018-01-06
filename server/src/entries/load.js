@@ -6,7 +6,7 @@ import fetch from 'unfetch';
 import { isServer } from './env';
 import processEntries from './process';
 
-export default async (path = 'posts') => (isServer() ? fromServer(path) : fromClient(path));
+export default async (path = 'docs') => (isServer() ? fromServer(path) : fromClient(path));
 
 const fromServer = async entriesPath => {
   const paths = glob.sync(`${entriesPath}/**/*.md`, { root: process.cwd() });
@@ -20,13 +20,13 @@ const fromClient = async path => {
   // This will pickup the current props and return it as a workaround
   // https://github.com/zeit/next.js/issues/2360
   if (__NEXT_DATA__.nextExport) {
-    return __NEXT_DATA__.props.posts;
+    return __NEXT_DATA__.props.docs;
   }
   const resp = await fetch('/_load_entries');
   return resp.json();
 };
 
-export const byFileName = async (path, root = 'posts') =>
+export const byFileName = async (path, root = 'docs') =>
   isServer() ? byFileNameFromServer(path, root) : byFileNameFromClient(path);
 
 const byFileNameFromServer = (path, entriesPath) => processEntries([path], entriesPath).pop();
@@ -34,16 +34,16 @@ const byFileNameFromServer = (path, entriesPath) => processEntries([path], entri
 const byFileNameFromClient = async path => {
   // this is used to make next.js Link to work on exported sites.
   if (__NEXT_DATA__.nextExport) {
-    return findPostFromNextCache(path);
+    return findDocFromNextCache(path);
   }
   const resp = await fetch(`/_load_entry/${path.replace(sep, '/')}`);
   return resp.json();
 };
 
-const findPostFromNextCache = path => {
-  const { post, posts } = __NEXT_DATA__.props;
+const findDocFromNextCache = path => {
+  const { doc, docs } = __NEXT_DATA__.props;
 
-  return post && post.data._entry === path
-    ? post
-    : posts.filter(p => p.data._entry === path).reduce(v => v);
+  return doc && doc.data._entry === path
+    ? doc
+    : docs.filter(p => p.data._entry === path).reduce(v => v);
 };

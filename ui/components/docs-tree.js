@@ -100,8 +100,8 @@ const DocsTree = ({ classes, go }) => (
         name="Page 4 (has sub)"
         sections={['intro', 'section A', 'Section B']}
         sub={[
-          { stories: ['intro', 'section A', 'Section B'], name: 'Page 5' },
-          { stories: ['intro', 'section A', 'Section B'], name: 'Page 6' },
+          { docs: ['intro', 'section A', 'Section B'], name: 'Page 5' },
+          { docs: ['intro', 'section A', 'Section B'], name: 'Page 6' },
         ]}
         {...{ classes, go }}
       />
@@ -127,8 +127,8 @@ const DocsTree = ({ classes, go }) => (
         name="Page 15"
         sections={['intro', 'section A', 'Section B']}
         sub={[
-          { stories: ['intro', 'section A', 'Section B'], name: 'Page 6' },
-          { stories: ['intro', 'section A', 'Section B'], name: 'Page 7' },
+          { docs: ['intro', 'section A', 'Section B'], name: 'Page 6' },
+          { docs: ['intro', 'section A', 'Section B'], name: 'Page 7' },
         ]}
         {...{ classes, go }}
       />

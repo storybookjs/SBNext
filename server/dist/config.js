@@ -21,13 +21,13 @@ var _extends3 = require('babel-runtime/helpers/extends');
 
 var _extends4 = _interopRequireDefault(_extends3);
 
-var _load = require('./entries/load');
-
-var _load2 = _interopRequireDefault(_load);
-
 var _uglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
 
 var _uglifyjsWebpackPlugin2 = _interopRequireDefault(_uglifyjsWebpackPlugin);
+
+var _load = require('./entries/load');
+
+var _load2 = _interopRequireDefault(_load);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

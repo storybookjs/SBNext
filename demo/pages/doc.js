@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Head from 'next/head';
 import withDoc, { Content } from '@sb/serve/doc';
 
 import Navigation from '../components/navigation';
@@ -10,26 +9,13 @@ class Doc extends Component {
     const { doc } = this.props;
     const { data, content } = doc;
     const tags = data.tag ? [].concat(data.tag) : [];
-
     return (
       <main style={styles.main}>
-        <Head>
-          <title>SB | {data.title}</title>
-          <link rel="stylesheet" href="/static/css/prism.css" />
-          <script src="/static/js/prism.js" />
-        </Head>
         <Navigation style={styles.navigation} />
         <article style={styles.section}>
           <h1>{data.title}</h1>
           <Tags tags={tags} />
-          <Content
-            {...doc}
-            renderers={{
-              p: Paragraph,
-              pre: CodeBlock,
-              code: Code,
-            }}
-          />
+          <Content {...doc} />
         </article>
       </main>
     );
@@ -37,20 +23,6 @@ class Doc extends Component {
 }
 
 export default withDoc(Doc);
-
-// Renderers -----
-
-const Paragraph = ({ children }) => <p style={styles.paragraph}>{children}</p>;
-
-const Code = ({ children, className, ...rest }) => (
-  <code className={className || 'language-js'} {...rest}>
-    {children}
-  </code>
-);
-
-const CodeBlock = ({ children }) => <pre style={styles.codeBlock}>{children}</pre>;
-
-// Styles --------
 
 const styles = {
   main: {
@@ -73,8 +45,5 @@ const styles = {
   navigation: {
     alignSelf: 'center',
     width: '60vw',
-  },
-  codeBlock: {
-    border: '1px solid #ccc',
   },
 };

@@ -1,5 +1,5 @@
-import loadEntries from './entries/load';
 import Uglify from 'uglifyjs-webpack-plugin';
+import loadEntries from './entries/load';
 
 export default original => {
   const { webpack: oWebpack, exportPathMap: oExportPathMap } = original;

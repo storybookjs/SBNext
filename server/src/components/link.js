@@ -5,7 +5,7 @@ export default props => {
   const { data, children, content, ...rest } = props;
   let { href, as } = rest;
   if (data) {
-    const { page = 'post', _entry, url } = data;
+    const { page = 'doc', _entry, url } = data;
     href = { pathname: `/${page}`, query: { _entry } };
     as = url;
   }

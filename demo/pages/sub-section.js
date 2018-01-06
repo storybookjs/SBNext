@@ -1,27 +1,27 @@
 import React from 'react';
 
-import withPosts, { inCategory, sortByDate } from '@sb/serve/posts';
+import withDocs, { inCategory, sortByDate } from '@sb/serve/docs';
 
-import PostListEntry from '../components/post-list-entry';
+import DocListEntry from '../components/doc-list-entry';
 import SBHello from '../components/sb-hello';
 import Navigation from '../components/navigation';
 
-const Index = ({ posts }) => {
-  posts.sort(sortByDate);
-  const subCategoryPosts = posts.filter(inCategory('sub-section', { includeSubCategories: true }));
+const Index = ({ docs }) => {
+  docs.sort(sortByDate);
+  const subCategoryDocs = docs.filter(inCategory('sub-section', { includeSubCategories: true }));
 
   return (
     <main style={styles.main}>
       <Navigation style={styles.navigation} />
       <SBHello title="Sub Section" />
       <section style={styles.section}>
-        {subCategoryPosts.map(post => <PostListEntry key={post.data.url} {...post} />)}
+        {subCategoryDocs.map(doc => <DocListEntry key={doc.data.url} {...doc} />)}
       </section>
     </main>
   );
 };
 
-export default withPosts(Index);
+export default withDocs(Index);
 
 const styles = {
   main: {
