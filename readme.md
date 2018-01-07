@@ -10,7 +10,8 @@ Provide a working prototype of the possibly future UI for SB.
 - [x] Multiple previews
 - [x] Add, move, resize, rescale previews
 - [x] Auto size preview to fit content
-      <details>If the current solution falls short we could add this: https://developer.mozilla.org/nl/docs/Web/API/MutationObserver</details>
+      <details>If the current solution falls short we could add this: https://developer.mozilla.org/nl/docs/Web/API/MutationObserver
+      </details>
 - [ ] View all stories of component on 1 page
 - [x] Panels & Content
 - [x] Settings Panel
@@ -20,7 +21,17 @@ Provide a working prototype of the possibly future UI for SB.
 - [ ] Search of other things (docs, settings, etc)
 
 ### Architecture
-- [x] Lazy bundling
+- [ ] Main server communicating with nextjs (updating data) about stories
+      <details>
+      Generating pages? or maybe some channel to push HMR events
+      </details>
+- [x] Bundling and watching infinite entries (for stories)
+- [ ] Lazy bundling for previews
+- [x] Lazy bundling for manager
+      <detail>
+      Next pages are bundled lazily, but we can't really have nextJS clinetside-script in previews.
+      so that makes so we can't use it for previews
+      </details>
 - [ ] Create a package managing next.js
 - [ ] Multiple frameworks
 - [ ] State management  
