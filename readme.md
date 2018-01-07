@@ -2,7 +2,15 @@
 # A prototype
 
 ## Goal description:
-Provide a working prototype of the possibly future UI for SB.
+Provide a working prototype of the possibly future UI & Server for SB.
+
+## Plan:
+
+Use Next.js for everything besides the preview. The previews require some special handling because of multi-framework support but also performance. The previews are and should stay real iframes. To get JS & CSS isolation and correctly functioning media-queries. CSS encapsulation would also be possible using tooling and the use of shadow-dom, but the other 2 are as of yet not possible without.
+
+We'll create a main server (framework-agnotic) that is in control of a preview-server and a manager-server (next.js). The main server will proxy and connect both.
+
+For performance reasons we don't want every iframe to create it's own websocket and HMR. Perhaps we can relay the data to the existing websocket next.js/manager uses and pass it to the iframe via postmessage.
 
 ## Goal checklist
 
