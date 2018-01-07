@@ -85,12 +85,14 @@
       ".next"
     ],
     "roots": [
+      "bundler/",
       "demo/",
       "server/",
       "ui/"
     ]
   },
   "workspaces": [
+    "bundler",
     "demo",
     "server",
     "ui"

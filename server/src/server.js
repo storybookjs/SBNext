@@ -6,6 +6,7 @@ import { join, relative, sep } from 'path';
 
 import loadEntries, { byFileName } from './entries/load';
 
+// TODO: should actually use resolve
 const uiPath = join(__dirname, '../../ui');
 
 export default class Server {
@@ -39,6 +40,7 @@ export default class Server {
     const parsedUrl = parse(req.url, true);
     const { pathname } = parsedUrl;
     const customRoute = exportPathMap[pathname];
+
     console.log(pathname);
 
     const matchEntry = route()('/_load_entry/:path+');

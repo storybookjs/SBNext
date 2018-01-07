@@ -6,17 +6,25 @@ jest.mock('fs');
 jest.mock('frontmatter');
 
 describe('processEntries ', () => {
+  beforeAll(() => {
+    const constantDate = new Date('2017');
+
+    global.Date = class extends Date {
+      constructor() {
+        super();
+        return constantDate;
+      }
+    };
+  });
+
   test('exports processEntries fn as default', () => {
     expect(processEntries).toBeDefined();
   });
 
   test('retrieves an array of docs with default values', async () => {
-    const expectedPage = 'doc';
-    const expectedCategory = undefined;
     const expectedName = 'test';
     const expectedEntry = `docs/${expectedName}.md`;
     const expectedContent = 'text';
-    const expectedUrl = `/${expectedName}`;
     const expectedDate = new Date();
     const expectedFileContent = `
         ---
@@ -43,11 +51,9 @@ describe('processEntries ', () => {
 
 describe('frontmatter: permalink', () => {
   test('default permalink', async () => {
-    const expectedPage = 'doc';
     const expectedCategory = 'category';
     const expectedName = 'test';
     const expectedEntry = `docs/${expectedName}.md`;
-    const expectedUrl = `/${expectedCategory}/${expectedName}`;
     const expectedDate = new Date();
 
     fm.mockReturnValueOnce({
@@ -67,11 +73,9 @@ describe('frontmatter: permalink', () => {
 
   test('permalink /:category/:name.html', async () => {
     const permalink = '/:category/:name.html';
-    const expectedPage = 'doc';
     const expectedCategory = 'category';
     const expectedName = 'test';
     const expectedEntry = `docs/${expectedName}.md`;
-    const expectedUrl = `/${expectedCategory}/${expectedName}.html`;
     const expectedDate = new Date();
 
     fm.mockReturnValueOnce({
@@ -92,12 +96,10 @@ describe('frontmatter: permalink', () => {
 
   test('permalink /:date/:name.html', async () => {
     const permalink = '/:date/:name.html';
-    const expectedPage = 'doc';
     const expectedCategory = 'category';
     const expectedName = 'test';
     const expectedEntry = `docs/${expectedName}.md`;
     const dateStr = '2017-05-01';
-    const expectedUrl = `/${dateStr}/${expectedName}.html`;
     const expectedDate = new Date(dateStr);
 
     fm.mockReturnValueOnce({
