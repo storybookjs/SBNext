@@ -38,7 +38,7 @@ export default class Server {
   handleRequest = async (req, res) => {
     const { app, exportPathMap } = this;
     const parsedUrl = parse(req.url, true);
-    const { pathname } = parsedUrl;
+    const { pathname, query } = parsedUrl;
     const customRoute = exportPathMap[pathname];
 
     console.log(pathname);
@@ -52,7 +52,9 @@ export default class Server {
     }
 
     if (pathname === '/iframe') {
-      return res.end('Hello from iframe');
+      const page = '/preview-1';
+      // const query = query;
+      return app.render(req, res, page, query);
     }
 
     if (entryParam) {
@@ -67,8 +69,8 @@ export default class Server {
     }
 
     if (customRoute) {
-      const { page, query } = customRoute;
-      return app.render(req, res, page, query);
+      const { page, customQuery } = customRoute;
+      return app.render(req, res, page, { ...customQuery, ...query });
     }
 
     app.handleRequest(req, res, parsedUrl);

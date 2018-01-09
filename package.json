@@ -86,6 +86,7 @@
     ],
     "roots": [
       "bundler/",
+      "core/",
       "demo/",
       "server/",
       "ui/"
@@ -93,6 +94,7 @@
   },
   "workspaces": [
     "bundler",
+    "core",
     "demo",
     "server",
     "ui"

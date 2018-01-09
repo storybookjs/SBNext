@@ -1,3 +1,7 @@
-const p = require('path');
+const sb = require('@sb/core');
 
-console.log('A');
+sb
+  .describe('module-a', {})
+  .add('p1', () => {}, {})
+  .add('p2', () => {}, {})
+  .add('p3', () => {}, {});

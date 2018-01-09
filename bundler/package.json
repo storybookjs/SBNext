@@ -5,9 +5,10 @@
   "author": "Norbert de Langen <ndelangen@me.com>",
   "scripts": {
     "build": "NODE_ENV=production webpack",
-    "dev": "webpack --watch"
+    "dev": "webpack --config webpack.vendor.config.js && webpack --config webpack.entries.config.js --watch"
   },
   "dependencies": {
+    "@sb/core": "^1.0.0",
     "glob": "^7.1.2",
     "html-webpack-plugin": "^2.30.1",
     "webpack": "^3.10.0",
