@@ -63,7 +63,6 @@ const styles = theme => ({
   wrapper: {
     fontFamily: theme.typography.fontFamily,
     position: 'relative',
-    marginRight: 16,
     borderRadius: 2,
     background: fade(theme.palette.common.white, 0.15),
     '&:hover': {

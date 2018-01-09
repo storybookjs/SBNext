@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactGridLayout from 'react-grid-layout';
 import sizeMe from 'react-sizeme';
 
+import IconButton from 'material-ui/IconButton';
 import { MenuItem } from 'material-ui/Menu';
 import { ListItemIcon, ListItemText } from 'material-ui/List';
 import CloseIcon from 'material-ui-icons/Close';
@@ -162,12 +163,13 @@ class GridPreview extends Component {
                 id={i}
                 isDragging={dragging}
                 menuItems={[
-                  <MenuItem key="remove" onClick={() => this.remove(i)}>
-                    <ListItemIcon>
-                      <CloseIcon />
-                    </ListItemIcon>
-                    <ListItemText inset primary="Close" />
-                  </MenuItem>,
+                  <IconButton
+                    key="remove"
+                    onClick={() => this.remove(i)}
+                    style={{ width: 30, height: 30 }}
+                  >
+                    <CloseIcon />
+                  </IconButton>,
                 ]}
               />
             </div>

@@ -49,7 +49,7 @@ const styles = theme => ({
   },
   appBar: {
     position: 'absolute',
-    zIndex: theme.zIndex.navDrawer + 1,
+    zIndex: 1201,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -70,7 +70,7 @@ const styles = theme => ({
     flex: 1,
   },
   menuButton: {
-    marginLeft: 12,
+    marginLeft: -12,
     marginRight: 12,
   },
   hide: {
@@ -274,7 +274,7 @@ class MainLayout extends Component {
       <div className={classes.root}>
         <div className={classes.appFrame}>
           <AppBar className={classNames(classes.appBar, this.state.open && classes.appBarShift)}>
-            <Toolbar disableGutters={!this.state.open}>
+            <Toolbar>
               <IconButton
                 color="contrast"
                 aria-label="open drawer"
