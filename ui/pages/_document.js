@@ -3,19 +3,6 @@ import Document, { Head, Main, NextScript } from 'next/document';
 import JssProvider from 'react-jss/lib/JssProvider';
 import getContext from '../styles/getContext';
 
-{
-  /*
-manifest.json provides metadata used when your web app is added to the
-homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
-*/
-}
-{
-  /* PWA primary color */
-}
-{
-  /* Use minimum-scale=1 to enable GPU rasterization */
-}
-
 const RegularPage = props => (
   <html lang="en" dir="ltr">
     <Head>
