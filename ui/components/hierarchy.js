@@ -10,7 +10,7 @@ import Divider from 'material-ui/Divider';
 
 import DashboardIcon from 'material-ui-icons/Dashboard';
 import FullscreenIcon from 'material-ui-icons/Fullscreen';
-import MoreVertIcon from 'material-ui-icons/MoreVert';
+import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 
 const styles = theme => ({
   root: {
@@ -37,47 +37,22 @@ class NestedListItem extends React.Component {
   };
   state = {
     open: false,
-    menu: false,
   };
 
   open = () => {
     this.setState({ open: !this.state.open });
   };
-  menu = e => {
-    this.setState({
-      menu: !this.state.menu,
-      anchorEl: e.target,
-    });
-  };
 
   render() {
     const { classes, docs, sub = [], name, go } = this.props;
-    const { open, menu, anchorEl } = this.state;
-
-    const action = e => {
-      this.menu(e);
-    };
+    const { open } = this.state;
 
     return (
       <Fragment>
         <ListItem button onClick={this.open}>
           <ListItemText primary={name} />
-          <MoreVertIcon onClick={e => e.stopPropagation() || this.menu(e)} />
+          <ExpandMoreIcon />
         </ListItem>
-        <Menu id="simple-menu" anchorEl={anchorEl} open={menu} onClose={this.menu}>
-          <MenuItem onClick={action}>
-            <ListItemIcon className={classes.icon}>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText inset primary="View all" />
-          </MenuItem>
-          <MenuItem onClick={action}>
-            <ListItemIcon className={classes.icon}>
-              <FullscreenIcon />
-            </ListItemIcon>
-            <ListItemText inset primary="Isolation" />
-          </MenuItem>
-        </Menu>
         <Collapse component="li" in={open} timeout="auto" unmountOnExit>
           <List disablePadding dense>
             {sub.map((item, index) => (

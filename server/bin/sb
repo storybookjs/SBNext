@@ -97,7 +97,8 @@ const restartProcess = (cur, prev) => {
 
 let proc = startProcess();
 // const { pagesDirectory = resolve(process.cwd(), 'pages') } = getConfig(process.cwd())
-const pagesDirectory = resolve(process.cwd(), 'pages');
+
+const pagesDirectory = join(__dirname, '../../ui/pages');
 
 if (cmd === 'dev') {
   watchFile(`${resolve(pagesDirectory, '..')}/next.config.js`, restartProcess);

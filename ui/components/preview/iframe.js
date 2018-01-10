@@ -162,7 +162,15 @@ class Iframe extends Component {
         {isDragging ? <PointerOverlay /> : null}
         {toolbar ? (
           <Toolbar menuItems={menuItems} onZoomChange={val => this.setState({ zoom: zoom + val })}>
-            <Typography type="body2" gutterBottom>
+            <Typography
+              style={{
+                fontSize: 11,
+                lineHeight: '32px',
+                marginRight: 5,
+                borderRight: '1px solid rgba(0,0,0,0.2)',
+                paddingRight: 10,
+              }}
+            >
               ({parseFloat(100 / zoom).toFixed(0)}%)
             </Typography>
           </Toolbar>

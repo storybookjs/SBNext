@@ -8,7 +8,7 @@
   "repository": "git@github.com:ndelangen/SB4.git",
   "scripts": {
     "dev": "sb",
-    "export": "sb build && sb export"
+    "export": "sb-build && sb-export"
   },
   "dependencies": {
     "@sb/serve": "^1.0.0",

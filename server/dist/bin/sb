@@ -91,7 +91,8 @@ var restartProcess = function restartProcess(cur, prev) {
 
 var proc = startProcess();
 // const { pagesDirectory = resolve(process.cwd(), 'pages') } = getConfig(process.cwd())
-var pagesDirectory = (0, _path.resolve)(process.cwd(), 'pages');
+
+var pagesDirectory = (0, _path.join)(__dirname, '../../ui/pages');
 
 if (cmd === 'dev') {
   (0, _fs.watchFile)((0, _path.resolve)(pagesDirectory, '..') + '/next.config.js', restartProcess);
