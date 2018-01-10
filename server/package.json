@@ -18,7 +18,8 @@
     "sb-export": "./dist/bin/sb-export"
   },
   "scripts": {
-    "build": "taskr",
+    "build": "taskr build",
+    "dev": "taskr",
     "lint": "eslint . --fix",
     "test": "jest"
   },

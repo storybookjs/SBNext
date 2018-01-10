@@ -6,12 +6,8 @@
   "main": "index.js",
   "repository": "git@github.com:ndelangen/SB4.git",
   "scripts": {
-    "build": "next build",
     "demo": "npm --prefix demo run dev",
-    "dev": "next",
-    "export": "next export",
     "lint": "eslint . --fix",
-    "start": "NODE_ENV=production next start",
     "test": "NODE_ENV=test jest"
   },
   "devDependencies": {
