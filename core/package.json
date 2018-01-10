@@ -1,0 +1,15 @@
+{
+  "name": "@sb/core",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Norbert de Langen <ndelangen@me.com>",
+  "scripts": {},
+  "dependencies": {},
+  "peerDependencies": {},
+  "main": "main.js",
+  "engines": {
+    "node": ">=8.0.0",
+    "yarn": ">=1.0.0"
+  },
+  "private": true
+}

@@ -52,7 +52,7 @@ module.exports = {
           '*.js',
           '**/*.test.js',
           '**/scripts/*.js',
-          '**/stories/**/*.js',
+          '**/docs/**/*.js',
           '**/__tests__/**/*.js',
         ],
         peerDependencies: true,

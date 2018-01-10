@@ -1,6 +1,6 @@
 [build]
-  publish = "out"
-  command = "yarn && yarn build && yarn export"
+  publish = "ui/out"
+  command = "npm --prefix server run build && rm -rf ./demo/node_modules && yarn && npm --prefix demo run export"
 [build.environment]
   NODE_VERSION = "8"
   YARN_VERSION = "1.3.2"
