@@ -13,9 +13,9 @@
   ],
   "main": "index.js",
   "bin": {
-    "sb": "./dist/bin/sb",
-    "sb-build": "./dist/bin/sb-build",
-    "sb-export": "./dist/bin/sb-export"
+    "sb": "./bin/sb",
+    "sb-build": "./bin/sb-build",
+    "sb-export": "./bin/sb-export"
   },
   "scripts": {
     "build": "taskr build",

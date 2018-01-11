@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
-import 'source-map-support/register';
-import { resolve } from 'path';
-import parseArgs from 'minimist';
-import { readFileSync } from 'fs';
-import pkgUp from 'pkg-up';
-import chokidar from 'chokidar';
+require('source-map-support/register');
 
-import Server from '../server';
+const { resolve } = require('path');
+const parseArgs = require('minimist');
+const { readFileSync } = require('fs');
+const pkgUp = require('pkg-up');
+const chokidar = require('chokidar');
+
+const Server = require('../dist/server').default;
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 

@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-import { join, resolve } from 'path';
-import { spawn } from 'cross-spawn';
-import { watchFile } from 'fs';
-import pkg from '../../package.json';
+const { join, resolve } = require('path');
+const { spawn } = require('cross-spawn');
+const { watchFile } = require('fs');
+const pkg = require('../package.json');
 
 if (pkg.peerDependencies) {
   Object.keys(pkg.peerDependencies).forEach(dependency => {
