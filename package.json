@@ -4,7 +4,7 @@
   "license": "MIT",
   "author": "Norbert de Langen <ndelangen@me.com>",
   "main": "index.js",
-  "repository": "git@github.com:ndelangen/SB4.git",
+  "repository": "git@github.com:ndelangen/SB4.git", 
   "scripts": {
     "demo": "npm --prefix demo run dev",
     "lint": "eslint . --fix",

@@ -20,7 +20,7 @@ module.exports = config({
   exportPathMap: async () => {
     const docs = await getDocs();
 
-    console.log(docs);
+    // console.log(docs);
 
     return {
       '/': { page: '/' },

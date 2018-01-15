@@ -42,7 +42,7 @@ const PreviewPage = props => (
 
 class MyDocument extends Document {
   render() {
-    console.log(this.props);
+    // console.log(this.props);
 
     if (this.props.__NEXT_DATA__.pathname.match(/iframe/)) {
       /*

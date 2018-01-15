@@ -41,7 +41,7 @@ export default class Server {
     const { pathname, query } = parsedUrl;
     const customRoute = exportPathMap[pathname];
 
-    console.log(pathname);
+    // console.log(pathname);
 
     const matchEntry = route()('/_load_entry/:path+');
     const entryParam = matchEntry(pathname);
@@ -69,7 +69,7 @@ export default class Server {
     }
 
     if (customRoute) {
-      const { page, customQuery } = customRoute;
+      const { page, query: customQuery } = customRoute;
       return app.render(req, res, page, { ...customQuery, ...query });
     }
 
