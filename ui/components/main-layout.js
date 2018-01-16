@@ -197,8 +197,6 @@ class MainLayout extends Component {
   constructor(props) {
     super(props);
 
-    // debugger;
-    console.log(this.props.url.asPath);
     const { url } = this.props;
     const [, p1, p2, p3, p4] = url.asPath.match(
       /^(?:\/([^/]+))?(?:\/([^/]+))?(?:\/([^/]+))?(?:\/([^/]+))?/
@@ -259,8 +257,11 @@ class MainLayout extends Component {
   }
 
   componentWillReceiveProps() {
+<<<<<<< HEAD
     debugger;
     console.log(this.props.url.asPath);
+=======
+>>>>>>> Add pages
     const { url } = this.props;
     const [, p1, p2, p3, p4] = url.asPath.match(
       /^(?:\/([^/]+))?(?:\/([^/]+))?(?:\/([^/]+))?(?:\/([^/]+))?/
