@@ -257,11 +257,6 @@ class MainLayout extends Component {
   }
 
   componentWillReceiveProps() {
-<<<<<<< HEAD
-    debugger;
-    console.log(this.props.url.asPath);
-=======
->>>>>>> Add pages
     const { url } = this.props;
     const [, p1, p2, p3, p4] = url.asPath.match(
       /^(?:\/([^/]+))?(?:\/([^/]+))?(?:\/([^/]+))?(?:\/([^/]+))?/
@@ -294,7 +289,7 @@ class MainLayout extends Component {
 
   handleAsideChange = val => {
     if (contents[val].url) {
-      Router.push(contents[val].url);
+      Router.push(contents[val].url, contents[val].url, { shallow: true });
     } else {
       this.setState(contents[val]);
     }
