@@ -200,7 +200,7 @@ class MainLayout extends Component {
     this.state = {
       open: false,
       previewMode: 'doc',
-      ...contents[p1 || 'components'],
+      ...(contents[p1] || contents.components),
     };
   }
 
