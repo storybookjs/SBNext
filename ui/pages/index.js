@@ -9,7 +9,7 @@ class Index extends Component {
   }
 
   render() {
-    return <MainLayout />;
+    return <MainLayout {...this.props} />;
   }
 }
 

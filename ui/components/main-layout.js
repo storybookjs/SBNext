@@ -149,7 +149,7 @@ const contents = {
     ),
     panel: ({ go, onSwitchPreviewMode }) => <Hierarchy {...{ go, onSwitchPreviewMode }} />,
   },
-  documentation: {
+  docs: {
     content: () => (
       <div
         style={{
@@ -188,11 +188,21 @@ const contents = {
 };
 
 class MainLayout extends Component {
-  state = {
-    open: false,
-    previewMode: 'multi',
-    ...contents.components,
-  };
+  constructor(props) {
+    super(props);
+
+    console.log(this.props);
+    const { url } = this.props;
+    const [, p1, p2, p3, p4] = url.pathname.match(
+      /^(?:\/([^/]+))?(?:\/([^/]+))?(?:\/([^/]+))?(?:\/([^/]+))?/
+    );
+
+    this.state = {
+      open: false,
+      previewMode: 'doc',
+      ...contents[p1 || 'components'],
+    };
+  }
 
   componentDidMount() {
     this.props.bindShortcut(

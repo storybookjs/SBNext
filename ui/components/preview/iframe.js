@@ -95,7 +95,7 @@ const WrapperA = ({ children, height, zoom, getRef }) => (
       position: 'relative',
       height: 32 + height / zoom,
       overflow: 'hidden',
-      transition: 'height .15s ease-out',
+      transition: 'height .4s ease-out',
     }}
   >
     {children}
