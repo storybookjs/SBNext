@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { document } from 'global';
+import { window, document, history } from 'global';
 
 import mouseTrap from 'react-mousetrap';
 import { withStyles } from 'material-ui/styles';
@@ -148,8 +148,9 @@ const contents = {
       <Previews previewMode={state.previewMode} {...{ onSwitchPreviewMode }} />
     ),
     panel: ({ go, onSwitchPreviewMode }) => <Hierarchy {...{ go, onSwitchPreviewMode }} />,
+    url: '/',
   },
-  docs: {
+  documentation: {
     content: () => (
       <div
         style={{
@@ -164,22 +165,26 @@ const contents = {
       </div>
     ),
     panel: ({ go, onSwitchPreviewMode }) => <DocsTree {...{ go, onSwitchPreviewMode }} />,
+    url: '/docs/',
   },
   design: {
     content: ({ state, onSwitchPreviewMode }) => (
       <Previews previewMode={state.previewMode} {...{ onSwitchPreviewMode }} />
     ),
     panel: () => <div>Design is awesome</div>,
+    url: '/design/',
   },
   issues: {
     content: ({ state, onSwitchPreviewMode }) => (
       <Previews previewMode={state.previewMode} {...{ onSwitchPreviewMode }} />
     ),
     panel: () => <div>Issues are bad</div>,
+    url: '/issues/',
   },
   settings: {
     content: () => <SettingsContent />,
     panel: () => <SettingsPanel />,
+    url: '/settings/',
   },
   addon: {
     content: ({ state }) => <Previews previewMode={state.previewMode} />,
@@ -191,16 +196,19 @@ class MainLayout extends Component {
   constructor(props) {
     super(props);
 
-    console.log(this.props);
+    console.log(props);
+
     const { url } = this.props;
-    const [, p1, p2, p3, p4] = url.pathname.match(
+    const [, p1, p2, p3, p4] = url.asPath.match(
       /^(?:\/([^/]+))?(?:\/([^/]+))?(?:\/([^/]+))?(?:\/([^/]+))?/
     );
+    const addition = contents[Object.keys(contents).find(k => contents[k].url === url.asPath)];
 
+    // debugger;
     this.state = {
       open: false,
       previewMode: 'doc',
-      ...(contents[p1] || contents.components),
+      ...(addition || contents.components),
     };
   }
 
@@ -250,6 +258,30 @@ class MainLayout extends Component {
       },
       'keydown'
     );
+
+    window.addEventListener('popstate', e => {
+      console.log(e);
+      const { url } = e.state;
+      debugger;
+      const addition = contents[Object.keys(contents).find(k => contents[k].url === url)];
+      this.setState({
+        ...e.state,
+        ...addition,
+      });
+    });
+
+    // const { previewMode, open, url } = this.state;
+
+    this.changeUrl({ name: '', url: this.state.url }, true);
+    // history.replaceState(
+    //   {
+    //     previewMode,
+    //     open,
+    //     url,
+    //   },
+    //   'name',
+    //   url
+    // );
   }
 
   onSwitchPreviewMode = val => {
@@ -257,6 +289,19 @@ class MainLayout extends Component {
       previewMode: val,
     });
   };
+
+  changeUrl({ name, url }, replace = false) {
+    const { previewMode, open } = this.state;
+    history[replace ? 'replaceState' : 'pushState'](
+      {
+        previewMode,
+        open,
+        url,
+      },
+      name,
+      url
+    );
+  }
 
   go(id) {
     [...document.getElementsByTagName('iframe')]
@@ -273,6 +318,9 @@ class MainLayout extends Component {
   };
 
   handleAsideChange = val => {
+    if (contents[val].url) {
+      this.changeUrl({ name: val, url: contents[val].url });
+    }
     this.setState(contents[val]);
   };
 

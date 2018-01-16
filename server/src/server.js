@@ -39,7 +39,7 @@ export default class Server {
     const { app, exportPathMap } = this;
     const parsedUrl = parse(req.url, true);
     const { pathname, query } = parsedUrl;
-    const customRoute = exportPathMap[pathname];
+    const customRoute = exportPathMap[pathname] || exportPathMap[pathname.slice(0, -1)];
 
     // console.log(pathname);
 
