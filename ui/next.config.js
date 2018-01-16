@@ -8,7 +8,7 @@ const getDocs = async () => {
     (prev, entry) => ({
       ...prev,
       [entry.url]: {
-        page: '/index',
+        page: '/docs/',
         query: { doc: entry },
       },
     }),
@@ -24,7 +24,7 @@ module.exports = config({
 
     return {
       '/': { page: '/' },
-      '/docs/': { page: '/' },
+      '/docs/': { page: '/docs/' },
       ...docs,
 
       // will remove i favour of iframe in server.js

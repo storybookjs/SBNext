@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { document } from 'global';
+import Router from 'next/router';
 
 import mouseTrap from 'react-mousetrap';
 import { withStyles } from 'material-ui/styles';
@@ -148,6 +149,7 @@ const contents = {
       <Previews previewMode={state.previewMode} {...{ onSwitchPreviewMode }} />
     ),
     panel: ({ go, onSwitchPreviewMode }) => <Hierarchy {...{ go, onSwitchPreviewMode }} />,
+    url: '/',
   },
   docs: {
     content: () => (
@@ -164,22 +166,26 @@ const contents = {
       </div>
     ),
     panel: ({ go, onSwitchPreviewMode }) => <DocsTree {...{ go, onSwitchPreviewMode }} />,
+    url: '/docs/',
   },
   design: {
     content: ({ state, onSwitchPreviewMode }) => (
       <Previews previewMode={state.previewMode} {...{ onSwitchPreviewMode }} />
     ),
     panel: () => <div>Design is awesome</div>,
+    url: '/design/',
   },
   issues: {
     content: ({ state, onSwitchPreviewMode }) => (
       <Previews previewMode={state.previewMode} {...{ onSwitchPreviewMode }} />
     ),
     panel: () => <div>Issues are bad</div>,
+    url: '/issues/',
   },
   settings: {
     content: () => <SettingsContent />,
     panel: () => <SettingsPanel />,
+    url: '/settings/',
   },
   addon: {
     content: ({ state }) => <Previews previewMode={state.previewMode} />,
@@ -191,9 +197,10 @@ class MainLayout extends Component {
   constructor(props) {
     super(props);
 
-    console.log(this.props);
+    // debugger;
+    console.log(this.props.url.asPath);
     const { url } = this.props;
-    const [, p1, p2, p3, p4] = url.pathname.match(
+    const [, p1, p2, p3, p4] = url.asPath.match(
       /^(?:\/([^/]+))?(?:\/([^/]+))?(?:\/([^/]+))?(?:\/([^/]+))?/
     );
 
@@ -203,7 +210,6 @@ class MainLayout extends Component {
       ...(contents[p1] || contents.components),
     };
   }
-
   componentDidMount() {
     this.props.bindShortcut(
       'command+,',
@@ -252,6 +258,19 @@ class MainLayout extends Component {
     );
   }
 
+  componentWillReceiveProps() {
+    debugger;
+    console.log(this.props.url.asPath);
+    const { url } = this.props;
+    const [, p1, p2, p3, p4] = url.asPath.match(
+      /^(?:\/([^/]+))?(?:\/([^/]+))?(?:\/([^/]+))?(?:\/([^/]+))?/
+    );
+
+    this.setState({
+      ...(contents[p1] || contents.components),
+    });
+  }
+
   onSwitchPreviewMode = val => {
     this.setState({
       previewMode: val,
@@ -273,7 +292,11 @@ class MainLayout extends Component {
   };
 
   handleAsideChange = val => {
-    this.setState(contents[val]);
+    if (contents[val].url) {
+      Router.push(contents[val].url);
+    } else {
+      this.setState(contents[val]);
+    }
   };
 
   render() {
@@ -323,7 +346,7 @@ class MainLayout extends Component {
                     </ListItemIcon>
                     <ListItemText primary="Components" />
                   </ListItem>
-                  <ListItem button onClick={() => this.handleAsideChange('documentation')}>
+                  <ListItem button onClick={() => this.handleAsideChange('docs')}>
                     <ListItemIcon>
                       <DescriptionIcon />
                     </ListItemIcon>
