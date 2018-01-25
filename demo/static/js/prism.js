@@ -1,8 +1,8 @@
 /* http://prismjs.com/download.html?themes=prism&languages=markup+css+clike+javascript+bash+css-extras+json+markdown+jsx */
 let _self =
-    typeof window != 'undefined'
+    typeof window !== 'undefined'
       ? window
-      : typeof WorkerGlobalScope != 'undefined' && self instanceof WorkerGlobalScope ? self : {},
+      : typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope ? self : {},
   Prism = (function() {
     var e = /\blang(?:uage)?-(\w+)\b/i,
       t = 0,
@@ -12,7 +12,7 @@ let _self =
           encode(e) {
             return e instanceof a
               ? new a(e.type, n.util.encode(e.content), e.alias)
-              : 'Array' === n.util.type(e)
+              : n.util.type(e) === 'Array'
                 ? e.map(n.util.encode)
                 : e
                     .replace(/&/g, '&amp;')
@@ -26,39 +26,34 @@ let _self =
             return e.__id || Object.defineProperty(e, '__id', { value: ++t }), e.__id;
           },
           clone(e) {
-            var t = n.util.type(e);
+            const t = n.util.type(e);
             switch (t) {
               case 'Object':
                 var a = {};
-                for (var r in e) e.hasOwnProperty(r) && (a[r] = n.util.clone(e[r]));
+                for (const r in e) e.hasOwnProperty(r) && (a[r] = n.util.clone(e[r]));
                 return a;
               case 'Array':
-                return (
-                  e.map &&
-                  e.map(function(e) {
-                    return n.util.clone(e);
-                  })
-                );
+                return e.map && e.map(e => n.util.clone(e));
             }
             return e;
           },
         },
         languages: {
           extend(e, t) {
-            var a = n.util.clone(n.languages[e]);
-            for (var r in t) a[r] = t[r];
+            const a = n.util.clone(n.languages[e]);
+            for (const r in t) a[r] = t[r];
             return a;
           },
           insertBefore(e, t, a, r) {
             r = r || n.languages;
-            var i = r[e];
-            if (2 == arguments.length) {
+            const i = r[e];
+            if (arguments.length == 2) {
               a = arguments[1];
               for (var l in a) a.hasOwnProperty(l) && (i[l] = a[l]);
               return i;
             }
-            var o = {};
-            for (var s in i)
+            const o = {};
+            for (const s in i)
               if (i.hasOwnProperty(s)) {
                 if (s == t) for (var l in a) a.hasOwnProperty(l) && (o[l] = a[l]);
                 o[s] = i[s];
@@ -72,11 +67,11 @@ let _self =
           },
           DFS(e, t, a, r) {
             r = r || {};
-            for (var i in e)
+            for (const i in e)
               e.hasOwnProperty(i) &&
                 (t.call(e, i, e[i], a || i),
-                'Object' !== n.util.type(e[i]) || r[n.util.objId(e[i])]
-                  ? 'Array' !== n.util.type(e[i]) ||
+                n.util.type(e[i]) !== 'Object' || r[n.util.objId(e[i])]
+                  ? n.util.type(e[i]) !== 'Array' ||
                     r[n.util.objId(e[i])] ||
                     ((r[n.util.objId(e[i])] = !0), n.languages.DFS(e[i], t, i, r))
                   : ((r[n.util.objId(e[i])] = !0), n.languages.DFS(e[i], t, null, r)));
@@ -84,7 +79,7 @@ let _self =
         },
         plugins: {},
         highlightAll(e, t) {
-          var a = {
+          const a = {
             callback: t,
             selector:
               'code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code',
@@ -100,11 +95,11 @@ let _self =
         highlightElement(t, a, r) {
           for (var i, l, o = t; o && !e.test(o.className); ) o = o.parentNode;
           o && ((i = (o.className.match(e) || [, ''])[1].toLowerCase()), (l = n.languages[i])),
-            (t.className = t.className.replace(e, '').replace(/\s+/g, ' ') + ' language-' + i),
+            (t.className = `${t.className.replace(e, '').replace(/\s+/g, ' ')} language-${i}`),
             (o = t.parentNode),
             /pre/i.test(o.nodeName) &&
-              (o.className = o.className.replace(e, '').replace(/\s+/g, ' ') + ' language-' + i);
-          var s = t.textContent,
+              (o.className = `${o.className.replace(e, '').replace(/\s+/g, ' ')} language-${i}`);
+          let s = t.textContent,
             u = { element: t, language: i, grammar: l, code: s };
           if ((n.hooks.run('before-sanity-check', u), !u.code || !u.grammar))
             return (
@@ -116,7 +111,7 @@ let _self =
               void 0
             );
           if ((n.hooks.run('before-highlight', u), a && _self.Worker)) {
-            var g = new Worker(n.filename);
+            const g = new Worker(n.filename);
             (g.onmessage = function(e) {
               (u.highlightedCode = e.data),
                 n.hooks.run('before-insert', u),
@@ -137,30 +132,30 @@ let _self =
               n.hooks.run('complete', u);
         },
         highlight(e, t, r) {
-          var i = n.tokenize(e, t);
+          const i = n.tokenize(e, t);
           return a.stringify(n.util.encode(i), r);
         },
         matchGrammar(e, t, a, r, i, l, o) {
-          var s = n.Token;
-          for (var u in a)
+          const s = n.Token;
+          for (const u in a)
             if (a.hasOwnProperty(u) && a[u]) {
               if (u == o) return;
-              var g = a[u];
-              g = 'Array' === n.util.type(g) ? g : [g];
-              for (var c = 0; c < g.length; ++c) {
-                var h = g[c],
+              let g = a[u];
+              g = n.util.type(g) === 'Array' ? g : [g];
+              for (let c = 0; c < g.length; ++c) {
+                let h = g[c],
                   f = h.inside,
                   d = !!h.lookbehind,
                   m = !!h.greedy,
                   p = 0,
                   y = h.alias;
                 if (m && !h.pattern.global) {
-                  var v = h.pattern.toString().match(/[imuy]*$/)[0];
-                  h.pattern = RegExp(h.pattern.source, v + 'g');
+                  const v = h.pattern.toString().match(/[imuy]*$/)[0];
+                  h.pattern = RegExp(h.pattern.source, `${v}g`);
                 }
                 h = h.pattern || h;
-                for (var b = r, k = i; b < t.length; k += t[b].length, ++b) {
-                  var w = t[b];
+                for (let b = r, k = i; b < t.length; k += t[b].length, ++b) {
+                  let w = t[b];
                   if (t.length > e.length) return;
                   if (!(w instanceof s)) {
                     h.lastIndex = 0;
@@ -190,12 +185,12 @@ let _self =
                         C = w.slice(j),
                         E = [b, P];
                       N && (++b, (k += N.length), E.push(N));
-                      var L = new s(u, f ? n.tokenize(_, f) : _, y, _, m);
+                      const L = new s(u, f ? n.tokenize(_, f) : _, y, _, m);
                       if (
                         (E.push(L),
                         C && E.push(C),
                         Array.prototype.splice.apply(t, E),
-                        1 != P && n.matchGrammar(e, t, a, b, k, !0, u),
+                        P != 1 && n.matchGrammar(e, t, a, b, k, !0, u),
                         l)
                       )
                         break;
@@ -206,10 +201,10 @@ let _self =
             }
         },
         tokenize(e, t) {
-          var a = [e],
+          let a = [e],
             r = t.rest;
           if (r) {
-            for (var i in r) t[i] = r[i];
+            for (const i in r) t[i] = r[i];
             delete t.rest;
           }
           return n.matchGrammar(e, a, t, 0, 0, !1), a;
@@ -217,11 +212,11 @@ let _self =
         hooks: {
           all: {},
           add(e, t) {
-            var a = n.hooks.all;
+            const a = n.hooks.all;
             (a[e] = a[e] || []), a[e].push(t);
           },
           run(e, t) {
-            var a = n.hooks.all[e];
+            const a = n.hooks.all[e];
             if (a && a.length) for (var r, i = 0; (r = a[i++]); ) r(t);
           },
         },
@@ -235,14 +230,9 @@ let _self =
       });
     if (
       ((a.stringify = function(e, t, r) {
-        if (typeof e == 'string') return e;
-        if (n.util.type(e) === 'Array')
-          return e
-            .map((n) => {
-              return a.stringify(n, t, e);
-            })
-            .join('');
-        let i = {
+        if (typeof e === 'string') return e;
+        if (n.util.type(e) === 'Array') return e.map(n => a.stringify(n, t, e)).join('');
+        const i = {
           type: e.type,
           content: a.stringify(e.content, t, r),
           tag: 'span',
@@ -252,36 +242,24 @@ let _self =
           parent: r,
         };
         if ((i.type == 'comment' && (i.attributes.spellcheck = 'true'), e.alias)) {
-          let l = n.util.type(e.alias) === 'Array' ? e.alias : [e.alias];
+          const l = n.util.type(e.alias) === 'Array' ? e.alias : [e.alias];
           Array.prototype.push.apply(i.classes, l);
         }
         n.hooks.run('wrap', i);
-        let o = Object.keys(i.attributes)
-          .map((e) => {
-            return e + '="' + (i.attributes[e] || '').replace(/"/g, '&quot;') + '"';
-          })
+        const o = Object.keys(i.attributes)
+          .map(e => `${e}="${(i.attributes[e] || '').replace(/"/g, '&quot;')}"`)
           .join(' ');
-        return (
-          `<${ 
-          i.tag 
-          } class="${ 
-          i.classes.join(' ') 
-          }"${ 
-          o ? ' ' + o : '' 
-          }>${ 
-          i.content 
-          }</${ 
-          i.tag 
-          }>`
-        );
+        return `<${i.tag} class="${i.classes.join(' ')}"${o ? ` ${o}` : ''}>${i.content}</${
+          i.tag
+        }>`;
       }),
       !_self.document)
     )
       return _self.addEventListener
         ? (_self.addEventListener(
             'message',
-            (e) => {
-              var t = JSON.parse(e.data),
+            e => {
+              let t = JSON.parse(e.data),
                 a = t.language,
                 r = t.code,
                 i = t.immediateClose;
@@ -291,7 +269,8 @@ let _self =
           ),
           _self.Prism)
         : _self.Prism;
-    let r = document.currentScript || [].slice.call(document.getElementsByTagName('script')).pop();
+    const r =
+      document.currentScript || [].slice.call(document.getElementsByTagName('script')).pop();
     return (
       r &&
         ((n.filename = r.src),
@@ -306,8 +285,8 @@ let _self =
       _self.Prism
     );
   })();
-typeof module != 'undefined' && module.exports && (module.exports = Prism),
-  typeof global != 'undefined' && (global.Prism = Prism);
+typeof module !== 'undefined' && module.exports && (module.exports = Prism),
+  typeof global !== 'undefined' && (global.Prism = Prism);
 (Prism.languages.markup = {
   comment: /<!--[\s\S]*?-->/,
   prolog: /<\?[\s\S]+?\?>/,
@@ -331,8 +310,8 @@ typeof module != 'undefined' && module.exports && (module.exports = Prism),
   entity: /&#?[\da-z]{1,8};/i,
 }),
   (Prism.languages.markup.tag.inside['attr-value'].inside.entity = Prism.languages.markup.entity),
-  Prism.hooks.add('wrap', (a) => {
-    'entity' === a.type && (a.attributes.title = a.content.replace(/&amp;/, '&'));
+  Prism.hooks.add('wrap', a => {
+    a.type === 'entity' && (a.attributes.title = a.content.replace(/&amp;/, '&'));
   }),
   (Prism.languages.xml = Prism.languages.markup),
   (Prism.languages.html = Prism.languages.markup),
@@ -433,7 +412,7 @@ Prism.languages.clike = {
     }),
   (Prism.languages.js = Prism.languages.javascript);
 !(function(e) {
-  let t = {
+  const t = {
     variable: [
       {
         pattern: /\$?\(\([\s\S]+?\)\)/,
@@ -473,7 +452,7 @@ Prism.languages.clike = {
     operator: /&&?|\|\|?|==?|!=?|<<<?|>>|<=?|>=?|=~/,
     punctuation: /\$?\(\(?|\)\)?|\.\.|[{}[\];]/,
   };
-  let a = t.variable[1].inside;
+  const a = t.variable[1].inside;
   (a.function = e.languages.bash.function),
     (a.keyword = e.languages.bash.keyword),
     (a.boolean = e.languages.bash.boolean),
@@ -559,7 +538,7 @@ Prism.languages.clike = {
   (Prism.languages.markdown.bold.inside.italic = Prism.util.clone(Prism.languages.markdown.italic)),
   (Prism.languages.markdown.italic.inside.bold = Prism.util.clone(Prism.languages.markdown.bold));
 !(function(a) {
-  let e = a.util.clone(a.languages.javascript);
+  const e = a.util.clone(a.languages.javascript);
   (a.languages.jsx = a.languages.extend('markup', e)),
     (a.languages.jsx.tag.pattern = /<\/?[\w\.:-]+\s*(?:\s+(?:[\w\.:-]+(?:=(?:("|')(\\?[\s\S])*?\1|[^\s'">=]+|(\{[\s\S]*?\})))?|\{\.{3}\w+\}))*\s*\/?>/i),
     (a.languages.jsx.tag.inside['attr-value'].pattern = /=(?!\{)(?:('|")[\s\S]*?(\1)|[^\s>]+)/i),

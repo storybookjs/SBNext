@@ -85,7 +85,8 @@
       "core/",
       "demo/",
       "server/",
-      "ui/"
+      "ui/",
+      "ui2/"
     ]
   },
   "workspaces": [
@@ -93,6 +94,7 @@
     "core",
     "demo",
     "server",
-    "ui"
+    "ui",
+    "ui2"
   ]
 }
