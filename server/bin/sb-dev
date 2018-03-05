@@ -21,7 +21,7 @@ const argv = parseArgs(process.argv.slice(2), {
   boolean: ['h'],
   string: ['H'],
   default: {
-    p: 3000,
+    p: 1337,
   },
 });
 

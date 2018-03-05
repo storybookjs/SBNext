@@ -93,6 +93,7 @@
     "bundler",
     "core",
     "demo",
+    "docs-v2",
     "server",
     "ui",
     "ui2"

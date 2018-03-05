@@ -7,8 +7,8 @@ import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
 
 import Drawer from 'material-ui/Drawer';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
+// import AppBar from 'material-ui/AppBar';
+// import Toolbar from 'material-ui/Toolbar';
 import Paper from 'material-ui/Paper';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Typography from 'material-ui/Typography';
@@ -26,7 +26,8 @@ import BubbleChartIcon from 'material-ui-icons/BubbleChart';
 import AnnouncementIcon from 'material-ui-icons/Announcement';
 import AddonIcon from 'material-ui-icons/ChromeReaderMode';
 
-import Search from './search';
+import { Logo, Icon } from './logo';
+// import Search from './search';
 import Hierarchy from './hierarchy';
 import DocsTree from './docs-tree';
 import Previews from '../components/preview';
@@ -109,7 +110,7 @@ const styles = theme => ({
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     padding: '0 8px',
     ...theme.mixins.toolbar,
   },
@@ -119,11 +120,11 @@ const styles = theme => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: 0,
-    height: 'calc(100% - 56px)',
-    marginTop: 56,
+    height: 'calc(100%)',
+    // marginTop: 56,
     [theme.breakpoints.up('sm')]: {
-      height: 'calc(100% - 64px)',
-      marginTop: 64,
+      height: 'calc(100%)',
+      // marginTop: 64,
     },
   },
   content: {
@@ -195,8 +196,6 @@ const contents = {
 class MainLayout extends Component {
   constructor(props) {
     super(props);
-
-    console.log(props);
 
     const { url } = this.props;
     const [, p1, p2, p3, p4] = url.asPath.match(
@@ -331,6 +330,7 @@ class MainLayout extends Component {
     return (
       <div className={classes.root}>
         <div className={classes.appFrame}>
+          {/*
           <AppBar className={classNames(classes.appBar, this.state.open && classes.appBarShift)}>
             <Toolbar>
               <IconButton
@@ -348,7 +348,7 @@ class MainLayout extends Component {
                 <Search />
               </div>
             </Toolbar>
-          </AppBar>
+          </AppBar> */}
           <Drawer
             type="permanent"
             classes={{
@@ -358,6 +358,11 @@ class MainLayout extends Component {
           >
             <div className={classes.drawerInner}>
               <div className={classes.drawerHeader}>
+                {this.state.open ? (
+                  <Logo />
+                ) : (
+                  <Icon onClick={this.handleDrawerOpen} style={{ width: 40 }} />
+                )}
                 <IconButton onClick={this.handleDrawerClose}>
                   {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                 </IconButton>
