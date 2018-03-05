@@ -8,7 +8,7 @@ const getDocs = async () => {
     (prev, entry) => ({
       ...prev,
       [entry.url]: {
-        page: '/docs/',
+        page: '/docs',
         query: { doc: entry },
       },
     }),
