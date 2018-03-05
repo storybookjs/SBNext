@@ -24,7 +24,7 @@ module.exports = config({
 
     return {
       '/': { page: '/' },
-      '/docs/': { page: '/docs/' },
+      '/docs/': { page: '/docs' },
       ...docs,
 
       // will remove i favour of iframe in server.js
