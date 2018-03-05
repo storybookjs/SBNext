@@ -50,7 +50,7 @@ export default class extends Component {
   render() {
     return (
       <div>
-        <h1>Page 1</h1>
+        <h1>Component in state 1</h1>
         <button onClick={() => this.go(2)}>TEST</button>
       </div>
     );
