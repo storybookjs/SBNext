@@ -3,16 +3,12 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: {
-    // create two library bundles, one with jQuery and
-    // another with Angular and related libraries
     sb: ['@sb/core'],
+    react: ['react'],
   },
 
   output: {
     filename: 'out/[name].js',
-
-    // The name of the global variable which the library's
-    // require() function will be assigned to
     library: '[name]_lib',
   },
 
