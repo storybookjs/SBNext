@@ -21,3 +21,5 @@ const icons = {
 const MyComponent = ({ t }) => (t && icons[t] ? t() : null);
 
 module.exports = MyComponent;
+
+console.log(MyComponent, React);
