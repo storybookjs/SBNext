@@ -2,6 +2,7 @@
 const webpack = require('webpack');
 
 module.exports = {
+  mode: 'production',
   entry: {
     sb: ['@sb/core'],
     react: ['react'],

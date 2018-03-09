@@ -10,6 +10,7 @@ function resolve(dir) {
 }
 
 module.exports = {
+  mode: 'development',
   entry: WildcardsEntryWebpackPlugin.entry('./in/**/*.example.js'),
   output: {
     filename: 'out/[name].js',

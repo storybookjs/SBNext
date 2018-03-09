@@ -4,10 +4,10 @@
   "license": "MIT",
   "author": "Norbert de Langen <ndelangen@me.com>",
   "scripts": {
-    "build": "NODE_ENV=production webpack",
     "dev": "yarn dev-vendor && echo \"---\n\" && yarn dev-client",
     "dev-vendor": "webpack --config webpack.vendor.config.js",
-    "dev-client": "webpack --config webpack.entries.config.js"
+    "dev-client": "webpack --config webpack.entries.config.js",
+    "serve": "webpack-serve --config webpack.entries.config.js --open --content ./out --port 1337"
   },
   "dependencies": {
     "@sb/core": "^1.0.0",
@@ -17,6 +17,7 @@
     "html-webpack-plugin": "^3.0.6",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.10",
+    "webpack-serve": "^0.2.0",
     "wildcards-entry-webpack-plugin": "^2.1.0"
   },
   "peerDependencies": {},
