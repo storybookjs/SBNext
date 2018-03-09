@@ -54,6 +54,20 @@
     <% } %>
   </head>
   <body>
+    <style>
+      body, html {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+      }
+      textarea {
+        height: 100vh;
+        width: 100vw;
+        border: 0 none;
+      }
+    </style>
+
     <% if (htmlWebpackPlugin.options.unsupportedBrowser) { %>
       <style>.unsupported-browser { display: none; }</style>
       <div class="unsupported-browser">
@@ -89,7 +103,7 @@
       <%= htmlWebpackPlugin.files[htmlWebpackPlugin.options.inlineManifestWebpackName] %>
     <% } %>
 
-    <textarea style="height: 100vh; width: 100vw"><%= JSON.stringify(htmlWebpackPlugin.files, null, 4) %></textarea>
+    <textarea><%= JSON.stringify(htmlWebpackPlugin.files, null, 4) %></textarea>
                 
     <% for (item of htmlWebpackPlugin.options.scripts) { %>
     <% if (typeof item === 'string' || item instanceof String) { item = { src: item } } %>
