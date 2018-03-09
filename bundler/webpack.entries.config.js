@@ -1,7 +1,8 @@
 const path = require('path');
 
 const webpack = require('webpack');
-const WildcardsEntryWebpackPlugin = require('wildcards-entry-webpack-plugin');
+const WildcardsEntryWebpackPlugin = require('./lib/plugin');
+// const WildcardsEntryWebpackPlugin = require('wildcards-entry-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 function resolve(dir) {

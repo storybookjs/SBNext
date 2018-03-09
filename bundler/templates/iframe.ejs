@@ -89,13 +89,11 @@
       <%= htmlWebpackPlugin.files[htmlWebpackPlugin.options.inlineManifestWebpackName] %>
     <% } %>
 
-    <textarea style="height: 100vh; width: 100vw">
-      <%= JSON.stringify(htmlWebpackPlugin.files, null, 4) %>
-    </textarea>
+    <textarea style="height: 100vh; width: 100vw"><%= JSON.stringify(htmlWebpackPlugin.files, null, 4) %></textarea>
                 
     <% for (item of htmlWebpackPlugin.options.scripts) { %>
     <% if (typeof item === 'string' || item instanceof String) { item = { src: item } } %>
-      <script <% for (key in item) { %> <%= key %>="<%= item[key] %>"<% } %>/>
+      <script <% for (key in item) { %> <%= key %>="<%= item[key] %>"<% } %>></script>
     <% } %>
 
     <% for (key in htmlWebpackPlugin.files.chunks) { %>
@@ -104,14 +102,14 @@
           src="<%= htmlWebpackPlugin.files.chunks[key].entry %>"
         
           integrity="<%= htmlWebpackPlugin.files.jsIntegrity[htmlWebpackPlugin.files.js.indexOf(htmlWebpackPlugin.files.chunks[key].entry)] %>"
-          crossorigin="<%= webpackConfig.output.crossOriginLoading %>"/>
+          crossorigin="<%= webpackConfig.output.crossOriginLoading %>"></script>
       <% } else { %>
-        <script src="<%= htmlWebpackPlugin.files.chunks[key].entry %>"/>
+        <script src="<%= htmlWebpackPlugin.files.chunks[key].entry %>"></script>
       <% } %>
     <% } %>
 
     <% if (htmlWebpackPlugin.options.devServer) { %>
-      <script src="<%= htmlWebpackPlugin.options.devServer %>/webpack-dev-server.js"/>
+      <script src="<%= htmlWebpackPlugin.options.devServer %>/webpack-dev-server.js"></script>
     <% } %>
 
     <% if (htmlWebpackPlugin.options.googleAnalytics) { %>
@@ -124,7 +122,7 @@
           ga('send','pageview')
         <% } %>
       </script>
-      <script async defer src="https://www.google-analytics.com/analytics.js"/>
+      <script async defer src="https://www.google-analytics.com/analytics.js"></script>
     <% } %>
   </body>
 </html>
