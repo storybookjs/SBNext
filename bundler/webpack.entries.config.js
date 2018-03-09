@@ -1,16 +1,15 @@
 const path = require('path');
 
 const webpack = require('webpack');
-const WildcardsEntryWebpackPlugin = require('./lib/plugin');
-// const WildcardsEntryWebpackPlugin = require('wildcards-entry-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackWatchedGlobEntries = require('webpack-watched-glob-entries-plugin');
 
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
 
 module.exports = {
-  entry: WildcardsEntryWebpackPlugin.entry('./in/**/*.example.js'),
+  entry: WebpackWatchedGlobEntries.getEntries(['./in/**/*.example.js']),
   output: {
     filename: 'out/[name].js',
     library: 'example_[id]',
@@ -30,7 +29,7 @@ module.exports = {
     ],
   },
   plugins: [
-    new WildcardsEntryWebpackPlugin(),
+    new WebpackWatchedGlobEntries(),
     new webpack.DllReferencePlugin({
       context: resolve('.'),
       manifest: require('./out/sb-manifest.json'),
