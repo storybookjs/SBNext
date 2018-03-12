@@ -1,10 +1,8 @@
-const React = require('react');
-const Component = require('./icon');
+import React from 'react';
+import Component from './icon';
 
-module.exports = {
-  house: () => <Component t="house" />,
-  arrow: () => <Component t="arrow" />,
-  warning: () => <Component t="warning" />,
-  unknown: () => <Component t="__inexistent__" />,
-  default: () => <Component />,
-};
+export default () => <Component />;
+export const house = () => <Component t="house" />;
+export const arrow = () => <Component t="arrow" />;
+export const warning = () => <Component t="warning" />;
+export const unknown = () => <Component t="__inexistent__" />;

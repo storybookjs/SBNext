@@ -1,17 +1,23 @@
-// vendor-bundles.webpack.config.js
+const path = require('path');
 const webpack = require('webpack');
 
+function resolve(dir) {
+  return path.join(__dirname, dir);
+}
+
 module.exports = {
-  mode: 'production',
   entry: {
     sb: ['@sb/core'],
     react: ['react'],
   },
-
   output: {
-    filename: 'out/[name].dll.js',
+    path: resolve('./out'),
+    filename: '[name].dll.js',
     library: '[name]_dll',
   },
+
+  mode: 'development',
+  devtool: 'source-map',
 
   plugins: [
     new webpack.DllPlugin({

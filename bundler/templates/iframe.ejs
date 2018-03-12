@@ -103,7 +103,7 @@
       <%= htmlWebpackPlugin.files[htmlWebpackPlugin.options.inlineManifestWebpackName] %>
     <% } %>
 
-    <textarea><%= JSON.stringify(htmlWebpackPlugin.files, null, 4) %></textarea>
+    <textarea><%= JSON.stringify(htmlWebpackPlugin, null, 4) %></textarea>
                 
     <% for (item of htmlWebpackPlugin.options.scripts) { %>
     <% if (typeof item === 'string' || item instanceof String) { item = { src: item } } %>

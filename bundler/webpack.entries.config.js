@@ -10,13 +10,17 @@ function resolve(dir) {
 }
 
 module.exports = {
-  mode: 'development',
-  entry: WildcardsEntryWebpackPlugin.entry('./in/**/*.example.js'),
+  entry: WildcardsEntryWebpackPlugin.entry('./in/**/*.example.js')(),
   output: {
-    filename: 'out/[name].js',
-    library: 'example_[id]',
+    path: resolve('./out'),
+    filename: '[name].js',
+    library: 'example_[hash]',
     publicPath: '/',
   },
+
+  mode: 'development',
+  devtool: 'source-map',
+
   module: {
     rules: [
       {
@@ -41,9 +45,10 @@ module.exports = {
       manifest: require('./out/react-manifest.json'),
     }),
     new HtmlWebpackPlugin({
+      cache: true,
       filename: resolve('./out/iframe.html'),
       inject: false,
-      scripts: ['/out/react.dll.js', '/out/sb.dll.js'],
+      scripts: ['./react.dll.js', './sb.dll.js'],
       template: 'templates/iframe.ejs',
       xhtml: true,
 
