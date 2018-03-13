@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 const icons = {
   house: () => (
@@ -19,7 +19,6 @@ const icons = {
 };
 
 const MyComponent = ({ t }) => (t && icons[t] ? t() : null);
-
-module.exports = MyComponent;
-
 console.log(MyComponent, React);
+
+export default MyComponent;

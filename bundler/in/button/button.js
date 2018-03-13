@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 const MyComponent = ({ color = 'hotpink', children = 'World', prefix = 'Hello' }) => (
   <button style={{ color }}>
@@ -6,4 +6,4 @@ const MyComponent = ({ color = 'hotpink', children = 'World', prefix = 'Hello' }
   </button>
 );
 
-module.exports = MyComponent;
+export default MyComponent;

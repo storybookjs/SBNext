@@ -1,16 +1,16 @@
 const path = require('path');
 
 const webpack = require('webpack');
-const WildcardsEntryWebpackPlugin = require('./lib/plugin');
+const WildcardsEntryWebpackPlugin = require('./lib/entrypointsPlugin');
 // const WildcardsEntryWebpackPlugin = require('wildcards-entry-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const GeneratePagePlugin = require('./lib/generatePageplugin');
 
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
 
 module.exports = {
-  entry: WildcardsEntryWebpackPlugin.entry('./in/**/*.example.js')(),
+  entry: WildcardsEntryWebpackPlugin.entry('./in/**/*.example.js'),
   output: {
     path: resolve('./out'),
     filename: '[name].js',
@@ -44,22 +44,9 @@ module.exports = {
       context: resolve('.'),
       manifest: require('./out/react-manifest.json'),
     }),
-    new HtmlWebpackPlugin({
-      cache: true,
-      filename: resolve('./out/iframe.html'),
-      inject: false,
-      scripts: ['./react.dll.js', './sb.dll.js'],
-      template: 'templates/iframe.ejs',
-      xhtml: true,
-
-      minify: {
-        collapseBooleanAttributes: true,
-        collapseWhitespace: true,
-        decodeEntities: true,
-        keepClosingSlash: true,
-        removeComments: true,
-        removeScriptTypeAttributes: true,
-      },
+    new GeneratePagePlugin({
+      template: resolve('./templates/iframe.ejs'),
+      parser: 'ejs',
     }),
   ],
 };

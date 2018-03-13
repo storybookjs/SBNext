@@ -12,7 +12,7 @@ module.exports = {
   },
   output: {
     path: resolve('./out'),
-    filename: '[name].dll.js',
+    filename: '[name]_dll.js',
     library: '[name]_dll',
   },
 
