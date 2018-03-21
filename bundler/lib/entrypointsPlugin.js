@@ -6,7 +6,15 @@
 const path = require('path');
 const glob = require('glob');
 
-let changeFileName, globBasedir;
+let globBasedir;
+
+function getEntryName(pathname, basedir, extname) {
+  let name;
+  if (pathname.startsWith(basedir)) {
+    name = pathname.substring(basedir.length + 1);
+  }
+  return name;
+}
 
 class WildcardsEntryWebpackPlugin {
   // make an entry name for every wildcards file;
@@ -32,26 +40,27 @@ class WildcardsEntryWebpackPlugin {
       );
     }
 
-    var namePrefix = namePrefix ? `${namePrefix}/` : '';
-    let basedir, file;
+    namePrefix = namePrefix ? `${namePrefix}/` : '';
+    let basedir;
     let flagIndex = wildcards.indexOf('/*');
+
     if (flagIndex === -1) {
       flagIndex = wildcards.lastIndexOf('/');
     }
     basedir = wildcards.substring(0, flagIndex);
-    file = wildcards.substring(flagIndex + 1);
+    const file = wildcards.substring(flagIndex + 1);
 
     basedir = path.resolve(process.cwd(), basedir);
     globBasedir = basedir = path.normalize(basedir);
 
-    return function() {
+    return () => {
       const files = glob.sync(path.resolve(basedir, file));
-      let entries = {},
-        entry,
-        dirname,
-        basename,
-        pathname,
-        extname;
+      const entries = {};
+      let entry;
+      let dirname;
+      let basename;
+      let pathname;
+      let extname;
 
       for (let i = 0; i < files.length; i++) {
         entry = files[i];
@@ -73,14 +82,6 @@ class WildcardsEntryWebpackPlugin {
       callback();
     });
   }
-}
-
-function getEntryName(pathname, basedir, extname) {
-  let name;
-  if (pathname.startsWith(basedir)) {
-    name = pathname.substring(basedir.length + 1);
-  }
-  return name;
 }
 
 module.exports = WildcardsEntryWebpackPlugin;

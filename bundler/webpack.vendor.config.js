@@ -11,7 +11,7 @@ module.exports = {
     react: ['react'],
   },
   output: {
-    path: resolve('./out'),
+    path: resolve('./out/dll'),
     filename: '[name]_dll.js',
     library: '[name]_dll',
   },
@@ -22,7 +22,7 @@ module.exports = {
   plugins: [
     new webpack.DllPlugin({
       context: resolve('.'),
-      path: './out/[name]-manifest.json',
+      path: './out/dll/[name]-manifest.json',
       name: '[name]_dll',
     }),
   ],

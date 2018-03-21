@@ -6,4 +6,6 @@ This subproject is an experiment on efficient webpack building, rebuilding, cach
 
 - [x] find and watch all `**/*.example.js`
 - [x] extract & precompile common parts
-- [ ] write an HTML file for every `**/*.example.js`
+- [x] write an HTML file for every `**/*.example.js`
+- [x] HMR on every page & refresh if uncaught
+- [ ] wrap every example with HMR catcher code

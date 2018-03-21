@@ -11,7 +11,7 @@ const getDLLs = entrypoint => {
   return Object.values(hash)
     .reduce((acc, i) => acc.concat(i.dependencies), [])
     .filter(i => i.module)
-    .map(i => `${i.module.request}.js`);
+    .map(i => `dll/${i.module.request}.js`);
 };
 
 class GeneratePagePlugin {

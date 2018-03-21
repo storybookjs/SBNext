@@ -24,6 +24,11 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.example.jsx?$/,
+        exclude: /node_modules/,
+        use: [resolve('./lib/addHMRLoader.js')],
+      },
+      {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: ['babel-loader'],
@@ -38,11 +43,11 @@ module.exports = {
     new WildcardsEntryWebpackPlugin(),
     new webpack.DllReferencePlugin({
       context: resolve('.'),
-      manifest: require('./out/sb-manifest.json'),
+      manifest: require('./out/dll/sb-manifest.json'),
     }),
     new webpack.DllReferencePlugin({
       context: resolve('.'),
-      manifest: require('./out/react-manifest.json'),
+      manifest: require('./out/dll/react-manifest.json'),
     }),
     new GeneratePagePlugin({
       template: resolve('./templates/iframe.ejs'),
