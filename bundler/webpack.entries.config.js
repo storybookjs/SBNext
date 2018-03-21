@@ -26,7 +26,7 @@ module.exports = {
       {
         test: /\.example.jsx?$/,
         exclude: /node_modules/,
-        use: [resolve('./lib/addHMRLoader.js')],
+        use: [resolve('./lib/storybookLoader.js')],
       },
       {
         test: /\.jsx?$/,

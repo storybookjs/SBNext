@@ -7,3 +7,5 @@ const MyComponent = ({ color = 'hotpink', children = 'World', prefix = 'Hello' }
 );
 
 export default MyComponent;
+
+document.body.style.background = 'deepskyblue';
