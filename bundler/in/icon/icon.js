@@ -22,3 +22,5 @@ const MyComponent = ({ t }) => (t && icons[t] ? t() : null);
 console.log(MyComponent, React);
 
 export default MyComponent;
+
+document.body.style.background = 'orangered';

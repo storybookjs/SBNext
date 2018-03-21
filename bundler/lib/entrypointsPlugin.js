@@ -60,7 +60,7 @@ class WildcardsEntryWebpackPlugin {
         basename = path.basename(entry, extname);
         pathname = path.normalize(path.join(dirname, basename));
         pathname = getEntryName(pathname, basedir, extname);
-        entries[namePrefix + pathname] = entry;
+        entries[namePrefix + pathname] = [entry];
       }
       Object.assign(entries, assignEntry);
       return entries;

@@ -1,11 +1,10 @@
 module.exports = {
   open: {
-    path: 'iframe.html',
+    path: 'icon/icon.example.html',
   },
   content: './out',
   port: 1337,
   dev: {
-    index: 'iframe.html',
     publicPath: '/',
   },
 };
