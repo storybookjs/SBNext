@@ -52,13 +52,6 @@
       }
     </style>
 
-    <% if (options.unsupportedBrowser) { %>
-      <style>.unsupported-browser { display: none; }</style>
-      <div class="unsupported-browser">
-        Sorry, your browser is not supported. Please upgrade to the latest version or switch your browser to use this site. See <a href="http://outdatedbrowser.com/">outdatedbrowser.com</a> for options.
-      </div>
-    <% } %>
-
     <% if (options.bodyHtmlSnippet) { %>
       <%= options.bodyHtmlSnippet %>
     <% } %>
@@ -74,19 +67,6 @@
     <% for (item of options.appMountIds) { %>
       <div id="<%= item %>"></div>
     <% } %>
-
-    <% if (options.window) { %>
-    <script>
-      <% for (key in options.window) { %>
-        window['<%= key %>'] = <%= JSON.stringify(options.window[key]) %>;
-      <% } %>
-    </script>
-    <% } %>
-
-    <% if (options.inlineManifestWebpackName) { %>
-      <%= files[options.inlineManifestWebpackName] %>
-    <% } %>
-
                 
     <% for (item of options.scripts) { %>
     <% if (typeof item === 'string' || item instanceof String) { item = { src: item } } %>
@@ -101,10 +81,6 @@
       <% for (key in chunks[index].files) { %>
         <script src="<%= compilation.outputOptions.publicPath %><%= chunks[index].files[key] %>"></script>
       <% } %>
-    <% } %>
-
-    <% if (options.devServer) { %>
-      <script src="<%= options.devServer %>/webpack-dev-server.js"></script>
     <% } %>
   </body>
 </html>

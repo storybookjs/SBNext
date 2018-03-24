@@ -14,7 +14,8 @@ module.exports = {
   output: {
     path: resolve('./out'),
     filename: '[name].js',
-    library: 'example_[hash]',
+    library: 'example_[id]',
+    libraryTarget: 'window',
     publicPath: '/',
   },
 
@@ -23,11 +24,11 @@ module.exports = {
 
   module: {
     rules: [
-      {
-        test: /\.example.jsx?$/,
-        exclude: /node_modules/,
-        use: [resolve('./lib/storybookLoader.js')],
-      },
+      // {
+      //   test: /\.example.jsx?$/,
+      //   exclude: /node_modules/,
+      //   use: [resolve('./lib/storybookLoader.js')],
+      // },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,

@@ -23,4 +23,4 @@ console.log(MyComponent, React);
 
 export default MyComponent;
 
-document.body.style.background = 'orangered';
+document.body.style.background = 'pink';

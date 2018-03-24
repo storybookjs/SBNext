@@ -1,13 +1,14 @@
-export const runtime = m => {
+export const runtime = ({ examples, m, p }) => {
   // ENABLE HMR
   if (m && m.hot) {
     m.hot.accept(() => {
-      console.log('ACCEPTED');
+      console.log('ACCEPTED', p);
     });
-    m.hot.dispose(() => {
-      console.log('DISPOSED');
+    m.hot.dispose((...params) => {
+      debugger;
+      console.log('DISPOSED', m);
     });
   }
 
-  console.log('storybook runtime ENABLED for', m);
+  console.log('storybook runtime ENABLED for', m, examples, p);
 };
