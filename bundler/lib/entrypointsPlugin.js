@@ -77,9 +77,8 @@ class WildcardsEntryWebpackPlugin {
   }
 
   apply(compiler) {
-    compiler.plugin('after-compile', (compilation, callback) => {
+    compiler.hooks.afterCompile.tap('EntrypointsPlugin', compilation => {
       compilation.contextDependencies.add(globBasedir);
-      callback();
     });
   }
 }

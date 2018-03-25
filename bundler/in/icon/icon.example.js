@@ -5,4 +5,4 @@ export default () => <Component />;
 export const house = () => <Component t="house" />;
 export const arrow = () => <Component t="arrow" />;
 export const warning = () => <Component t="warning" />;
-export const unknown = () => <Component t="__inexistent__" />;
+export const unknownx = () => <Component t="__inexistent__" />;

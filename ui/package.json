@@ -13,20 +13,20 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "global": "^4.3.2",
-    "jss": "^9.4.0",
-    "jss-preset-default": "^4.0.1",
-    "material-ui": "^1.0.0-beta.25",
-    "material-ui-icons": "^1.0.0-beta.17",
+    "jss": "^9.8.1",
+    "jss-preset-default": "^4.3.0",
+    "material-ui": "^0.20.0",
+    "material-ui-icons": "^1.0.0-beta.36",
     "next": "^4.2.1",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-grid-layout": "^0.16.6",
-    "react-jss": "^8.2.0",
+    "react-jss": "^8.3.5",
     "react-mousetrap": "^0.2.0",
-    "react-resize-detector": "^1.1.0",
+    "react-resize-detector": "^2.2.0",
     "react-sizeme": "^2.3.6",
-    "styled-jss": "^2.1.2"
+    "styled-jss": "^2.2.2"
   },
   "peerDependencies": {
     "@sb/serve": "^1.0.0"
