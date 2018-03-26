@@ -23,4 +23,4 @@ console.log(MyComponent, React);
 
 export default MyComponent;
 
-document.body.style.background = 'deeppink';
+document.body.style.background = 'hotpink';

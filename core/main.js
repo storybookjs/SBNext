@@ -10,16 +10,4 @@ export const runtime = (m, examples) => {
   }
 
   console.log('storybook runtime ENABLED for', m, examples);
-  // try {
-  //   __webpack_require__(m);
-  //   debugger;
-  // } catch (err) {
-  //   console.log(err);
-  // }
-  // try {
-  //   require(m.id);
-  //   debugger;
-  // } catch (err) {
-  //   console.log(err);
-  // }
 };

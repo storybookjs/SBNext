@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const WildcardsEntryWebpackPlugin = require('./lib/entrypointsPlugin');
 // const WildcardsEntryWebpackPlugin = require('wildcards-entry-webpack-plugin');
 const GeneratePagePlugin = require('./lib/generatePageplugin');
+const DashboardPlugin = require('webpack-dashboard/plugin');
 
 function resolve(dir) {
   return path.join(__dirname, dir);
@@ -26,7 +27,7 @@ module.exports = {
       {
         test: /\.example.jsx?$/,
         exclude: /node_modules/,
-        use: [resolve('./lib/storybookLoader.js')],
+        use: ['@sb/core/loader'],
       },
       {
         test: /\.jsx?$/,
@@ -40,6 +41,7 @@ module.exports = {
     ],
   },
   plugins: [
+    // new DashboardPlugin(),
     new WildcardsEntryWebpackPlugin(),
     new webpack.DllReferencePlugin({
       context: resolve('.'),

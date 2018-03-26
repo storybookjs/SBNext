@@ -90,21 +90,21 @@
                 
     <% for (item of options.scripts) { %>
     <% if (typeof item === 'string' || item instanceof String) { item = { src: item } } %>
-      <script <% for (key in item) { %> <%= key %>="<%= item[key] %>"<% } %>></script>
+      <script <% for (key in item) { %> <%= key %>="<%= item[key] %>"<% } %> defer></script>
     <% } %>
 
     <% for (key in dlls) { %>
-      <script src="<%= compilation.outputOptions.publicPath %><%= dlls[key] %>"></script>
+      <script src="<%= compilation.outputOptions.publicPath %><%= dlls[key] %>" defer></script>
     <% } %>
 
     <% for (index in chunks) { %>
       <% for (key in chunks[index].files) { %>
-        <script src="<%= compilation.outputOptions.publicPath %><%= chunks[index].files[key] %>"></script>
+        <script src="<%= compilation.outputOptions.publicPath %><%= chunks[index].files[key] %>" defer></script>
       <% } %>
     <% } %>
 
     <% if (options.devServer) { %>
-      <script src="<%= options.devServer %>/webpack-dev-server.js"></script>
+      <script src="<%= options.devServer %>/webpack-dev-server.js" defer></script>
     <% } %>
   </body>
 </html>

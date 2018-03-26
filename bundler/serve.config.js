@@ -1,18 +1,33 @@
+const compress = require('koa-compress');
+
 module.exports = {
   open: {
     path: 'icon/icon.example.html',
   },
+  logTime: true,
+  add: (app, middleware) => {
+    middleware.webpack();
+    middleware.content();
+
+    app.use(compress());
+  },
   content: './out',
   port: 1337,
+  hot: {
+    logTime: true,
+    logLevel: 'error',
+  },
   dev: {
     publicPath: '/',
+    writeToDisk: true,
+    logTime: true,
     stats: {
       assets: false,
       // Sort assets by a field
       // You can reverse the sort with `!field`.
       assetsSort: 'field',
       // Add build date and time information
-      builtAt: true,
+      builtAt: false,
       // Add information about cached (not built) modules
       cached: true,
       // Show cached assets (setting this to `false` only shows emitted files)
@@ -64,7 +79,7 @@ module.exports = {
       // Add the source code of modules
       source: false,
       // Add timing information
-      timings: true,
+      timings: false,
       // Show which exports of a module are used
       usedExports: false,
       // Add webpack version information
