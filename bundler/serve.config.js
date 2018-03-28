@@ -1,9 +1,9 @@
 const compress = require('koa-compress');
 
 module.exports = {
-  open: {
-    path: 'icon/icon.example.html',
-  },
+  // open: {
+  //   path: 'icon/icon.example.html',
+  // },
   logTime: true,
   add: (app, middleware) => {
     middleware.webpack();
