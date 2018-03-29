@@ -54,7 +54,7 @@
     "react-grid-layout": "^0.16.6",
     "react-jss": "^8.3.5",
     "react-mousetrap": "^0.2.0",
-    "react-resize-detector": "^2.2.0",
+    "react-resize-detector": "^2.3.0",
     "react-sizeme": "^2.4.0",
     "react-test-renderer": "^16.2.0",
     "rehype-raw": "^2.0.0",
@@ -90,10 +90,7 @@
   },
   "workspaces": [
     "bundler",
-    "core",
-    "demo",
-    "docs-v2",
-    "server",
-    "ui"
+    "core/*",
+    "renderers/*"
   ]
 }

@@ -11,16 +11,17 @@ This subproject is an experiment on efficient webpack building, rebuilding, cach
 - [x] wrap every example with HMR catcher code
   - [x] rebuild
   - [x] refresh
-  - [ ] recover from fatal webpack error
-- [ ] add renderer
+  - [x] recover from fatal parse error
+  - [x] recover from fatal webpack error
+- [x] add renderer
       maybe rename e.g. react_dll to renderer, or detect and inject additional module
-- [ ] render first example
+- [x] render first example
 - [ ] runtime with communication-layer
 - [ ] write outer frame with runtime
 - [ ] split into serve-package and bundle-package
 - [ ] run from example-package in and out
 - [ ] support for other frameworks
-- [ ] create the renderer packages
+- [x] create the renderer packages
 - [ ] support for multiple frameworks in 1 config
 - [ ] serve outer and inner in 1 command
 - [ ] serve on localhost and local IP

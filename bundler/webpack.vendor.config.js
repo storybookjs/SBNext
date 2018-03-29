@@ -7,8 +7,9 @@ function resolve(dir) {
 
 module.exports = {
   entry: {
-    sb: ['@sb/core'],
-    react: ['react'],
+    sb_core: ['@sb/core-runtime'],
+    sb_renderer_react: ['@sb/renderer-react', 'react'],
+    // react: ['react'],
   },
   output: {
     path: resolve('./out/dll'),

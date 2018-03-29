@@ -27,7 +27,7 @@ module.exports = {
       {
         test: /\.example.jsx?$/,
         exclude: /node_modules/,
-        use: ['@sb/core/loader'],
+        use: ['@sb/core-loader'],
       },
       {
         test: /\.jsx?$/,
@@ -45,15 +45,16 @@ module.exports = {
     new WildcardsEntryWebpackPlugin(),
     new webpack.DllReferencePlugin({
       context: resolve('.'),
-      manifest: require('./out/dll/sb-manifest.json'),
+      manifest: require('./out/dll/sb_core-manifest.json'),
     }),
     new webpack.DllReferencePlugin({
       context: resolve('.'),
-      manifest: require('./out/dll/react-manifest.json'),
+      manifest: require('./out/dll/sb_renderer_react-manifest.json'),
     }),
     new GeneratePagePlugin({
       template: resolve('./templates/iframe.ejs'),
       parser: 'ejs',
+      appMountIds: ['root'],
     }),
   ],
 };

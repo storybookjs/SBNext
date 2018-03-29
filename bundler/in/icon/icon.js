@@ -2,24 +2,23 @@ import React from 'react';
 
 const icons = {
   house: () => (
-    <svg>
-      <circle stroke="orangered" />
+    <svg width={50} height={50}>
+      <circle stroke="orangered" cx="25" cy="25" r="25" />
     </svg>
   ),
   arrow: () => (
-    <svg>
-      <circle stroke="deepskyblue" />
+    <svg width={50} height={50}>
+      <circle stroke="deepskyblue" cx="25" cy="25" r="25" />
     </svg>
   ),
   warning: () => (
-    <svg>
-      <circle stroke="orange" />
+    <svg width={50} height={50}>
+      <circle stroke="orange" cx="25" cy="25" r="25" />
     </svg>
   ),
 };
 
-const MyComponent = ({ t }) => (t && icons[t] ? t() : null);
-console.log(MyComponent, React);
+const MyComponent = ({ t }) => (t && icons[t] ? icons[t]() : null);
 
 export default MyComponent;
 

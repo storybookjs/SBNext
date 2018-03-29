@@ -1,0 +1,17 @@
+{
+  "name": "@sb/core-runtime",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Norbert de Langen <ndelangen@me.com>",
+  "scripts": {},
+  "dependencies": {
+    "global": "4.3.2"
+  },
+  "peerDependencies": {},
+  "main": "main.js",
+  "engines": {
+    "node": ">=8.0.0",
+    "yarn": ">=1.0.0"
+  },
+  "private": true
+}
