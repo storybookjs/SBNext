@@ -17,7 +17,7 @@ This subproject is an experiment on efficient webpack building, rebuilding, cach
   - [x] recover from fatal webpack error
   - [x] changing example 1 has no side-effects in example 2
 - [ ] support for pre-build html-files
-- [ ] support DLL vendor in production mode
+- [x] support DLL vendor in production mode
 ### core
 - [x] add renderer
       maybe rename e.g. react_dll to renderer, or detect and inject additional module

@@ -19,7 +19,7 @@ module.exports = {
     library: '[name]_dll',
   },
 
-  mode: 'development',
+  mode: 'production',
   devtool: 'source-map',
 
   plugins: [
