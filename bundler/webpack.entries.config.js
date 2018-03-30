@@ -6,11 +6,14 @@ const WildcardsEntryWebpackPlugin = require('./lib/entrypointsPlugin');
 const GeneratePagePlugin = require('./lib/generatePageplugin');
 const DashboardPlugin = require('webpack-dashboard/plugin');
 
+const { NamedModulesPlugin } = webpack;
+
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
 
 module.exports = {
+  name: 'entries',
   entry: WildcardsEntryWebpackPlugin.entry('./in/**/*.example.js'),
   output: {
     path: resolve('./out'),
@@ -42,6 +45,7 @@ module.exports = {
   },
   plugins: [
     // new DashboardPlugin(),
+    new NamedModulesPlugin(),
     new WildcardsEntryWebpackPlugin(),
     new webpack.DllReferencePlugin({
       context: resolve('.'),

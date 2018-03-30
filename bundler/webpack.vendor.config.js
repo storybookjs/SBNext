@@ -1,15 +1,17 @@
 const path = require('path');
 const webpack = require('webpack');
 
+const { NamedModulesPlugin } = webpack;
+
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
 
 module.exports = {
+  name: 'vendor',
   entry: {
     sb_core: ['@sb/core-runtime'],
     sb_renderer_react: ['@sb/renderer-react', 'react'],
-    // react: ['react'],
   },
   output: {
     path: resolve('./out/dll'),
@@ -17,10 +19,11 @@ module.exports = {
     library: '[name]_dll',
   },
 
-  mode: 'production',
+  mode: 'development',
   devtool: 'source-map',
 
   plugins: [
+    new NamedModulesPlugin(),
     new webpack.DllPlugin({
       context: resolve('.'),
       path: './out/dll/[name]-manifest.json',

@@ -1,11 +1,11 @@
 {
-  "name": "@sb/core-loader",
+  "name": "@sb/core-logger",
   "version": "1.0.0",
   "license": "MIT",
   "author": "Norbert de Langen <ndelangen@me.com>",
   "scripts": {},
   "dependencies": {
-    "@sb/core-logger": "1.0.0"
+    "loglevelnext": "^1.0.3"
   },
   "peerDependencies": {},
   "main": "main.js",

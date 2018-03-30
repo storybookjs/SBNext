@@ -71,7 +71,7 @@ serve(Object.assign(options, { config })).then(server => {
         });
       }, {});
 
-      console.dir(entryPoints, { depth: 2 });
+      // console.dir(entryPoints, { depth: 2 });
 
       // console.timeEnd('doneProcess');
     } catch (err) {

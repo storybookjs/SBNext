@@ -1,17 +1,18 @@
-import { location } from 'global';
+import logger from '@sb/core-logger';
 
-export const runtime = (m, examples, renderer) => {
-  // ENABLE HMR
-  if (m && m.hot) {
-    m.hot.accept(() => {
-      location.reload();
-    });
-    m.hot.dispose(() => {
-      console.log('DISPOSED');
-    });
-  }
+export const runtime = ({ examples, renderer, type, name }) => {
+  const e = Object.assign(Object.create(null), examples);
 
-  console.log('storybook runtime ENABLED for', { examples });
+  logger.info(
+    `%cenabled %c${type}%c renderer for %c${name}`,
+    'color: inherit;',
+    'color: #F1618C; font-weight: 700',
+    'color: inherit;',
+    'color: #6DABF5; font-weight: 700',
+    e
+  );
+
+  // logger.info(`enabled ${type} renderer`);
 
   renderer(Object.values(examples));
 };
@@ -19,5 +20,3 @@ export const runtime = (m, examples, renderer) => {
 if (module.hot) {
   module.hot.decline();
 }
-
-console.log('Storybook runtime actived');

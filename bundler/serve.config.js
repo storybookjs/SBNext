@@ -21,6 +21,7 @@ module.exports = {
     publicPath: '/',
     writeToDisk: true,
     logTime: true,
+    logLevel: 'error',
     stats: {
       assets: false,
       // Sort assets by a field
