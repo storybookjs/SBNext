@@ -1,6 +1,7 @@
 {
   "presets": ["env", "stage-2", "react"],
   "plugins": [
+    "babel-plugin-transform-export-extensions",
     ["transform-runtime", {
       "polyfill": false,
       "regenerator": true

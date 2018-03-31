@@ -1,0 +1,21 @@
+{
+  "name": "@sb/cli",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Norbert de Langen <ndelangen@me.com>",
+  "scripts": {},
+  "dependencies": {
+    "chalk": "^2.3.2",
+    "commander": "^2.15.1"
+  },
+  "bin": {
+    "sb": "./bin/sb"
+  },
+  "peerDependencies": {},
+  "main": "main.js",
+  "engines": {
+    "node": ">=8.0.0",
+    "yarn": ">=1.0.0"
+  },
+  "private": true
+}

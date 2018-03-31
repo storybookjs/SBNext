@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+
+const fs = require('fs');
+
+const runAsProd = () => {
+  require('../dist/index');
+};
+const runAsDev = () => {
+  require('babel-register');
+  require('../src/index');
+};
+
+fs.access('../dist', error => (error ? runAsDev() : runAsProd()));
