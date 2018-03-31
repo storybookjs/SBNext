@@ -1,17 +1,17 @@
 {
   "name": "@sb/core-logger",
   "version": "1.0.0",
+  "private": true,
   "license": "MIT",
   "author": "Norbert de Langen <ndelangen@me.com>",
+  "main": "main.js",
   "scripts": {},
   "dependencies": {
     "loglevelnext": "^1.0.3"
   },
   "peerDependencies": {},
-  "main": "main.js",
   "engines": {
     "node": ">=8.0.0",
     "yarn": ">=1.0.0"
-  },
-  "private": true
+  }
 }

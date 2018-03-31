@@ -1,6 +1,7 @@
 {
   "name": "@sb4/root",
   "version": "1.0.0",
+  "private": true,
   "license": "MIT",
   "author": "Norbert de Langen <ndelangen@me.com>",
   "main": "index.js",
@@ -9,6 +10,21 @@
     "demo": "npm --prefix demo run dev",
     "lint": "eslint . --fix",
     "test": "NODE_ENV=test jest"
+  },
+  "jest": {
+    "roots": [
+      "bundler/",
+      "core/",
+      "demo/",
+      "server/",
+      "ui/"
+    ],
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "dist",
+      "node_modules",
+      ".next"
+    ]
   },
   "devDependencies": {
     "@taskr/babel": "^1.1.0",
@@ -73,22 +89,6 @@
   "engines": {
     "node": ">=8.0.0",
     "yarn": ">=1.0.0"
-  },
-  "private": true,
-  "jest": {
-    "testEnvironment": "node",
-    "testPathIgnorePatterns": [
-      "dist",
-      "node_modules",
-      ".next"
-    ],
-    "roots": [
-      "bundler/",
-      "core/",
-      "demo/",
-      "server/",
-      "ui/"
-    ]
   },
   "workspaces": [
     "bundler",
