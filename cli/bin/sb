@@ -5,8 +5,20 @@ const fs = require('fs');
 const runAsProd = () => {
   require('../dist/index');
 };
+
 const runAsDev = () => {
-  require('babel-register');
+  require('babel-register')({
+    ignore: filename => {
+      if (filename.match(/src/) || filename.match(/@sb/) || filename.match(/bundler/)) {
+        return false;
+      }
+      if (filename.match(/\/node_modules\//)) {
+        return true;
+      }
+      return false;
+    },
+    cache: false,
+  });
   require('../src/index');
 };
 

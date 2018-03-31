@@ -1,6 +1,6 @@
 const compress = require('koa-compress');
 
-module.exports = {
+module.exports = () => ({
   // open: {
   //   path: 'icon/icon.example.html',
   // },
@@ -89,4 +89,4 @@ module.exports = {
       warnings: true,
     },
   },
-};
+});

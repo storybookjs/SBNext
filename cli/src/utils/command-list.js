@@ -2,3 +2,4 @@
 
 export * as commandA from '../commands/commandA';
 export * as commandB from '../commands/commandB';
+export * as serve from '../commands/serve';

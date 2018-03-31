@@ -55,9 +55,6 @@ class WildcardsEntryWebpackPlugin {
 
     return () => {
       const files = glob.sync(path.resolve(basedir, file));
-
-      console.log({ files });
-
       const entries = {};
       let entry;
       let dirname;

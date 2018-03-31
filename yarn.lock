@@ -132,9 +132,9 @@
     mz "^2.6.0"
     resolve-path "^1.3.3"
 
-"@shellscape/koa-static@^4.0.2":
-  version "4.0.4"
-  resolved "https://registry.yarnpkg.com/@shellscape/koa-static/-/koa-static-4.0.4.tgz#38b569dfad3ce04c43391bed68f5f3b4af0294bb"
+"@shellscape/koa-static@^4.0.4":
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/@shellscape/koa-static/-/koa-static-4.0.5.tgz#b329b55bfd41056a6981c584ae6bace30b5b6b3b"
   dependencies:
     "@shellscape/koa-send" "^4.1.0"
     debug "^2.6.8"
@@ -7758,7 +7758,7 @@ resolve@1.1.7:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.1.7.tgz#203114d82ad2c5ed9e8e0411b3932875e889e97b"
 
-resolve@^1.1.6, resolve@^1.2.0, resolve@^1.5.0:
+resolve@^1.1.6, resolve@^1.2.0, resolve@^1.5.0, resolve@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.6.0.tgz#0fbd21278b27b4004481c395349e7aba60a9ff5c"
   dependencies:
@@ -9273,7 +9273,7 @@ webpack-dev-middleware@^3.0.0:
     url-join "^4.0.0"
     webpack-log "^1.0.1"
 
-webpack-hot-client@^2.0.0:
+webpack-hot-client@^2.0.0, webpack-hot-client@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/webpack-hot-client/-/webpack-hot-client-2.2.0.tgz#21055a60f4292d00ac5376fe76786cfbef576482"
   dependencies:
@@ -9302,10 +9302,10 @@ webpack-log@^1.0.1, webpack-log@^1.1.1, webpack-log@^1.1.2:
     uuid "^3.1.0"
 
 webpack-serve@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/webpack-serve/-/webpack-serve-0.3.0.tgz#4b948587a78af7541393ce1cedf4b3092ff4650c"
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/webpack-serve/-/webpack-serve-0.3.1.tgz#a91a99d013a70d2c15df2d12c5d31a8842c033ba"
   dependencies:
-    "@shellscape/koa-static" "^4.0.2"
+    "@shellscape/koa-static" "^4.0.4"
     chalk "^2.3.0"
     clipboardy "^1.2.2"
     cosmiconfig "^4.0.0"
@@ -9321,10 +9321,12 @@ webpack-serve@^0.3.0:
     meow "^4.0.0"
     nanobus "^4.3.1"
     opn "^5.1.0"
+    resolve "^1.6.0"
     time-fix-plugin "^2.0.0"
     update-notifier "^2.3.0"
     url-join "3.0.0"
     v8-compile-cache "^1.1.0"
+    webpack-hot-client "^2.2.0"
     webpack-log "^1.1.2"
 
 webpack-sources@^1.0.1, webpack-sources@^1.1.0:
@@ -9628,8 +9630,8 @@ yarn@^1.3.2:
   resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.5.1.tgz#e8680360e832ac89521eb80dad3a7bc27a40bab4"
 
 yeoman-environment@^2.0.0, yeoman-environment@^2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/yeoman-environment/-/yeoman-environment-2.0.5.tgz#84f22bafa84088971fe99ea85f654a3a3dd2b693"
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/yeoman-environment/-/yeoman-environment-2.0.6.tgz#ae1b21d826b363f3d637f88a7fc9ea7414cb5377"
   dependencies:
     chalk "^2.1.0"
     debug "^3.1.0"

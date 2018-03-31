@@ -1,12 +1,10 @@
 {
   "name": "@sb/bundler",
+  "main": "src/main.js",
   "version": "1.0.0",
   "private": true,
   "license": "MIT",
   "author": "Norbert de Langen <ndelangen@me.com>",
-  "bin": {
-    "sb-bundler": "./bin/sb-bundler"
-  },
   "scripts": {
     "build": "yarn build-vendor && yarn build-client",
     "build-client": "webpack --config webpack.entries.config.js",

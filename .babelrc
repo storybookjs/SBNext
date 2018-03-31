@@ -1,5 +1,13 @@
 {
-  "presets": ["env", "stage-2", "react"],
+  "presets": [
+    ["env", {
+      "targets":  {},
+      "modules": "commonjs",
+      "loose": true
+    }],
+    "react", 
+    "stage-2"
+  ],
   "plugins": [
     "babel-plugin-transform-export-extensions",
     ["transform-runtime", {

@@ -1,11 +1,11 @@
-const path = require('path');
-const webpack = require('webpack');
+import path from 'path';
+import webpack from 'webpack';
 
 const { NamedModulesPlugin } = webpack;
 
 const resolveLocal = dir => path.join(process.cwd(), dir);
 
-module.exports = ({
+export default ({
   renderers = [],
   outputPath = resolveLocal('out'),
   devTool = 'source-map',

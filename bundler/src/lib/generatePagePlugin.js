@@ -18,7 +18,7 @@ class GeneratePagePlugin {
   constructor(options) {
     this.options = options;
 
-    const engine = require(options.parser);
+    const engine = options.parser;
     const template = fs.readFileSync(options.template, 'utf-8');
 
     this.renderer = engine.compile(template);
@@ -29,7 +29,7 @@ class GeneratePagePlugin {
       compilation.hooks.additionalChunkAssets.tap('GeneratePagePlugin', () => {
         const { entrypoints } = compilation;
 
-        [...entrypoints].forEach(([, value]) => {
+        Array.from(entrypoints).forEach(([, value]) => {
           const dlls = getDLLs(value);
 
           const data = Object.assign({ options: this.options, compilation, dlls }, value);
@@ -46,15 +46,3 @@ class GeneratePagePlugin {
 }
 
 module.exports = GeneratePagePlugin;
-
-/* TODOS:
- * 
- * Investigate HMR
- * - [ ] perhaps I can add hot.accept to entrypoints themselves?
- * - [ ] not add html files during HMR?
- * 
- * Options
- * - [x] allow for a template compiler
- * - [x] allow for a template
- * 
- */
