@@ -4,27 +4,29 @@
   "private": true,
   "license": "MIT",
   "author": "Norbert de Langen <ndelangen@me.com>",
+  "bin": {
+    "sb-bundler": "./bin/sb-bundler"
+  },
   "scripts": {
     "build": "yarn build-vendor && yarn build-client",
     "build-client": "webpack --config webpack.entries.config.js",
     "build-vendor": "webpack --config webpack.vendor.config.js",
-    "serve": "node ./lib/bin.js",
-    "serve-dashboard": "webpack-dashboard -- yarn serve"
+    "serve": "./bin/sb-bundler"
   },
   "dependencies": {
     "@sb/core-loader": "^1.0.0",
     "@sb/core-runtime": "^1.0.0",
-    "@sb/renderer-react": "^1.0.0",
     "babel-loader": "^7.1.4",
     "ejs-loader": "^0.3.1",
     "glob": "^7.1.2",
     "koa-compress": "^2.0.0",
     "webpack": "^4.4.1",
     "webpack-cli": "^2.0.13",
-    "webpack-dashboard": "^1.1.1",
     "webpack-serve": "^0.3.0"
   },
-  "peerDependencies": {},
+  "peerDependencies": {
+    "@sb/renderer-react": "^1.0.0"
+  },
   "engines": {
     "node": ">=8.0.0",
     "yarn": ">=1.0.0"

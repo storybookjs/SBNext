@@ -1,0 +1,23 @@
+{
+  "name": "@sb/example-react",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Norbert de Langen <ndelangen@me.com>",
+  "scripts": {
+    "start": "sb-bundler"
+  },
+  "dependencies": {
+    "@sb/bundler": "1.0.0",
+    "@sb/renderer-react": "^1.0.0",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0"
+  },
+  "peerDependencies": {
+  },
+  "main": "main.js",
+  "engines": {
+    "node": ">=8.0.0",
+    "yarn": ">=1.0.0"
+  },
+  "private": true
+}

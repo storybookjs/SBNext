@@ -38,5 +38,5 @@ This subproject is an experiment on efficient webpack building, rebuilding, cach
 - [ ] serve on localhost and local IP
 
 ### Demo
-- [ ] create external demo run from example-package in and out
+- [x] create external demo run from example-package in and out
 - [ ] support for multiple frameworks in 1 config

@@ -2,15 +2,12 @@ const path = require('path');
 
 const webpack = require('webpack');
 const WildcardsEntryWebpackPlugin = require('./lib/entrypointsPlugin');
-// const WildcardsEntryWebpackPlugin = require('wildcards-entry-webpack-plugin');
 const GeneratePagePlugin = require('./lib/generatePageplugin');
-const DashboardPlugin = require('webpack-dashboard/plugin');
 
 const { NamedModulesPlugin } = webpack;
 
-function resolve(dir) {
-  return path.join(__dirname, dir);
-}
+const resolve = dir => path.join(__dirname, dir);
+const resolveLocal = dir => path.join(process.cwd(), dir);
 
 module.exports = {
   name: 'entries',
@@ -48,11 +45,11 @@ module.exports = {
     new NamedModulesPlugin(),
     new WildcardsEntryWebpackPlugin(),
     new webpack.DllReferencePlugin({
-      context: resolve('.'),
+      context: resolveLocal('.'),
       manifest: require('./out/dll/sb_core-manifest.json'),
     }),
     new webpack.DllReferencePlugin({
-      context: resolve('.'),
+      context: resolveLocal('.'),
       manifest: require('./out/dll/sb_renderer_react-manifest.json'),
     }),
     new GeneratePagePlugin({

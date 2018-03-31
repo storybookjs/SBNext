@@ -12,8 +12,6 @@ export const runtime = ({ examples, renderer, type, name }) => {
     e
   );
 
-  // logger.info(`enabled ${type} renderer`);
-
   renderer(Object.values(examples));
 };
 

@@ -3,15 +3,13 @@ const webpack = require('webpack');
 
 const { NamedModulesPlugin } = webpack;
 
-function resolve(dir) {
-  return path.join(__dirname, dir);
-}
+const resolve = dir => path.join(__dirname, dir);
 
 module.exports = {
   name: 'vendor',
   entry: {
     sb_core: ['@sb/core-runtime'],
-    sb_renderer_react: ['@sb/renderer-react', 'react'],
+    sb_renderer_react: ['@sb/renderer-react', 'react', 'react-dom'],
   },
   output: {
     path: resolve('./out/dll'),
