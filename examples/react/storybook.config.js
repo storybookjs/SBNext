@@ -1,3 +1,5 @@
+// TODO: implement these in cli / server / bundler
+
 module.exports = {
   // input
   entryPattern: './in/**/*.example.js',
@@ -32,4 +34,5 @@ module.exports = {
       target: 'web',
     },
   },
+  logLevel: 'info',
 };

@@ -1,4 +1,4 @@
-const loglevel = require('loglevelnext/dist/loglevelnext');
+import loglevel from 'loglevelnext/dist/loglevelnext';
 
 const { MethodFactory } = loglevel.factories;
 const css = {
@@ -42,4 +42,4 @@ log.group = console.group; // eslint-disable-line no-console
 log.groupCollapsed = console.groupCollapsed; // eslint-disable-line no-console
 log.groupEnd = console.groupEnd; // eslint-disable-line no-console
 
-module.exports = log;
+export default log;

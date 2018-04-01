@@ -1,4 +1,4 @@
-import logger from '@sb/core-logger';
+import logger from '@sb/core-logger/browser';
 
 export const runtime = ({ examples, renderer, type, name }) => {
   const e = Object.assign(Object.create(null), examples);

@@ -7,7 +7,10 @@
   "main": "main.js",
   "scripts": {},
   "dependencies": {
-    "loglevelnext": "^1.0.3"
+    "chalk": "^2.3.2",
+    "log-symbols": "^2.2.0",
+    "loglevelnext": "^1.0.3",
+    "uuid": "^3.2.1"
   },
   "peerDependencies": {},
   "engines": {

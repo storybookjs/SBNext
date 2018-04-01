@@ -1,7 +1,7 @@
 const storybookCode = ({ type, name }) => `
 import { runtime } from '@sb/core-runtime';
 import { renderer } from '@sb/renderer-${type}';
-import logger from '@sb/core-logger';
+import logger from '@sb/core-logger/browser';
 
 logger.info('HMR activated');
 
