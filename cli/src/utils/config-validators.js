@@ -1,3 +1,5 @@
+import * as messages from './messages';
+
 export const renderers = items =>
   items.reduce((acc, item) => {
     switch (true) {
@@ -5,7 +7,7 @@ export const renderers = items =>
         try {
           return acc.concat(require(`@sb/renderer-${item}/definition`).default);
         } catch (error) {
-          console.error(`loading ${item} has failed`);
+          messages.renderer.unloadable({ name: item });
           return acc;
         }
       }
@@ -13,7 +15,7 @@ export const renderers = items =>
         return acc.concat(item);
       }
       default: {
-        console.warn(item, 'is not a valid renderer');
+        messages.renderer.unknown({ obj: item });
         return acc;
       }
     }

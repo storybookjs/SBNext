@@ -1,7 +1,6 @@
 import webpack from 'webpack';
 import serve from 'webpack-serve';
-
-import reactRenderer from '@sb/renderer-react/definition';
+import logger, { hmr } from '@sb/core-logger/node';
 
 import entriesConfig from './webpack.entries.fn';
 import vendorConfig from './webpack.vendor.fn';
@@ -48,16 +47,20 @@ export const run = config => {
   const { renderers } = config;
 
   webpack(configs.vendor({ renderers })).run(() => {
+    logger.info('Vendor compiled');
     serve(Object.assign(configs.serve({}), { config: configs.entries({ renderers }) })).then(
       server => {
-        server.on('listening', () => {});
+        logger.info('Entries compiled');
+        server.on('listening', () => {
+          logger.info('Server listening');
+        });
 
         const { compiler, options } = server;
 
         compiler.hooks.done.tap('me', ({ compilation }) => {
-          try {
-            // console.time('doneProcess');
+          hmr.info(compilation.getStats().toString(options.dev.stats));
 
+          try {
             const stats = compilation.getStats().toJson();
 
             const entryModules = stats.modules
@@ -77,14 +80,12 @@ export const run = config => {
                           as: m.originalRequest.rawRequest,
                           hash: m.originalRequest.hash || m.hash,
                           id: m.originalRequest.id || m.id,
-                          // request: m.originalRequest.request,
                           resource: m.originalRequest.resource,
                         }
                       : {
                           as: m.rawRequest,
                           hash: m.hash,
                           id: m.id,
-                          // request: m.request,
                           resource: m.resource,
                           exports: m.buildMeta && m.buildMeta.providedExports,
                         }
@@ -102,11 +103,9 @@ export const run = config => {
               });
             }, {});
 
-            console.dir(entryPoints, { depth: 1 });
-
-            // console.timeEnd('doneProcess');
+            logger.trace(entryPoints, { depth: 1 });
           } catch (err) {
-            console.log(err);
+            logger.error(err);
           }
         });
       }

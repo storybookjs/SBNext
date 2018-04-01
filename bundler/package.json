@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@sb/core-loader": "^1.0.0",
+    "@sb/core-logger": "^1.0.0",
     "@sb/core-runtime": "^1.0.0",
     "babel-loader": "^7.1.4",
     "ejs-loader": "^0.3.1",

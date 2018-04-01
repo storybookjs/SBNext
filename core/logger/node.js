@@ -1,15 +1,51 @@
 import chalk from 'chalk';
 import loglevel from 'loglevelnext';
-import logSymbols from 'log-symbols';
 import uuid from 'uuid/v4';
 
-const symbols = {
-  trace: chalk.grey('₸'),
-  debug: chalk.cyan('➤'),
-  info: logSymbols.info,
-  warn: logSymbols.warning,
-  error: logSymbols.error,
+export const colors = {
+  pink: chalk.hex('F1618C'),
+  purple: chalk.hex('B57EE5'),
+  orange: chalk.hex('F3AD38'),
+  green: chalk.hex('A2E05E'),
+  blue: chalk.hex('6DABF5'),
+  red: chalk.hex('F16161'),
+  gray: chalk.gray,
 };
+
+const getLevels = colorSupportLevel => {
+  switch (colorSupportLevel) {
+    case 1: {
+      return {
+        trace: chalk.gray,
+        debug: chalk.cyan,
+        info: chalk.blue,
+        warn: chalk.yellow,
+        error: chalk.red,
+      };
+    }
+    case 2:
+    case 3: {
+      return {
+        trace: colors.gray,
+        debug: colors.purple,
+        info: colors.blue,
+        warn: colors.orange,
+        error: colors.red,
+      };
+    }
+    default: {
+      return {
+        trace: text => `₸ ${text}`,
+        debug: text => `➤ ${text}`,
+        info: text => `ⓘ ${text}`,
+        warn: text => `⚠ ${text}`,
+        error: text => `⚑ ${text}`,
+      };
+    }
+  }
+};
+
+export const levels = getLevels(chalk.level);
 
 const defaults = {
   name: '<unknown>',
@@ -18,8 +54,9 @@ const defaults = {
 };
 
 const prefix = {
-  level: opts => symbols[opts.level],
-  template: `{{level}} ${chalk.gray('｢{{name}}｣')}: `,
+  time: opts => levels[opts.level](`[${new Date().toLocaleTimeString()}]`),
+  level: opts => levels[opts.level](`[${opts.logger.name}]`),
+  template: '{{level}} ',
 };
 
 export function createLogger(options) {
@@ -40,7 +77,7 @@ export function createLogger(options) {
   });
 
   if (opts.timestamp) {
-    opts.prefix.template = `[{{time}}] ${opts.prefix.template}`;
+    opts.prefix.template = `{{time}} ${opts.prefix.template}`;
   }
 
   const log = loglevel.getLogger(opts);
@@ -56,4 +93,6 @@ export function createLogger(options) {
   return log;
 }
 
-export default createLogger({ name: 'sb', id: 'storybook' });
+export default createLogger({ name: 'sb', id: 'storybook', timestamp: true });
+
+export const hmr = createLogger({ name: 'wp', id: 'storybook-webpack', timestamp: true });

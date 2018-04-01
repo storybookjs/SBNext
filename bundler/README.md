@@ -49,6 +49,7 @@ This subproject is an experiment on efficient webpack building, rebuilding, cach
 - [-] validate config
   - [ ] friendly errors
 - [ ] dashboard for serve
+  - [ ] Add logo http://paradoxxxzero.github.io/2014/02/28/butterfly.html
 - [ ] write credits/thanks command
 
 ### Config
