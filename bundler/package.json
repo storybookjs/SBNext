@@ -6,10 +6,6 @@
   "author": "Norbert de Langen <ndelangen@me.com>",
   "main": "src/main.js",
   "scripts": {
-    "build": "yarn build-vendor && yarn build-client",
-    "build-client": "webpack --config webpack.entries.config.js",
-    "build-vendor": "webpack --config webpack.vendor.config.js",
-    "serve": "./bin/sb-bundler"
   },
   "dependencies": {
     "@sb/core-loader": "^1.0.0",

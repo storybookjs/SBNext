@@ -1,4 +1,5 @@
 import React from 'react';
+import { document } from 'global';
 
 const icons = {
   house: () => (

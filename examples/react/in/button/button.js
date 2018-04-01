@@ -1,4 +1,5 @@
 import React from 'react';
+import { document } from 'global';
 
 const MyComponent = ({ color = 'hotpink', children = 'World', prefix = 'Hello' }) => (
   <button style={{ color }}>
