@@ -1,8 +1,15 @@
 import * as bundler from '@sb/bundler';
 
+import getConfig from '../utils/config';
+
 export const name = 'serve';
 
-export const run = (...args) => bundler.run();
+export const run = (...args) =>
+  getConfig().then(config => {
+    // do something with args + settings
+
+    bundler.run(config);
+  });
 
 export const addToCommander = commander =>
   commander

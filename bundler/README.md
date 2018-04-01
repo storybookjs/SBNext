@@ -46,11 +46,16 @@ This subproject is an experiment on efficient webpack building, rebuilding, cach
   - [ ] auto detect & confirmation
   - [ ] ability to skip interactivity
 - [ ] write install-addon command
-
+- [-] validate config
+  - [ ] friendly errors
+- [ ] dashboard for serve
+- [ ] write credits/thanks command
 
 ### Config
-- [ ] use cosmiconfig - https://github.com/davidtheclark/cosmiconfig
-- [ ] create first config in example
+- [x] use cosmiconfig - https://github.com/davidtheclark/cosmiconfig
+- [x] create first config in example
+- [x] accept shorthand-renderers
+- [-] use config in bundler
 
 ### Server
 - [ ] split into serve-package and bundle-package

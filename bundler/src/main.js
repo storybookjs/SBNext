@@ -7,7 +7,7 @@ import entriesConfig from './webpack.entries.fn';
 import vendorConfig from './webpack.vendor.fn';
 import serveConfig from './serve.config';
 
-export const config = {
+export const configs = {
   entries: entriesConfig,
   vendor: vendorConfig,
   serve: serveConfig,
@@ -30,25 +30,25 @@ export const defaults = {
 
 const webpackRegex = /(webpack)/;
 
-export const run = () => {
-  const isWebpackRelatedRecursive = ({ request, issuer }) => {
-    // if request itself is webpack related
-    if (request && request.match && request.match(webpackRegex)) {
-      return true;
-    }
+const isWebpackRelatedRecursive = ({ request, issuer }) => {
+  // if request itself is webpack related
+  if (request && request.match && request.match(webpackRegex)) {
+    return true;
+  }
 
-    // recursively walk into issuer
-    if (issuer) {
-      return isWebpackRelatedRecursive(issuer);
-    }
+  // recursively walk into issuer
+  if (issuer) {
+    return isWebpackRelatedRecursive(issuer);
+  }
 
-    return false;
-  };
+  return false;
+};
 
-  const renderers = [reactRenderer];
+export const run = config => {
+  const { renderers } = config;
 
-  webpack(config.vendor({ renderers })).run(() => {
-    serve(Object.assign(config.serve({}), { config: config.entries({ renderers }) })).then(
+  webpack(configs.vendor({ renderers })).run(() => {
+    serve(Object.assign(configs.serve({}), { config: configs.entries({ renderers }) })).then(
       server => {
         server.on('listening', () => {});
 

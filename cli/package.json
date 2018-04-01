@@ -12,7 +12,8 @@
   "dependencies": {
     "@sb/bundler": "1.0.0",
     "chalk": "^2.3.2",
-    "commander": "^2.15.1"
+    "commander": "^2.15.1",
+    "cosmiconfig": "^4.0.0"
   },
   "peerDependencies": {},
   "engines": {
