@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import loglevel from 'loglevelnext';
 import uuid from 'uuid/v4';
+import osLocale from 'os-locale';
 
 export const colors = {
   pink: chalk.hex('F1618C'),
@@ -11,6 +12,8 @@ export const colors = {
   red: chalk.hex('F16161'),
   gray: chalk.gray,
 };
+
+const locale = osLocale.sync().replace('_', '-');
 
 const getLevels = colorSupportLevel => {
   switch (colorSupportLevel) {
@@ -49,12 +52,12 @@ export const levels = getLevels(chalk.level);
 
 const defaults = {
   name: '<unknown>',
-  level: 'info',
+  level: 'debug',
   unique: true,
 };
 
 const prefix = {
-  time: opts => levels[opts.level](`[${new Date().toLocaleTimeString()}]`),
+  time: opts => levels[opts.level](`[${new Date().toLocaleTimeString(locale)}]`),
   level: opts => levels[opts.level](`[${opts.logger.name}]`),
   template: '{{level}} ',
 };

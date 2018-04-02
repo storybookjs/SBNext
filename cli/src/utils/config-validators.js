@@ -1,4 +1,4 @@
-import * as messages from './messages';
+import * as messages from '@sb/core-messages/src/renderer';
 
 export const renderers = items =>
   items.reduce((acc, item) => {
@@ -7,7 +7,7 @@ export const renderers = items =>
         try {
           return acc.concat(require(`${item}/definition`).default);
         } catch (error) {
-          messages.renderer.unloadable({ name: item });
+          messages.unloadable({ name: item });
           return acc;
         }
       }
@@ -15,7 +15,7 @@ export const renderers = items =>
         return acc.concat(item);
       }
       default: {
-        messages.renderer.unknown({ obj: item });
+        messages.unknown({ obj: item });
         return acc;
       }
     }

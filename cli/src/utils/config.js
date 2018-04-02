@@ -1,4 +1,5 @@
 import cosmiconfig from 'cosmiconfig';
+import logger from '@sb/core-logger/node';
 import * as validators from './config-validators';
 
 const explorer = cosmiconfig('storybook', {
@@ -10,6 +11,6 @@ const explorer = cosmiconfig('storybook', {
 
 export default () =>
   explorer.load().catch(parsingError => {
-    console.error({ parsingError });
+    logger.error({ parsingError });
     throw parsingError;
   });

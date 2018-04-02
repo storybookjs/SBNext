@@ -1,17 +1,13 @@
 {
-  "name": "@sb/core-logger",
+  "name": "@sb/core-messages",
   "version": "1.0.0",
   "private": true,
   "license": "MIT",
   "author": "Norbert de Langen <ndelangen@me.com>",
-  "main": "main.js",
   "scripts": {},
   "dependencies": {
-    "chalk": "^2.3.2",
-    "log-symbols": "^2.2.0",
-    "loglevelnext": "^1.0.3",
-    "os-locale": "^2.1.0",
-    "uuid": "^3.2.1"
+    "@sb/core-constants": "^1.0.0",
+    "@sb/core-logger": "^1.0.0"
   },
   "peerDependencies": {},
   "engines": {
