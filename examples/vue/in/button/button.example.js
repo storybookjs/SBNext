@@ -1,14 +1,20 @@
-import React from 'react';
-import Component from './button';
+import MyButton from './MyButton.vue';
 
-// No props
-export default () => <Component />;
+export default () => MyButton;
+// This one gives template compiler error
+// export default () => ({ template: '<div>hello world</div>' });
 
-// with children
-export const example1 = () => <Component>with children</Component>;
+// export const withText = () => ({
+//   components: { MyButton },
+//   template: '<my-button :handle-click="log">Hello Button</my-button>',
+//   methods: { log: () => console.log('clicked text button') },
+// });
 
-// with color
-export const example2 = () => <Component color="red">colored red</Component>;
-
-// with prefix
-export const example3 = () => <Component prefix="prefix - ">prefixed</Component>;
+// export const withEmoji = () => {
+//   console.log('withEmoji called');
+//   return {
+//     components: { MyButton },
+//     template: '<my-button :handle-click="log">😀 😎 👍 💯</my-button>',
+//     methods: { log: () => console.log('clicked emoji button') },
+//   };
+// };

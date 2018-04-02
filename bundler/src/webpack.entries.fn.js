@@ -48,6 +48,11 @@ export default ({
       ...renderers.map(r => r.loaders).reduce((acc, i) => acc.concat(i), []),
     ],
   },
+  // resolve: {
+  //   alias: {
+  //     vue$: 'vue/dist/vue.esm.js',
+  //   },
+  // },
   plugins: [
     new NamedModulesPlugin(),
     new WildcardsEntryWebpackPlugin(),
