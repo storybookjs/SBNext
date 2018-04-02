@@ -9,11 +9,13 @@
     "sb": "sb"
   },
   "dependencies": {
-    "@sb/cli": "1.0.0",
-    "@sb/renderer-react": "^1.0.0",
     "global": "^4.3.2",
     "react": "^16.3.0",
     "react-dom": "^16.3.0"
+  },
+  "devDependencies": {
+    "@sb/cli": "1.0.0",
+    "@sb/renderer-react": "^1.0.0"
   },
   "peerDependencies": {},
   "engines": {
