@@ -22,6 +22,7 @@ This subproject is an experiment on efficient webpack building, rebuilding, cach
       https://webpack.js.org/plugins/module-concatenation-plugin/
   - [ ] Measure real difference between 'development' and 'production'
 - [ ] run some experiments with bundle-splitting
+- [ ] fix bug with multiple DLLs
 
 ### core
 - [x] add renderer

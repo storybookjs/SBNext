@@ -9,14 +9,14 @@ module.exports = {
   outputPath: 'out',
 
   // frameworks desired (make sure to install)
-  renderers: ['vue'],
+  renderers: ['@sb/renderer-vue'],
 
-  // npm-modules (make sure to install), path, or maybe even function
+  // npm-modules (make sure to install) or path
   addons: [],
 
   webpack: {
     vendor: {
-      devTool: 'source-map',
+      devTool: 'none',
       module: {},
       performance: {},
       plugins: [],
@@ -25,7 +25,7 @@ module.exports = {
       target: 'web',
     },
     entries: {
-      devTool: 'source-map',
+      devTool: 'none',
       module: {},
       performance: {},
       plugins: [],

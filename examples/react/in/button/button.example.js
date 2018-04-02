@@ -1,7 +1,7 @@
 import React from 'react';
 import Component from './button';
 
-// No props!
+// No props
 export default () => <Component />;
 
 // with children

@@ -1,4 +1,4 @@
 export default {
-  name: 'vue',
-  dependencies: ['vue', 'vue-loader', 'vue-template-compiler'],
+  name: '@sb/renderer-vue',
+  dependencies: ['vue', 'vue-template-compiler'],
 };

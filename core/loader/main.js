@@ -1,3 +1,5 @@
+const getType = require('./getType');
+
 const storybookCode = ({ type, name }) => `
 import { runtime } from '@sb/core-runtime';
 import { renderer } from '@sb/renderer-${type}';
@@ -17,8 +19,6 @@ if (module && module.hot) {
 
 setTimeout(runtime, 0, { examples: __webpack_exports__, renderer, type: '${type}', name: '${name}'});
 `;
-
-const getType = source => 'react';
 
 module.exports = function loader(source) {
   return []
