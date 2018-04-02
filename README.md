@@ -1,63 +1,143 @@
 
-# A prototype
+# SBnext
 
-## Goal description:
+## Goal: a new architecture:
 Provide a working prototype of the possibly future UI & Server for SB.
 
 ## Plan:
 
-Use Next.js for everything besides the preview. The previews require some special handling because of multi-framework support but also performance. The previews are and should stay real iframes. To get JS & CSS isolation and correctly functioning media-queries. CSS encapsulation would also be possible using tooling and the use of shadow-dom, but the other 2 are as of yet not possible without.
+Todo
+## Checklist
 
-We'll create a main server (framework-agnotic) that is in control of a preview-server and a manager-server (next.js). The main server will proxy and connect both.
+### bundler
+This subproject is about efficient webpack building, rebuilding, caching.
 
-For performance reasons we don't want every iframe to create it's own websocket and HMR. Perhaps we can relay the data to the existing websocket next.js/manager uses and pass it to the iframe via postmessage.
+- [x] find and watch all `**/*.example.js`
+- [x] extract & precompile common parts
+- [x] write an HTML file for every `**/*.example.js`
+- [x] static build of html files
+- [x] HMR on every page
+- [x] wrap every example with HMR catcher code
+  - [x] rebuild
+  - [x] refresh
+  - [x] recover from fatal parse error
+  - [x] recover from fatal webpack error
+  - [x] changing example 1 has no side-effects in example 2
+- [ ] support for pre-build html-files
+- [x] support DLL vendor in production mode
+- [ ] investigate optimization plugins
+      https://webpack.js.org/plugins/module-concatenation-plugin/
+  - [ ] Measure real difference between 'development' and 'production'
+- [ ] run some experiments with bundle-splitting
+- [ ] fix bug with multiple DLLs
 
-## Goal checklist
+### core
+The main infrastructure and low level modules, not directly interacted with by users
 
-### UI
-- [x] Multiple previews
-- [x] Add, move, resize, rescale previews
-- [x] Auto size preview to fit content
+- [x] add renderer
+      maybe rename e.g. react_dll to renderer, or detect and inject additional module
+- [x] create the renderer packages
+  - [x] write react renderer
+    - [x] render all examples
+    - [ ] preserve order
+    - [ ] keep state
+  - [ ] write other renderer - support for other frameworks
+- [ ] write stateful renderer
+- [ ] write stateful runtime
+- [ ] runtime with communication-layer
+- [ ] write outer frame with runtime
+- [ ] share data from inner-bundle to outer
+- [ ] allow passing data to renderer
+
+### CLI
+Command Line interface that users use
+
+- [x] create cli package with multiple commands
+- [ ] write a awesome help command
+- [ ] write static build command
+- [ ] write start command
+  - [ ] --public --port
+- [ ] write deploy command
+- [ ] write help command
+- [ ] write migrate command
+- [ ] write init command
+  - [ ] --react --vue
+  - [ ] auto detect & confirmation
+  - [ ] ability to skip interactivity
+- [ ] write install-addon command
+- [x] validate config/...
+- [x] validate config/renderers
+  - [x] friendly errors
+- [ ] dashboard for serve
+  - [ ] Add logo http://paradoxxxzero.github.io/2014/02/28/butterfly.html
+- [ ] write credits/thanks command
+
+### Config
+The storybook configuration file, the parsing and validation of it
+
+- [x] use cosmiconfig - https://github.com/davidtheclark/cosmiconfig
+- [x] create first config in example
+- [x] accept shorthand-renderers
+- [x] use config in bundler
+- [ ] reload config in real time
+
+### Server
+The thing responsible for serving things to the browser
+
+- [ ] split into serve-package and bundle-package
+- [ ] serve outer and inner in 1 command
+- [ ] serve on localhost and local IP
+- [ ] Have some standard way of fetching and caching data
+      GraphQL?
+  - [ ] consider a static build and how to handle fetching data
+
+### Examples
+How users interact with storybook, on a code-level. how are they supposed to structure their code to work with storybook.
+
+- [x] create external demo run from example-package in and out
+- [ ] support for multiple frameworks in 1 config
+
+### Concepts
+The key new features sbnext introduces
+
+- [ ] Tokens / Entities (design elements)
+  - [ ] Typography
+  - [ ] Spacing & Grid
+  - [ ] Icons
+  - [ ] Colors
+- [ ] Documentation pages
+- [ ] Reports
+
+### UI / App
+- [ ] view-modes
+  - [ ] isolated
+  - [ ] multiple
+  - [ ] documentation + report
+- [ ] Routing
+- [ ] State management
+- [ ] Add, move, resize, rescale previews
+- [ ] Auto size preview to fit content
       <details>If the current solution falls short we could add this: https://developer.mozilla.org/nl/docs/Web/API/MutationObserver
       </details>
 - [ ] View all stories of component on 1 page
-- [x] Panels & Content
-- [x] Settings Panel
-- [x] Keyboard shortcuts
+- [ ] Panels & Content
+- [ ] Settings Panel
+- [ ] Keyboard shortcuts
 - [ ] Support for (infinite) deep hierarchy
 - [ ] Search of components
 - [ ] Search of other things (docs, settings, etc)
 
-### Architecture
-- [ ] Main server communicating with nextjs (updating data) about stories
-      <details>
-      Generating pages? or maybe some channel to push HMR events
-      </details>
-- [x] Bundling and watching infinite entries (for stories)
-- [ ] Lazy bundling for previews
-- [x] Lazy bundling for manager
-      <detail>
-      Next pages are bundled lazily, but we can't really have nextJS clinetside-script in previews.
-      so that makes so we can't use it for previews
-      </details>
-- [ ] Create a package managing next.js
-- [ ] Multiple frameworks
-- [ ] State management  
-      <details>
-       - Redux or mobX, maybe mobx-state-tree?
-       - a system for addons to have their state managed via this
-       - allow addons to access this state, possibly via a Provider component we provide
-      </details>
-
 ### Addon API
+- [ ] Override or wrap any component in component-registry
 - [ ] basics
 - [ ] ability to add panel & content
 - [ ] add search
 - [ ] add shortcuts
 - [ ] add settings
-- [ ] add sections to documentation view
+- [ ] provide/add new sections to documentation view
+- [ ] Allow addons to integrate into global state manager?
 
-### Bonus
+### Bonus (maybe as addons)
 - [ ] dependency graph for components
 - [ ] visualisation for dependency graph
       <details>
@@ -65,11 +145,4 @@ For performance reasons we don't want every iframe to create it's own websocket 
       </details>
 
 ## Notes
-For infrastructure this seems to be a good candidate to see how they've abstracted next.js:
-https://github.com/elmasse/nextein
-
-> I have a WIP branch that has taken the source of nextein, a nextein demo and the current ui, and placed them in a monorepo.
-
-## Badges
-[![Greenkeeper badge](https://badges.greenkeeper.io/ndelangen/SB4.svg)](https://greenkeeper.io/)
-
+nothing yet
