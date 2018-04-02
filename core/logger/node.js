@@ -3,8 +3,6 @@ import loglevel from 'loglevelnext';
 import uuid from 'uuid/v4';
 import osLocale from 'os-locale';
 
-import prettyTime from 'pretty-hrtime';
-
 export const colors = {
   pink: chalk.hex('F1618C'),
   purple: chalk.hex('B57EE5'),
@@ -14,8 +12,6 @@ export const colors = {
   red: chalk.hex('F16161'),
   gray: chalk.gray,
 };
-
-export const timer = t => colors.gray(prettyTime(t));
 
 const locale = osLocale.sync().replace('_', '-');
 

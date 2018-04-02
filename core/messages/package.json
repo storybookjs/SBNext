@@ -7,7 +7,8 @@
   "scripts": {},
   "dependencies": {
     "@sb/core-constants": "^1.0.0",
-    "@sb/core-logger": "^1.0.0"
+    "@sb/core-logger": "^1.0.0",
+    "pretty-hrtime": "^1.0.3"
   },
   "peerDependencies": {},
   "engines": {

@@ -1,6 +1,6 @@
 import webpack from 'webpack';
 import serve from 'webpack-serve';
-import logger, { hmr, timer } from '@sb/core-logger/node';
+import logger, { hmr } from '@sb/core-logger/node';
 import stripAnsi from 'strip-ansi';
 import * as rendererMessages from '@sb/core-messages/src/renderer';
 import * as webpackMessages from '@sb/core-messages/src/webpack';
@@ -49,14 +49,13 @@ export const run = userConfig => {
       Object.assign({}, userConfig.webpack.entries, { renderers, entryPattern })
     );
 
-    logger.error(entries.config.module.rules);
-
     webpackMessages.building(entries);
 
     serve(Object.assign(configs.serve({}), { config: entries.config })).then(server => {
-      const { compiler } = server;
+      entries.time = process.hrtime(entries.time);
+      webpackMessages.built(entries);
 
-      logger.info('Entries compiled');
+      const { compiler } = server;
 
       server.on('listening', () => {
         logger.info('Server listening');
