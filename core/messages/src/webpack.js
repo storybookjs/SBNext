@@ -14,7 +14,7 @@ export const building = ({ config }) => {
 export const built = ({ config, time }) => {
   logger.info(
     cleanIndent(`
-      built ${config.name} in ${colors.purple(prettyTime(time))}
+      built ${config.name} in ${colors.gray(`(${prettyTime(time)})`)}
     `)
   );
 };
