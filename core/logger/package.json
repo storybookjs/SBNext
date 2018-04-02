@@ -11,6 +11,7 @@
     "log-symbols": "^2.2.0",
     "loglevelnext": "^1.0.3",
     "os-locale": "^2.1.0",
+    "pretty-hrtime": "^1.0.3",
     "uuid": "^3.2.1"
   },
   "peerDependencies": {},

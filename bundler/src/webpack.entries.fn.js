@@ -45,6 +45,7 @@ export default ({
         test: /\.ejs$/,
         loader: 'ejs-loader',
       },
+      ...renderers.map(r => r.loaders).reduce((acc, i) => acc.concat(i), []),
     ],
   },
   plugins: [

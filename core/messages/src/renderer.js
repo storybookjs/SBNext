@@ -1,6 +1,6 @@
 import logger, { colors } from '@sb/core-logger/node';
-import * as documentation from './documentation';
 import cleanIndent from '@sb/core-logger/clean-indent';
+import * as documentation from './documentation';
 
 export const unloadable = ({ name }) => {
   const packageref = colors.blue(`@sb/renderer-${name}`);
@@ -45,18 +45,18 @@ export const unknown = ({ obj }) => {
   );
 };
 export const foundInAsset = ({ name, assets }) => {
+  const list = assets.map(a => colors.orange(a)).join(', ');
+  const s = list.length > 1 ? 's' : '';
+
   logger.warn(
     cleanIndent(`
-      The output/assets: ${assets
-        .map(a => colors.orange(a))
-        .join(', ')} appear to include a sb renderer!
+      The output/asset${s}: ${list} appear to include a sb renderer!
 
       This could be a mistake. It won't likely break anything, but it very un-optimized.
-
       You should probably configure storybook to extract the renderer!
 
       You will likely need to add the renderer:
-      ${colors.gray(`renderer: ['@sb/renderer-${colors.orange(name)}']`)},
+      ${colors.gray(`renderer: ['${colors.orange(`@sb/renderer-${name}`)}']`)},
 
       Learn more about configuration at ${documentation.link('/configuration')}
       Learn more about renderers at ${documentation.link('/renderers')}
