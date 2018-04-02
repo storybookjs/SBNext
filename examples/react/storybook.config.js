@@ -9,7 +9,7 @@ module.exports = {
   outputPath: 'out',
 
   // frameworks desired (make sure to install)
-  renderers: ['reactz'],
+  renderers: ['react'],
 
   // npm-modules (make sure to install), path, or maybe even function
   addons: [],
