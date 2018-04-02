@@ -25,8 +25,8 @@ class WildcardsEntryWebpackPlugin {
   //     └── js
   //         └── index.js
   //
-  // eg 1:    @wildcards: "./src/**/*.js", we will wacth './src', and chunk name 'js/index'
-  // eg 2:    @wildcards: "./src/js/**/*.js", we will wacth './src/js', and chunk name 'index'
+  // eg 1:    @wildcards: "./src/**/*.js", we will watch './src', and chunk name 'js/index'
+  // eg 2:    @wildcards: "./src/js/**/*.js", we will watch './src/js', and chunk name 'index'
   // eg 3:    @wildcards: "./src/js/**/*.js", @assignEntry: {xxx:'./src/a.js'} and chunk name {index:..., xxx...}
   //
   //
@@ -36,7 +36,7 @@ class WildcardsEntryWebpackPlugin {
   static entry(wildcards, assignEntry, namePrefix) {
     if (!wildcards) {
       throw new Error(
-        'please give me a wildcards path by invok WildcardsEntryWebpackPlugin.entry!'
+        'please give me a wildcards path by invoke WildcardsEntryWebpackPlugin.entry!'
       );
     }
 

@@ -1,6 +1,8 @@
 import path from 'path';
 import webpack from 'webpack';
 
+import { toSafeFilename } from './lib/util';
+
 const { NamedModulesPlugin } = webpack;
 
 const resolveLocal = dir => path.join(process.cwd(), dir);
@@ -17,7 +19,7 @@ export default ({
       sb_core: ['@sb/core-runtime'],
     },
     ...renderers.map(r => ({
-      [`sb_renderer_${r.name}`]: [`@sb/renderer-${r.name}`, ...r.dependencies],
+      [toSafeFilename(r.name)]: [r.name, ...r.dependencies],
     }))
   ),
   output: {

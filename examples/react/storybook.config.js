@@ -9,29 +9,27 @@ module.exports = {
   outputPath: 'out',
 
   // frameworks desired (make sure to install)
-  renderers: ['reactz'],
+  renderers: ['@sb/renderer-react'],
 
-  // npm-modules (make sure to install), path, or maybe even function
-  addons: [],
+  // npm-modules (make sure to install) or path to module,
+  addons: ['@sb/addon-testaddon'],
 
   webpack: {
     vendor: {
-      devTool: 'source-map',
+      devTool: 'eval',
       module: {},
       performance: {},
       plugins: [],
       resolve: {},
       stats: {},
-      target: 'web',
     },
     entries: {
-      devTool: 'source-map',
+      devTool: 'eval',
       module: {},
       performance: {},
       plugins: [],
       resolve: {},
       stats: {},
-      target: 'web',
     },
   },
   logLevel: 'info',

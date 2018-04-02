@@ -2,6 +2,8 @@ import webpack from 'webpack';
 import serve from 'webpack-serve';
 import logger, { hmr } from '@sb/core-logger/node';
 
+import { toStore, webpackRegex } from './lib/util';
+
 import entriesConfig from './webpack.entries.fn';
 import vendorConfig from './webpack.vendor.fn';
 import serveConfig from './serve.config';
@@ -12,36 +14,7 @@ export const configs = {
   serve: serveConfig,
 };
 
-export const defaults = {
-  entries: {
-    outputPath: 'out',
-    entryPattern: './in/**/*.example.js',
-    renderers: [],
-    plugins: [],
-  },
-  vendor: {
-    renderers: [],
-    outputPath: 'out',
-    devTool: 'source-map',
-    plugins: [],
-  },
-};
-
-const webpackRegex = /(webpack)/;
-
-const isWebpackRelatedRecursive = ({ request, issuer }) => {
-  // if request itself is webpack related
-  if (request && request.match && request.match(webpackRegex)) {
-    return true;
-  }
-
-  // recursively walk into issuer
-  if (issuer) {
-    return isWebpackRelatedRecursive(issuer);
-  }
-
-  return false;
-};
+const ignoredPackages = /(hot-update|\.html|\.map)/;
 
 export const run = config => {
   const { renderers } = config;
@@ -50,60 +23,72 @@ export const run = config => {
     logger.info('Vendor compiled');
     serve(Object.assign(configs.serve({}), { config: configs.entries({ renderers }) })).then(
       server => {
+        const { compiler, options } = server;
+
         logger.info('Entries compiled');
+
         server.on('listening', () => {
           logger.info('Server listening');
         });
 
-        const { compiler, options } = server;
+        // compilation.hotUpdateChunkTemplate.hooks.modules.tap('me', (...args) => {
+        //   logger.warn({ hotUpdateChunkTemplate: args });
+        // });
+
+        const state = {
+          invalids: [],
+        };
+
+        compiler.hooks.invalid.tap('me', m => {
+          state.invalids.push(m);
+        });
 
         compiler.hooks.done.tap('me', ({ compilation }) => {
-          hmr.info(compilation.getStats().toString(options.dev.stats));
+          hmr.info(
+            `\n${compilation
+              .getStats()
+              .toString({
+                all: false,
+                assets: true,
+                modules: true,
+                chunks: false,
+                cached: true,
+                excludeAssets: assetname => assetname.match(ignoredPackages),
+
+                errors: true,
+                errorDetails: true,
+                warnings: true,
+                moduleTrace: true,
+                colors: true,
+              })
+              .split('\n')
+              .filter(
+                m =>
+                  !(m.includes('delegated') || m.includes('hot-client')) &&
+                  (m.includes('[built]') || m.includes('[emitted]'))
+              )
+              .sort((a, b) => {
+                if (a.includes('[built]') && !b.includes('[built]')) {
+                  return -1;
+                }
+                // if (a.includes('[built]') && a.includes('[built]')) {
+                //  todo sort alphabetical
+                // }
+                return 1;
+              })
+              // .reduce(
+              //   (acc, item) =>
+              //     // I want to remove assets that did not have a chunk changed
+              //     acc.find(i => i.includes('[built]') && i.includes('{button/button.example}'))
+              // )
+              .join('\n')}`
+          );
+
+          state.invalids = [];
 
           try {
-            const stats = compilation.getStats().toJson();
-
-            const entryModules = stats.modules
-              .filter(m => m.reasons.find(r => r.type === 'single entry'))
-              .filter(m => !(m.name && m.name.match(webpackRegex)));
-
-            const entryPoints = Array.from(compilation.entrypoints).reduce((acc, [k, e]) => {
-              const modules = e.chunks
-                .reduce((acc, c) => acc.concat(c.getModules()), [])
-                .filter(m => !isWebpackRelatedRecursive(m))
-                .filter(m => !(m.constructor.name !== 'DelegatedModule' && m.context === null))
-                .filter(m => m.request || (m.originalRequest && m.originalRequest.request))
-                .map(
-                  m =>
-                    m.originalRequest
-                      ? {
-                          as: m.originalRequest.rawRequest,
-                          hash: m.originalRequest.hash || m.hash,
-                          id: m.originalRequest.id || m.id,
-                          resource: m.originalRequest.resource,
-                        }
-                      : {
-                          as: m.rawRequest,
-                          hash: m.hash,
-                          id: m.id,
-                          resource: m.resource,
-                          exports: m.buildMeta && m.buildMeta.providedExports,
-                        }
-                );
-
-              const main = entryModules.find(m => m.chunks.find(c => c === k));
-              const examples = main.providedExports;
-
-              return Object.assign(acc, {
-                [k]: {
-                  modules,
-                  main,
-                  examples,
-                },
-              });
-            }, {});
-
-            logger.trace(entryPoints, { depth: 1 });
+            const data = toStore(compilation);
+            logger.trace(data);
           } catch (err) {
             logger.error(err);
           }

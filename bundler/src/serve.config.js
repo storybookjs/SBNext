@@ -1,25 +1,29 @@
 const compress = require('koa-compress');
 
 module.exports = () => ({
-  // open: {
-  //   path: 'icon/icon.example.html',
-  // },
-  logTime: true,
+  port: 1337,
+  content: './out',
+
   add: (app, middleware) => {
     middleware.webpack();
     middleware.content();
 
     app.use(compress());
   },
-  content: './out',
-  port: 1337,
+
+  logTime: true,
+  logLevel: 'error',
+
+  // open: {
+  //   path: 'icon/icon.example.html',
+  // },
+
   hot: {
     logTime: true,
     logLevel: 'error',
   },
   dev: {
     publicPath: '/',
-    writeToDisk: true,
     logTime: true,
     logLevel: 'error',
     stats: {

@@ -5,7 +5,7 @@ export const renderers = items =>
     switch (true) {
       case typeof item === 'string': {
         try {
-          return acc.concat(require(`@sb/renderer-${item}/definition`).default);
+          return acc.concat(require(`${item}/definition`).default);
         } catch (error) {
           messages.renderer.unloadable({ name: item });
           return acc;

@@ -18,6 +18,11 @@ This subproject is an experiment on efficient webpack building, rebuilding, cach
   - [x] changing example 1 has no side-effects in example 2
 - [ ] support for pre-build html-files
 - [x] support DLL vendor in production mode
+- [ ] investigate optimization plugins
+      https://webpack.js.org/plugins/module-concatenation-plugin/
+  - [ ] Measure real difference between 'development' and 'production'
+- [ ] run some experiments with bundle-splitting
+
 ### core
 - [x] add renderer
       maybe rename e.g. react_dll to renderer, or detect and inject additional module
@@ -27,6 +32,8 @@ This subproject is an experiment on efficient webpack building, rebuilding, cach
     - [ ] preserve order
     - [ ] keep state
   - [ ] write other renderer - support for other frameworks
+- [ ] write stateful renderer
+- [ ] write stateful runtime
 - [ ] runtime with communication-layer
 - [ ] write outer frame with runtime
 - [ ] share data from inner-bundle to outer
@@ -46,8 +53,9 @@ This subproject is an experiment on efficient webpack building, rebuilding, cach
   - [ ] auto detect & confirmation
   - [ ] ability to skip interactivity
 - [ ] write install-addon command
-- [-] validate config
-  - [ ] friendly errors
+- [x] validate config/...
+- [x] validate config/renderers
+  - [x] friendly errors
 - [ ] dashboard for serve
   - [ ] Add logo http://paradoxxxzero.github.io/2014/02/28/butterfly.html
 - [ ] write credits/thanks command
@@ -56,7 +64,8 @@ This subproject is an experiment on efficient webpack building, rebuilding, cach
 - [x] use cosmiconfig - https://github.com/davidtheclark/cosmiconfig
 - [x] create first config in example
 - [x] accept shorthand-renderers
-- [-] use config in bundler
+- [x] use config in bundler
+- [ ] reload config in real time
 
 ### Server
 - [ ] split into serve-package and bundle-package

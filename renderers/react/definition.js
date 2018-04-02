@@ -1,4 +1,4 @@
 export default {
-  name: 'react',
+  name: '@sb/renderer-react',
   dependencies: ['react', 'react-dom'],
 };

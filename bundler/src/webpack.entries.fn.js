@@ -3,6 +3,7 @@ import webpack from 'webpack';
 
 import WildcardsEntryWebpackPlugin from './lib/entrypointsPlugin';
 import GeneratePagePlugin from './lib/generatePageplugin';
+import { toSafeFilename } from './lib/util';
 
 const { NamedModulesPlugin } = webpack;
 
@@ -62,7 +63,7 @@ export default ({
       r =>
         new webpack.DllReferencePlugin({
           context: resolveLocal('.'),
-          manifest: require(`${outputPath}/dll/sb_renderer_${r.name}-manifest.json`),
+          manifest: require(`${outputPath}/dll/${toSafeFilename(r.name)}-manifest.json`),
         })
     ),
     ...plugins,
