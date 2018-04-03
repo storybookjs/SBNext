@@ -1,9 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 
-import WildcardsEntryWebpackPlugin from './lib/entrypointsPlugin';
 import GeneratePagePlugin from './lib/generatePageplugin';
-import { toSafeFilename } from './lib/util';
 
 const { NamedModulesPlugin } = webpack;
 
@@ -12,13 +10,13 @@ const resolveLocal = dir => path.join(process.cwd(), dir);
 
 export default ({
   outputPath = resolveLocal('out'),
-  entryPattern = `${process.cwd()}/in/**/*.example.js`,
+  ui = '@sb/ui',
   renderers = [],
   devTool = 'source-map',
   plugins = [],
 }) => ({
-  name: 'entries',
-  entry: WildcardsEntryWebpackPlugin.entry(entryPattern),
+  name: 'manager',
+  entry: { index: ui },
   output: {
     path: outputPath,
     filename: '[name].js',
@@ -32,11 +30,6 @@ export default ({
   module: {
     rules: [
       {
-        test: /\.example.jsx?$/,
-        exclude: /node_modules/,
-        use: ['@sb/core-loader'],
-      },
-      {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: ['babel-loader'],
@@ -45,31 +38,14 @@ export default ({
         test: /\.ejs$/,
         loader: 'ejs-loader',
       },
-      ...renderers
-        .map(r => r.loaders)
-        .reduce((acc, i) => acc.concat(i), [])
-        .filter(Boolean),
     ],
   },
   plugins: [
     new NamedModulesPlugin(),
-    new WildcardsEntryWebpackPlugin(),
     new GeneratePagePlugin({
       template: resolve('./templates/iframe.ejs'),
       parser: require('ejs'),
       appMountIds: ['root'],
     }),
-    new webpack.DllReferencePlugin({
-      context: resolveLocal('.'),
-      manifest: require(`${outputPath}/dll/sb_core-manifest.json`),
-    }),
-    ...renderers.map(
-      r =>
-        new webpack.DllReferencePlugin({
-          context: resolveLocal('.'),
-          manifest: require(`${outputPath}/dll/${toSafeFilename(r.name)}-manifest.json`),
-        })
-    ),
-    ...plugins,
   ],
 });

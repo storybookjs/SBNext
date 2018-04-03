@@ -7,15 +7,13 @@ import * as webpackMessages from '@sb/core-messages/src/webpack';
 
 import { toStore } from './lib/util';
 
-import entriesConfig from './webpack.entries.fn';
-import vendorConfig from './webpack.vendor.fn';
-import serveConfig from './serve.config';
+import managerConfig from './webpack.manager.fn';
+import managerServeConfig from './manager.serve.config';
 
-export const configs = {
-  entries: entriesConfig,
-  vendor: vendorConfig,
-  serve: serveConfig,
-};
+import vendorConfig from './webpack.vendor.fn';
+
+import entriesConfig from './webpack.entries.fn';
+import entriesServeConfig from './entries.serve.config';
 
 const vendor = {
   configure: vendorConfig,
@@ -27,18 +25,37 @@ const entries = {
   config: {},
   time: 0,
 };
+const manager = {
+  configure: managerConfig,
+  config: {},
+  time: 0,
+};
 
 const ignoredPackages = /(hot-update|\.html|\.map)/;
 
 export const run = userConfig => {
   const { renderers, entryPattern } = userConfig;
 
+  manager.time = process.hrtime();
+  manager.config = manager.configure(
+    Object.assign({}, userConfig.webpack.manager || {}, { renderers, entryPattern })
+  );
+
+  serve(Object.assign(managerServeConfig({}), { config: manager.config })).then(server => {
+    manager.time = process.hrtime(manager.time);
+    webpackMessages.built(manager);
+
+    const { compiler } = server;
+
+    server.on('listening', () => {
+      logger.info('Manager Server listening');
+    });
+  });
+
   vendor.time = process.hrtime();
   vendor.config = vendor.configure(
     Object.assign({}, userConfig.webpack.vendor, { renderers, entryPattern })
   );
-
-  webpackMessages.building(vendor);
 
   webpack(vendor.config).run(() => {
     vendor.time = process.hrtime(vendor.time);
@@ -49,16 +66,16 @@ export const run = userConfig => {
       Object.assign({}, userConfig.webpack.entries, { renderers, entryPattern })
     );
 
-    webpackMessages.building(entries);
+    console.log(entries.config);
 
-    serve(Object.assign(configs.serve({}), { config: entries.config })).then(server => {
+    serve(Object.assign(entriesServeConfig({}), { config: entries.config })).then(server => {
       entries.time = process.hrtime(entries.time);
       webpackMessages.built(entries);
 
       const { compiler } = server;
 
       server.on('listening', () => {
-        logger.info('Server listening');
+        logger.info('Entries Server listening');
       });
 
       // compilation.hotUpdateChunkTemplate.hooks.modules.tap('me', (...args) => {

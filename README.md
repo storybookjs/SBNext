@@ -126,6 +126,7 @@ The key new features sbnext introduces
 - [ ] Support for (infinite) deep hierarchy
 - [ ] Search of components
 - [ ] Search of other things (docs, settings, etc)
+- [ ] multiple addons visisble
 
 ### Addon API
 - [ ] Override or wrap any component in component-registry
@@ -139,10 +140,24 @@ The key new features sbnext introduces
 
 ### Bonus (maybe as addons)
 - [ ] dependency graph for components
-- [ ] visualisation for dependency graph
+- [ ] visualization for dependency graph
       <details>
       http://js.cytoscape.org/demos/cose-bilkent-layout-compound/
       </details>
+- [ ] context providers, maybe as renderer-addons ?
 
 ## Notes
 nothing yet
+
+## Challenge
+
+- [ ] backwards compatibility with story api
+
+- [ ] backwards compatibility with decorators
+
+- [ ] backwards compatibility with existing addons in manager
+  - [ ] notes
+  - [ ] backgrounds
+
+- [ ] backwards compatibility with addons with decorators
+  - [ ] knobs

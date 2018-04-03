@@ -3,3 +3,6 @@ stringify
 hrtime
 fn
 boxen
+cosmiconfig
+dom
+koa
