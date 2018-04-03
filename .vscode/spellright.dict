@@ -3,6 +3,7 @@ stringify
 hrtime
 fn
 boxen
+gatsby
 cosmiconfig
 dom
 koa

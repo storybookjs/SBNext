@@ -54,6 +54,7 @@
     "bundler",
     "cli",
     "ui",
+    "server",
     "core/*",
     "examples/*",
     "renderers/*"

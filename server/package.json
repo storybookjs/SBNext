@@ -1,0 +1,23 @@
+{
+  "name": "@sb/server",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "author": "Norbert de Langen <ndelangen@me.com>",
+  "main": "src/main.js",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop"
+  },
+  "dependencies": {
+    "gatsby": "^1.9.241",
+    "gatsby-link": "^1.6.39",
+    "gatsby-plugin-react-helmet": "^2.0.8",
+    "react-helmet": "^5.2.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=8.0.0",
+    "yarn": ">=1.0.0"
+  }
+}
