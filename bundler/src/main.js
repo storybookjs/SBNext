@@ -135,15 +135,15 @@ export const run = settings => {
             // )
             .join('\n')}`
         );
-        const data = {
-          type: 'broadcast',
-          data: {
-            type: 'window-reload',
-            data: {},
-          },
-        };
+        // const data = {
+        //   type: 'broadcast',
+        //   data: {
+        //     type: 'window-reload',
+        //     data: {},
+        //   },
+        // };
 
-        socket.send(stringify(data));
+        // socket.send(stringify(data));
       } catch (error) {
         logger.error(error);
       }

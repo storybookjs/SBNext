@@ -168,12 +168,9 @@ nothing yet
 ## Challenge
 
 - [ ] backwards compatibility with story api
-
 - [ ] backwards compatibility with decorators
-
 - [ ] backwards compatibility with existing addons in manager
   - [ ] notes
   - [ ] backgrounds
-
 - [ ] backwards compatibility with addons with decorators
   - [ ] knobs
