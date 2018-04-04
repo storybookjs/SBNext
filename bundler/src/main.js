@@ -2,6 +2,8 @@ import logger, { hmr } from '@sb/core-logger/node';
 import stripAnsi from 'strip-ansi';
 import * as rendererMessages from '@sb/core-messages/src/renderer';
 
+import stringify from 'json-stringify-safe';
+
 import { serve as serveAsPromised, build as webpackAsPromised } from './lib/webpack-as-promised';
 import { toStore } from './lib/util';
 
@@ -45,16 +47,30 @@ export const run = settings => {
     setting: settings.webpack.manager || {},
     renderers,
     entryPattern,
-  }).then(({ server, compiler, config }) => {
-    //
-  });
+  })
+    .then(({ server, compiler, config, socket }) => {
+      const data = {
+        type: 'broadcast',
+        data: {
+          type: 'boo',
+          data: {},
+        },
+      };
+
+      // setInterval(() => {
+      //   socket.send(stringify(data));
+      // }, 1000);
+    })
+    .catch(err => {
+      logger.error(err);
+    });
 
   serveAsPromised({
     configurators: entries,
     settings: settings.webpack.entries || {},
     renderers,
     entryPattern,
-  }).then(({ server, compiler, config }) => {
+  }).then(({ server, compiler, config, socket }) => {
     // compilation.hotUpdateChunkTemplate.hooks.modules.tap('me', (...args) => {
     //   logger.warn({ hotUpdateChunkTemplate: args });
     // });
@@ -119,6 +135,15 @@ export const run = settings => {
             // )
             .join('\n')}`
         );
+        const data = {
+          type: 'broadcast',
+          data: {
+            type: 'window-reload',
+            data: {},
+          },
+        };
+
+        socket.send(stringify(data));
       } catch (error) {
         logger.error(error);
       }

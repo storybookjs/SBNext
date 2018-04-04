@@ -7,19 +7,21 @@
   "main": "src/main.js",
   "scripts": {},
   "dependencies": {
-    "@sb/ui": "^1.0.0",
     "@sb/core-loader": "^1.0.0",
     "@sb/core-logger": "^1.0.0",
     "@sb/core-messages": "^1.0.0",
     "@sb/core-runtime": "^1.0.0",
+    "@sb/ui": "^1.0.0",
     "babel-loader": "^7.1.4",
     "ejs-loader": "^0.3.1",
     "glob": "^7.1.2",
+    "json-stringify-safe": "^5.0.1",
     "koa-compress": "^2.0.0",
     "strip-ansi": "^4.0.0",
     "webpack": "^4.4.1",
     "webpack-cli": "^2.0.13",
-    "webpack-serve": "^0.3.0"
+    "webpack-serve": "^0.3.0",
+    "ws": "^5.1.1"
   },
   "peerDependencies": {
     "@sb/renderer-react": "^1.0.0"

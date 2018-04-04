@@ -21,6 +21,7 @@ module.exports = () => ({
   hot: {
     logTime: true,
     logLevel: 'error',
+    port: 8081,
   },
   dev: {
     publicPath: '/',
