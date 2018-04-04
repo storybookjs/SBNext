@@ -14,9 +14,9 @@ module.exports = () => ({
   logTime: true,
   logLevel: 'error',
 
-  // open: {
-  //   path: 'icon/icon.example.html',
-  // },
+  open: {
+    path: '/',
+  },
 
   hot: {
     logTime: true,

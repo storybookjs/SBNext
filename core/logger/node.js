@@ -52,7 +52,7 @@ export const levels = getLevels(chalk.level);
 
 const defaults = {
   name: '<unknown>',
-  level: 'debug',
+  level: 'info',
   unique: true,
 };
 

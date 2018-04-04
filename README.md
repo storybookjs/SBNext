@@ -53,6 +53,8 @@ The main infrastructure and low level modules, not directly interacted with by u
 Command Line interface that users use
 
 - [x] create cli package with multiple commands
+- [ ] create an interactive choose your command to run
+      https://github.com/ruyadorno/ntl
 - [ ] write a awesome help command
 - [ ] write static build command
 - [ ] write start command
@@ -71,6 +73,7 @@ Command Line interface that users use
 - [ ] dashboard for serve
   - [ ] Add logo http://paradoxxxzero.github.io/2014/02/28/butterfly.html
 - [ ] write credits/thanks command
+- [ ] logger should write to disk
 
 ### Config
 The storybook configuration file, the parsing and validation of it
@@ -145,6 +148,19 @@ The key new features sbnext introduces
       http://js.cytoscape.org/demos/cose-bilkent-layout-compound/
       </details>
 - [ ] context providers, maybe as renderer-addons ?
+
+### Api
+- [ ] In example files, a pretty name as first comment above export
+- [ ] a slash in pretty name might create hierarchy
+- [ ] directory structure might create hierarchy
+- [ ] How to add decorators
+  - [ ] modifiers - mutate html in preview
+  - [ ] inspectors - read html and listen to events
+  - [ ] providers - place props, or context
+- [ ] Api for fetching all or querying for example/components & variants
+  - [ ] result could be data, urls
+- [ ] Api for subscribing to changes
+  - [ ] change / delete / add of example
 
 ## Notes
 nothing yet
