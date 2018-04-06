@@ -30,37 +30,41 @@ const manager = {
 
 const ignoredPackages = /(hot-update|\.html|\.map)/;
 
-const detectVendors = input =>
-  new Promise((resolve, reject) => {
-    const config = vendor.build(input);
+const detectVendors = input => {
+  const config = vendor.build(input);
 
-    resolve(
-      Promise.all(
-        Object.keys(config.entry).map(
-          key =>
-            new Promise((resolve, reject) => {
-              fs.access(`${config.output.path}/${key}_dll.js`, err => (err ? reject() : resolve()));
-            })
-        )
-      )
-    );
-  });
+  return Promise.all(
+    Object.keys(config.entry).map(
+      key =>
+        new Promise((resolve, reject) => {
+          fs.access(`${config.output.path}/${key}_dll.js`, err => (err ? reject() : resolve()));
+        })
+    )
+  )
+    .then(() => false)
+    .catch(() => true);
+};
 
-export const run = settings => {
+export const run = (settings, flags) => {
   const { renderers, entryPattern } = settings;
+
+  logger.info(flags);
 
   detectVendors({
     settings: settings.webpack.vendor || {},
     renderers,
     entryPattern,
   })
-    .catch(() =>
-      webpackAsPromised({
-        configurators: vendor,
-        settings: settings.webpack.vendor || {},
-        renderers,
-        entryPattern,
-      })
+    .then(
+      needed =>
+        needed || flags.force
+          ? webpackAsPromised({
+              configurators: vendor,
+              settings: settings.webpack.vendor || {},
+              renderers,
+              entryPattern,
+            })
+          : logger.info('skipped vendor build')
     )
     .then(() =>
       Promise.all([
