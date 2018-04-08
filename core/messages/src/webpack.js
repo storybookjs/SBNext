@@ -16,3 +16,7 @@ export const built = ({ config, time }) => {
     `)
   );
 };
+
+export const skipped = ({ config }) => {
+  logger.debug(cleanIndent(`skipped ${config.name}`));
+};

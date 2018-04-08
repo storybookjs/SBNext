@@ -5,6 +5,7 @@ export const renderers = items =>
     switch (true) {
       case typeof item === 'string': {
         try {
+          // TODO change to import()
           return acc.concat(require(`${item}/definition`).default);
         } catch (error) {
           messages.unloadable({ name: item });

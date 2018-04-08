@@ -6,7 +6,7 @@ export const run = (...args) => {
   logger.info(`${name} executed`, args);
 };
 
-export const addToCommander = commander =>
+export default commander =>
   commander
     .command(name)
     .description('This is command A')

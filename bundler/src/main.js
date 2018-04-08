@@ -2,6 +2,7 @@ import fs from 'fs';
 import logger, { hmr } from '@sb/core-logger/node';
 import stripAnsi from 'strip-ansi';
 import * as rendererMessages from '@sb/core-messages/src/renderer';
+import * as webpackMessages from '@sb/core-messages/src/webpack';
 
 import stringify from 'json-stringify-safe';
 
@@ -62,7 +63,7 @@ export const run = (settings, flags) => {
               renderers,
               entryPattern,
             })
-          : logger.info('skipped vendor build')
+          : webpackMessages.skipped({ config: { name: 'vendor' } })
     )
     .then(() =>
       Promise.all([
@@ -149,7 +150,7 @@ export const run = (settings, flags) => {
             type: 'broadcast',
             data: {
               type: 'x',
-              data: compilation.getStats().toJson(),
+              data: stats.toJson(),
             },
           };
 
