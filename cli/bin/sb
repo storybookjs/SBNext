@@ -1,25 +1,15 @@
 #!/usr/bin/env node
 
 const fs = require('fs');
+const path = require('path');
+const r = require('esm')(module);
 
 const runAsProd = () => {
-  require('../dist/index');
+  r('../dist/index');
 };
 
 const runAsDev = () => {
-  require('babel-register')({
-    ignore: filename => {
-      if (filename.match(/src/) || filename.match(/@sb/) || filename.match(/bundler/)) {
-        return false;
-      }
-      if (filename.match(/\/node_modules\//)) {
-        return true;
-      }
-      return false;
-    },
-    cache: false,
-  });
-  require('../src/index');
+  r('../src/index');
 };
 
-fs.access('../dist', error => (error ? runAsDev() : runAsProd()));
+fs.access(path.join(__dirname, '../dist/index.js'), error => (error ? runAsDev() : runAsProd()));

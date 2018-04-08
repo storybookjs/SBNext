@@ -4,7 +4,6 @@
   "private": true,
   "license": "MIT",
   "author": "Norbert de Langen <ndelangen@me.com>",
-  "main": "src/main.js",
   "scripts": {},
   "dependencies": {
     "@sb/core-loader": "^1.0.0",

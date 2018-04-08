@@ -48,8 +48,6 @@ const detectVendors = input => {
 export const run = (settings, flags) => {
   const { renderers, entryPattern } = settings;
 
-  logger.info(flags);
-
   detectVendors({
     settings: settings.webpack.vendor || {},
     renderers,

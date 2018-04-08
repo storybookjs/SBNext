@@ -1,10 +1,11 @@
-import * as bundler from '@sb/bundler';
-
 import getConfig from '../utils/config';
 
 export const name = 'serve';
 
-export const run = args => getConfig().then(config => bundler.run(config, args));
+export const run = args =>
+  Promise.all([getConfig(), import('@sb/bundler')]).then(([config, bundler]) =>
+    bundler.run(config, args)
+  );
 
 export const addToCommander = commander =>
   commander

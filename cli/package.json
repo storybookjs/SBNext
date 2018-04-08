@@ -4,7 +4,6 @@
   "private": true,
   "license": "MIT",
   "author": "Norbert de Langen <ndelangen@me.com>",
-  "main": "main.js",
   "bin": {
     "sb": "./bin/sb"
   },
@@ -16,6 +15,7 @@
     "chalk": "^2.3.2",
     "commander": "^2.15.1",
     "cosmiconfig": "^4.0.0",
+    "esm": "^3.0.16",
     "os": "^0.1.1",
     "os-locale": "^2.1.0",
     "strip-ansi": "^4.0.0"
