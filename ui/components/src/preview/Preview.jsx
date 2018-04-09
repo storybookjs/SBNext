@@ -1,89 +1,62 @@
 import React, { Component, Fragment } from 'react';
+import glamorous from 'glamorous';
 import { window } from 'global';
 
-const Typography = props => <div {...props} />;
-const ZoomInIcon = () => <span>+</span>;
-const ZoomOutIcon = () => <span>+</span>;
-const IconButton = props => <button {...props} />;
+import PointerOverlay from './PointerOverlay.jsx';
+import Toolbar from './Toolbar.jsx';
 
-class Toolbar extends Component {
-  state = {
-    menu: false,
-    anchorEl: undefined,
-  };
-  menu = e => {
-    this.setState({
-      menu: !this.state.menu,
-      anchorEl: e.target,
-    });
-  };
+const Typography = glamorous.div({
+  fontSize: 11,
+  lineHeight: '32px',
+  marginRight: 5,
+  borderRight: '1px solid rgba(0,0,0,0.2)',
+  paddingRight: 10,
+});
 
-  render() {
-    const { children, onZoomChange, menuItems } = this.props;
-    const { menu, anchorEl } = this.state;
+const defaults = {
+  grid: {
+    backgroundSize: '100px 100px, 100px 100px, 20px 20px, 20px 20px',
+    backgroundPosition: '-2px -2px, -2px -2px, -1px -1px, -1px -1px',
 
-    return (
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          left: 0,
-          height: 32,
-          boxSizing: 'border-box',
-          borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-          background: '#fff',
-          zIndex: 2,
-        }}
-      >
-        {children}
-        <IconButton onClick={() => onZoomChange(-0.25)} style={{ width: 30, height: 30 }}>
-          <ZoomInIcon />
-        </IconButton>
-        <IconButton onClick={() => onZoomChange(0.25)} style={{ width: 30, height: 30 }}>
-          <ZoomOutIcon />
-        </IconButton>
-        {menuItems}
-      </div>
-    );
-  }
-}
-
-const zoomedIframeStyle = {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  border: '0 none',
-  overflow: 'hidden',
-  transformOrigin: 'top left',
-  background: '#f4f4f4',
-  backgroundSize: '100px 100px, 100px 100px, 20px 20px, 20px 20px',
-  backgroundPosition: '-2px -2px, -2px -2px, -1px -1px, -1px -1px',
-
-  backgroundImage: `
+    backgroundImage: `
     linear-gradient(rgba(0,0,0,0.05) 2px, transparent 2px),
     linear-gradient(90deg, rgba(0,0,0,0.05) 2px, transparent 2px),
     linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)`,
+  },
+  background: {
+    backgroundColor: 'transparent',
+  },
 };
 
-const PointerOverlay = () => (
-  <span
-    style={{
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      bottom: 0,
-      right: 0,
-      width: '100%',
-      height: '100%',
-      zIndex: 1,
-      background: 'rgba(255,255,255,0.05)',
-    }}
-  />
+const Frame = glamorous.iframe(
+  {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    border: '0 none',
+    overflow: 'hidden',
+  },
+  ({ grid = defaults.grid }) => grid,
+  ({ background = defaults.background }) => background,
+  ({ zoom }) => ({
+    width: `${100 * zoom}%`,
+    height: `${100 * zoom}%`,
+    transform: `scale(${1 / zoom})`,
+    transition: 'transform .2s ease-out, height .2s ease-out, width .2s ease-out',
+    transformOrigin: 'top left',
+  })
 );
+
+const FrameWrap = glamorous.div(({ height }) => ({
+  position: 'absolute',
+  overflow: 'hidden',
+  left: 0,
+  right: 0,
+  bottom: 0,
+  top: height,
+  height: `calc(100% - ${height}px)`,
+}));
 
 const WrapperA = ({ children, height, zoom, getRef }) => (
   <div
@@ -92,14 +65,12 @@ const WrapperA = ({ children, height, zoom, getRef }) => (
       position: 'relative',
       height: 32 + height / zoom,
       overflow: 'hidden',
-      transition: 'height .4s ease-out',
+      transition: 'height .2s ease-out',
     }}
   >
     {children}
   </div>
 );
-
-const WrapperB = ({ children }) => <Fragment>{children}</Fragment>;
 
 class Iframe extends Component {
   state = {
@@ -114,13 +85,6 @@ class Iframe extends Component {
       }
     };
 
-    if (this.props.publisher) {
-      this.props.publisher.listen((command, ...args) => {
-        if (command === 'zoom') {
-          this.setState({ zoom: this.state.zoom + args[0] });
-        }
-      });
-    }
     window.addEventListener('message', this.postMessageListener, false);
   }
   componentWillUnmount() {
@@ -142,7 +106,6 @@ class Iframe extends Component {
     const {
       id,
       isDragging,
-      menuItems = [],
       absolute = true,
       toolbar = true,
       url = 'https://example.com',
@@ -150,49 +113,20 @@ class Iframe extends Component {
 
     const { zoom, height } = this.state;
 
-    const zoomPercentage = `${100 * zoom}%`;
-
-    const Wrapper = absolute ? WrapperB : WrapperA;
+    const Wrapper = absolute ? Fragment : WrapperA;
     const toolbarHeight = toolbar ? 32 : 0;
 
-    const style = {
-      ...zoomedIframeStyle,
-      width: zoomPercentage,
-      height: zoomPercentage,
-      transform: `scale(${1 / zoom})`,
-      transition: 'transform .4s ease-out, height .4s ease-out, width .4s ease-out',
-    };
     return (
       <Wrapper getRef={element => this.registerPreview(element)} {...{ zoom, height }}>
         {isDragging ? <PointerOverlay /> : null}
         {toolbar ? (
-          <Toolbar menuItems={menuItems} onZoomChange={val => this.setState({ zoom: zoom + val })}>
-            <Typography
-              style={{
-                fontSize: 11,
-                lineHeight: '32px',
-                marginRight: 5,
-                borderRight: '1px solid rgba(0,0,0,0.2)',
-                paddingRight: 10,
-              }}
-            >
-              ({parseFloat(100 / zoom).toFixed(0)}%)
-            </Typography>
+          <Toolbar onZoomChange={val => this.setState({ zoom: zoom * val })}>
+            <Typography>({parseFloat(100 / zoom).toFixed(0)}%)</Typography>
           </Toolbar>
         ) : null}
-        <div
-          style={{
-            position: 'absolute',
-            overflow: 'hidden',
-            left: 0,
-            right: 0,
-            bottom: 0,
-            top: toolbarHeight,
-            height: `calc(100% - ${toolbarHeight}px)`,
-          }}
-        >
-          <iframe src={url} style={style} title={id} />
-        </div>
+        <FrameWrap height={toolbarHeight}>
+          <Frame src={url} title={id} {...{ zoom }} />
+        </FrameWrap>
       </Wrapper>
     );
   }

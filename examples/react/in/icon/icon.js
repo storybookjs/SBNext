@@ -1,5 +1,4 @@
 import React from 'react';
-import { document } from 'global';
 
 const icons = {
   house: () => (
@@ -22,5 +21,3 @@ const icons = {
 const MyComponent = ({ t }) => (t && icons[t] ? icons[t]() : null);
 
 export default MyComponent;
-
-document.body.style.background = 'hotpink';

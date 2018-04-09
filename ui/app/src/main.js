@@ -46,16 +46,16 @@ class App extends Component {
   render() {
     const { examples } = this.state;
 
-    console.log({ examples });
-
     return examples.length ? (
       <Fragment>
         {examples.map(([key, val]) => (
           <div
+            key={key}
             style={{
               position: 'relative',
               border: '0 none',
-              margin: 0,
+              margin: 10,
+              boxShadow: '1px 1px 5px rgba(0,0,0,0.3)',
               padding: 0,
               flex: 1,
               width: 'auto',
@@ -70,9 +70,6 @@ class App extends Component {
     );
   }
 }
-// {examples.map(([key, val]) => (
-//   <Iframe title="button" url={`http://localhost:1337/${key}.html`} />
-// ))}
 
 ReactDOM.render(
   React.createElement(
