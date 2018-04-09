@@ -1,19 +1,6 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, Component } from 'react';
 import ReactDOM from 'react-dom';
-import { document } from 'global';
-
-// Create WebSocket connection.
-const socket = new WebSocket('ws://localhost:8082');
-
-// Connection opened
-socket.addEventListener('open', event => {
-  // socket.send('Hello Server!');
-});
-
-// Listen for messages
-socket.addEventListener('message', event => {
-  console.log('Message from server ', event.data);
-});
+import { document, WebSocket } from 'global';
 
 const Iframe = ({ url, title }) => (
   <iframe
@@ -22,6 +9,54 @@ const Iframe = ({ url, title }) => (
     src={url}
   />
 );
+
+class App extends Component {
+  state = {
+    examples: [],
+  };
+  componentDidMount() {
+    this.socket = new WebSocket('ws://localhost:8082');
+
+    this.socket.addEventListener('open', () => {
+      this.socket.send(
+        JSON.stringify({
+          type: 'broadcast',
+          data: {
+            type: 'pull',
+            data: { foo: 4 },
+          },
+        })
+      );
+    });
+
+    this.socket.addEventListener('message', ({ data }) => {
+      if (data && data.substr('push')) {
+        const result = JSON.parse(data);
+        if (result.type === 'push') {
+          this.setState({
+            examples: Object.entries(result.data),
+          });
+        }
+        // console.log('Message from server ', data);
+      }
+    });
+  }
+  render() {
+    const { examples } = this.state;
+
+    console.log({ examples });
+
+    return examples.length ? (
+      <Fragment>
+        {examples.map(([key, val]) => (
+          <Iframe title="button" url={`http://localhost:1337/${key}.html`} />
+        ))}
+      </Fragment>
+    ) : (
+      'loading...'
+    );
+  }
+}
 
 ReactDOM.render(
   React.createElement(
@@ -33,11 +68,7 @@ ReactDOM.render(
         display: 'flex',
       },
     },
-    <Fragment>
-      <Iframe title="icon" url="http://localhost:1337/icon/icon.example.html" />
-      <Iframe title="title" url="http://localhost:1337/title/title.example.html" />
-      <Iframe title="button" url="http://localhost:1337/button/button.example.html" />
-    </Fragment>
+    <App />
   ),
   document.getElementById('root')
 );

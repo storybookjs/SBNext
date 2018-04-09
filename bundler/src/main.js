@@ -85,6 +85,7 @@ export const run = (settings, flags) => {
       // now we have both manager and entries listening!
       // we can communicate entries changes to the manager!
 
+      const state = {};
       // const state = {
       //   invalids: [],
       // };
@@ -93,24 +94,42 @@ export const run = (settings, flags) => {
       //   state.invalids.push(m);
       // });
 
+      manager.socket.on('message', message => {
+        // if request is for entries but entries isn't known yet, we'll send them eventually
+        // if entries ARE known, we might have a slow connecting client, so we send previous result
+        if (message.substr('pull') && state.entries && JSON.parse(message).type === 'pull') {
+          const data = {
+            type: 'broadcast',
+            data: {
+              type: 'push',
+              data: state.entries,
+            },
+          };
+
+          manager.socket.send(stringify(data));
+        }
+      });
+
       entries.compiler.hooks.done.tap('me', ({ compilation }) => {
         try {
-          const stats = compilation.getStats();
+          const stats = compilation.getStats({
+            all: false,
+            assets: true,
+            modules: true,
+            chunks: false,
+            cached: true,
+            excludeAssets: assetName => assetName.match(ignoredPackages),
+
+            errors: true,
+            errorDetails: true,
+            warnings: true,
+            moduleTrace: true,
+            colors: true,
+          });
 
           hmr.info(
             `built: \n${stats
               .toString({
-                all: false,
-                assets: true,
-                modules: true,
-                chunks: false,
-                cached: true,
-                excludeAssets: assetName => assetName.match(ignoredPackages),
-
-                errors: true,
-                errorDetails: true,
-                warnings: true,
-                moduleTrace: true,
                 colors: true,
               })
               .split('\n')
@@ -146,15 +165,6 @@ export const run = (settings, flags) => {
               // )
               .join('\n')}`
           );
-          const data = {
-            type: 'broadcast',
-            data: {
-              type: 'x',
-              data: stats.toJson(),
-            },
-          };
-
-          manager.socket.send(stringify(data));
         } catch (error) {
           logger.error(error);
         }
@@ -162,8 +172,8 @@ export const run = (settings, flags) => {
         // state.invalids = [];
 
         try {
-          const data = toStore(compilation);
-          logger.debug(data);
+          state.entries = toStore(compilation);
+          logger.debug(state.entries);
         } catch (err) {
           logger.error(err);
         }
