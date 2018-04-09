@@ -2,6 +2,8 @@ import React, { Fragment, Component } from 'react';
 import ReactDOM from 'react-dom';
 import { document, WebSocket } from 'global';
 
+import Preview from '@sb/components/src/preview/Preview.jsx';
+
 const Iframe = ({ url, title }) => (
   <iframe
     style={{ border: '0 none', margin: 0, padding: 0, flex: 1, width: 'auto' }}
@@ -49,7 +51,18 @@ class App extends Component {
     return examples.length ? (
       <Fragment>
         {examples.map(([key, val]) => (
-          <Iframe title="button" url={`http://localhost:1337/${key}.html`} />
+          <div
+            style={{
+              position: 'relative',
+              border: '0 none',
+              margin: 0,
+              padding: 0,
+              flex: 1,
+              width: 'auto',
+            }}
+          >
+            <Preview url={`http://localhost:1337/${key}.html`} />
+          </div>
         ))}
       </Fragment>
     ) : (
@@ -57,6 +70,9 @@ class App extends Component {
     );
   }
 }
+// {examples.map(([key, val]) => (
+//   <Iframe title="button" url={`http://localhost:1337/${key}.html`} />
+// ))}
 
 ReactDOM.render(
   React.createElement(

@@ -53,7 +53,7 @@
   "workspaces": [
     "bundler",
     "cli",
-    "ui",
+    "ui/*",
     "core/*",
     "examples/*",
     "renderers/*"
