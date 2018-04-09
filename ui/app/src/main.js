@@ -2,15 +2,8 @@ import React, { Fragment, Component } from 'react';
 import ReactDOM from 'react-dom';
 import { document, WebSocket } from 'global';
 
+import AppLayout from '@sb/components/src/app-layout/AppLayout.jsx';
 import Preview from '@sb/components/src/preview/Preview.jsx';
-
-const Iframe = ({ url, title }) => (
-  <iframe
-    style={{ border: '0 none', margin: 0, padding: 0, flex: 1, width: 'auto' }}
-    title={title}
-    src={url}
-  />
-);
 
 class App extends Component {
   state = {
@@ -25,7 +18,6 @@ class App extends Component {
           type: 'broadcast',
           data: {
             type: 'pull',
-            data: { foo: 4 },
           },
         })
       );
@@ -39,49 +31,47 @@ class App extends Component {
             examples: Object.entries(result.data),
           });
         }
-        // console.log('Message from server ', data);
       }
     });
   }
   render() {
     const { examples } = this.state;
 
-    return examples.length ? (
-      <Fragment>
-        {examples.map(([key, val]) => (
-          <div
-            key={key}
-            style={{
-              position: 'relative',
-              border: '0 none',
-              margin: 10,
-              boxShadow: '1px 1px 5px rgba(0,0,0,0.3)',
-              padding: 0,
-              flex: 1,
-              width: 'auto',
-            }}
-          >
-            <Preview url={`http://localhost:1337/${key}.html`} />
-          </div>
-        ))}
-      </Fragment>
-    ) : (
-      'loading...'
+    return (
+      <AppLayout>
+        <div
+          style={{
+            height: '100%',
+            width: '100%',
+            display: 'flex',
+          }}
+        >
+          {examples.length ? (
+            <Fragment>
+              {examples.map(([key]) => (
+                <div
+                  key={key}
+                  style={{
+                    position: 'relative',
+                    border: '0 none',
+                    margin: 10,
+                    boxShadow: '1px 1px 5px rgba(0,0,0,0.3)',
+                    padding: 0,
+                    flex: 1,
+                    width: 'auto',
+                  }}
+                >
+                  <Preview url={`http://localhost:1337/${key}.html`} />
+                </div>
+              ))}
+            </Fragment>
+          ) : (
+            'loading...'
+          )}
+        </div>
+      </AppLayout>
     );
   }
 }
 
-ReactDOM.render(
-  React.createElement(
-    'div',
-    {
-      style: {
-        height: '100vh',
-        width: '100vw',
-        display: 'flex',
-      },
-    },
-    <App />
-  ),
-  document.getElementById('root')
-);
+ReactDOM.render(<App />, document.getElementById('root'));
