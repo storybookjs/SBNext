@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import glamorous from 'glamorous';
+import Content from './Content.jsx';
 
 const Wrapper = glamorous.div({
   position: 'fixed',
@@ -57,7 +58,7 @@ const LeftBar = glamorous.div({
   boxSizing: 'border-box',
   padding: 15,
 });
-const Content = glamorous.div({
+const ContentPanel = glamorous.div({
   position: 'fixed',
   top: 0,
   bottom: 0,
@@ -65,7 +66,7 @@ const Content = glamorous.div({
   right: 0,
   zIndex: 2,
   boxSizing: 'border-box',
-  padding: 15,
+  // padding: 15,
 });
 
 class AppLayout extends Component {
@@ -82,10 +83,23 @@ class AppLayout extends Component {
 
     return (
       <Wrapper>
+        <link
+          type="text/css"
+          rel="stylesheet"
+          href="https://golden-layout.com/assets/css/goldenlayout-base.css"
+        />
+        <link
+          type="text/css"
+          rel="stylesheet"
+          href="https://golden-layout.com/assets/css/goldenlayout-light-theme.css"
+        />
+
         <NavBar onClick={toggleExpanded} />
         <NavContent expanded={expanded}>nav content</NavContent>
         <LeftBar>Hello</LeftBar>
-        <Content>{children}</Content>
+        <ContentPanel>
+          <Content />
+        </ContentPanel>
       </Wrapper>
     );
   }

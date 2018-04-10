@@ -10,6 +10,7 @@
     "glamor": "^2.20.40",
     "glamorous": "^4.12.1",
     "global": "^4.3.2",
+    "@ndelangen/golden-layout": "^1.5.11",
     "json-stringify-safe": "^5.0.1",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
