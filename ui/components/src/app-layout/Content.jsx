@@ -5,9 +5,6 @@ import { window } from 'global';
 
 const TestComponent = ({ label }) => <h1>{label}</h1>;
 
-window.ReactDOM = ReactDOM;
-window.React = React;
-
 const initial = {
   settings: {
     hasHeaders: true,
@@ -25,8 +22,8 @@ const initial = {
     borderWidth: 5,
     minItemHeight: 10,
     minItemWidth: 10,
-    headerHeight: 20,
-    dragProxyWidth: 300,
+    headerHeight: 30,
+    dragProxyWidth: 200,
     dragProxyHeight: 200,
   },
   labels: {
