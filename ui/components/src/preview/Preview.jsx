@@ -71,6 +71,7 @@ const WrapperA = ({ children, height, zoom, getRef }) => (
     {children}
   </div>
 );
+const WrapperB = ({ children }) => <Fragment>{children}</Fragment>;
 
 class Iframe extends Component {
   state = {
@@ -113,7 +114,7 @@ class Iframe extends Component {
 
     const { zoom, height } = this.state;
 
-    const Wrapper = absolute ? Fragment : WrapperA;
+    const Wrapper = absolute ? WrapperB : WrapperA;
     const toolbarHeight = toolbar ? 32 : 0;
 
     return (

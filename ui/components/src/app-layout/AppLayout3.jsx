@@ -1,36 +1,61 @@
 import React, { Component } from 'react';
 
-import Navigation, { AkNavigationItem, AkContainerNavigationNested } from '@atlaskit/navigation';
+import Navigation, {
+  AkContainerNavigationNested,
+  AkContainerTitle,
+  AkCreateDrawer,
+  AkNavigationItem,
+  AkNavigationItemGroup,
+  AkGlobalNavigation,
+  AkSearch,
+  AkGlobalItem,
+  AkSearchDrawer,
+  presetThemes,
+} from '@atlaskit/navigation';
+import Tooltip from '@atlaskit/tooltip';
+import SearchIcon from '@atlaskit/icon/glyph/search';
+import CreateIcon from '@atlaskit/icon/glyph/add';
+
 import Page from '@atlaskit/page';
+
+import SearchDrawer from './SearchDrawer.jsx';
+import CreateDrawer from './CreateDrawer.jsx';
 
 export default class NavigationPanel extends Component<{}> {
   constructor(props: {}) {
     super(props);
 
     this.state = {
+      containerThemeName: 'container',
+      globalThemeName: 'dark',
+      isOpen: true,
+      openDrawer: false,
+      width: 304,
+
       stack: [
         [
           {
-            title: 'Category 1',
+            text: 'Category 1',
             children: [
               {
-                title: 'Component A',
+                text: 'Component A',
                 children: [
                   {
-                    title: 'bar',
+                    text: 'bar',
                   },
                 ],
               },
             ],
           },
           {
-            title: 'Category 2',
+            text: 'Category 2',
+            subText: 'the best category',
             children: [
               {
-                title: 'Component B',
+                text: 'Component B',
                 children: [
                   {
-                    title: 'bar',
+                    text: 'bar',
                   },
                 ],
               },
@@ -70,18 +95,77 @@ export default class NavigationPanel extends Component<{}> {
   renderItem = (item: any) => {
     const onClick = item.children && (() => this.stackPush(item.children));
 
-    return <AkNavigationItem text={item.title} onClick={onClick} key={item.title} />;
+    return <AkNavigationItem {...item} onClick={onClick} key={item.title} />;
   };
 
   renderStack = () => this.state.stack.map(page => page.map(item => this.renderItem(item)));
+  openSearchDrawer = () => this.setState({ openDrawer: 'searchDrawer' });
+  openCreateDrawer = () => this.setState({ openDrawer: 'createDrawer' });
+  closeDrawer = () => this.setState({ openDrawer: false });
+
+  handleResize = (pr: { isOpen: boolean, width: number }) => this.setState(pr);
+  toggleNavCollapse = () => this.setState({ isOpen: !this.state.isOpen });
 
   render() {
+    const {
+      isOpen,
+      openDrawer,
+      compactItems,
+      showIcon,
+      width,
+      globalThemeName,
+      containerThemeName,
+    } = this.state;
+
     const { children } = this.props;
 
     return (
       <Page
         navigation={
-          <Navigation containerHeaderComponent={this.renderHeader}>
+          <Navigation
+            isOpen={isOpen}
+            width={width}
+            onResize={this.handleResize}
+            containerHeaderComponent={this.renderHeader}
+            globalTheme={presetThemes[globalThemeName]}
+            containerTheme={presetThemes[containerThemeName]}
+            globalPrimaryActions={[
+              <AkGlobalItem onClick={this.openSearchDrawer}>
+                <Tooltip key="1" position="right" content="Let's Search">
+                  <SearchIcon label="search" />
+                </Tooltip>
+              </AkGlobalItem>,
+              <AkGlobalItem onClick={this.openCreateDrawer}>
+                <Tooltip key="1" position="right" content="Create Stuff">
+                  <CreateIcon label="search" />
+                </Tooltip>
+              </AkGlobalItem>,
+            ]}
+            globalSecondaryActions={[
+              <AkGlobalItem>
+                <Tooltip key="1" position="right" content="Let's Search">
+                  <CreateIcon label="other" />
+                </Tooltip>
+              </AkGlobalItem>,
+              <AkGlobalItem>
+                <Tooltip key="1" position="right" content="Create Stuff">
+                  <CreateIcon label="other" />
+                </Tooltip>
+              </AkGlobalItem>,
+            ]}
+            onSearchDrawerOpen={this.openSearchDrawer}
+            onCreateDrawerOpen={this.openCreateDrawer}
+            drawers={[
+              <SearchDrawer
+                drawerIsOpen={openDrawer === 'searchDrawer'}
+                closeDrawer={this.closeDrawer}
+              />,
+              <CreateDrawer
+                drawerIsOpen={openDrawer === 'createDrawer'}
+                closeDrawer={this.closeDrawer}
+              />,
+            ]}
+          >
             <AkContainerNavigationNested
               stack={this.renderStack()}
               onAnimationEnd={(...args) => console.log('animation end', args)}
