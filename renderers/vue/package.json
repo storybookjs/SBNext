@@ -1,0 +1,21 @@
+{
+  "name": "@sb/renderer-vue",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "author": "Michael Shilman <michael@lab80.co>",
+  "main": "main.js",
+  "scripts": {},
+  "dependencies": {
+    "global": "4.3.2"
+  },
+  "peerDependencies": {
+    "vue": "*",
+    "vue-loader": "*",
+    "vue-template-compiler": "*"
+  },
+  "engines": {
+    "node": ">=8.0.0",
+    "yarn": ">=1.0.0"
+  }
+}

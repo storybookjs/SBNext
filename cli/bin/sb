@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+
+const fs = require('fs');
+const path = require('path');
+const r = require('esm')(module);
+
+const runAsProd = () => {
+  r('../dist/index');
+};
+
+const runAsDev = () => {
+  r('../src/index');
+};
+
+fs.access(path.join(__dirname, '../dist/index.js'), error => (error ? runAsDev() : runAsProd()));

@@ -1,0 +1,26 @@
+{
+  "name": "@sb/example-vue",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "author": "Michael Shilman <michael@lab80.co>",
+  "main": "main.js",
+  "scripts": {
+    "sb": "sb"
+  },
+  "dependencies": {
+    "global": "^4.3.2",
+    "vue": "2.5.16",
+    "vue-loader": "14.2.2",
+    "vue-template-compiler": "2.5.16"
+  },
+  "devDependencies": {
+    "@sb/cli": "1.0.0",
+    "@sb/renderer-react": "^1.0.0"
+  },
+  "peerDependencies": {},
+  "engines": {
+    "node": ">=8.0.0",
+    "yarn": ">=1.0.0"
+  }
+}

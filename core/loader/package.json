@@ -1,0 +1,17 @@
+{
+  "name": "@sb/core-loader",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "author": "Norbert de Langen <ndelangen@me.com>",
+  "main": "main.js",
+  "scripts": {},
+  "dependencies": {
+    "@sb/core-logger": "1.0.0"
+  },
+  "peerDependencies": {},
+  "engines": {
+    "node": ">=8.0.0",
+    "yarn": ">=1.0.0"
+  }
+}

@@ -1,0 +1,105 @@
+<% var item, key %>
+
+<% options.appMountIds = options.appMountIds || [] %>
+<% options.lang = options.lang || "en" %>
+<% options.links = options.links || [] %>
+<% options.meta = options.meta || [] %>
+<% options.scripts = options.scripts || [] %>
+
+<!DOCTYPE html>
+<html lang="<%= options.lang %>">
+  <head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+
+    <% if (options.baseHref) { %>
+      <base href="<%= options.baseHref %>">
+    <% } %>
+
+    <% if (Array.isArray(options.meta)) { %>
+      <% for (item of options.meta) { %>
+        <meta<% for (key in item) { %> <%= key %>="<%= item[key] %>"<% } %>>
+      <% } %>
+    <% } %>
+
+    <title><%= options.title %></title>
+
+    <% if (options.mobile) { %>
+      <meta content="width=device-width, initial-scale=1" name="viewport">
+    <% } %>
+
+    <% for (item of options.links) { %>
+    <% if (typeof item === 'string' || item instanceof String) { item = { href: item, rel: 'stylesheet' } } %>
+      <link<% for (key in item) { %> <%= key %>="<%= item[key] %>"<% } %>>
+    <% } %>
+
+    <% if (options.headHtmlSnippet) { %>
+      <%= options.headHtmlSnippet %>
+    <% } %>
+  </head>
+  <body>
+    <style>
+      body, html, #root {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+    </style>
+
+    <% if (options.unsupportedBrowser) { %>
+      <style>.unsupported-browser { display: none; }</style>
+      <div class="unsupported-browser">
+        Sorry, your browser is not supported. Please upgrade to the latest version or switch your browser to use this site. See <a href="http://outdatedbrowser.com/">outdatedbrowser.com</a> for options.
+      </div>
+    <% } %>
+
+    <% if (options.bodyHtmlSnippet) { %>
+      <%= options.bodyHtmlSnippet %>
+    <% } %>
+
+    <% if (options.appMountId) { %>
+      <div id="<%= options.appMountId %>">	    
+        <% if (options.appMountHtmlSnippet) { %>
+          <%= options.appMountHtmlSnippet %>
+        <% } %>    
+      </div>
+    <% } %>
+
+    <% for (item of options.appMountIds) { %>
+      <div id="<%= item %>"></div>
+    <% } %>
+
+    <% if (options.window) { %>
+    <script>
+      <% for (key in options.window) { %>
+        window['<%= key %>'] = <%= JSON.stringify(options.window[key]) %>;
+      <% } %>
+    </script>
+    <% } %>
+
+    <% if (options.inlineManifestWebpackName) { %>
+      <%= files[options.inlineManifestWebpackName] %>
+    <% } %>
+
+    <% for (item of options.scripts) { %>
+    <% if (typeof item === 'string' || item instanceof String) { item = { src: item } } %>
+      <script <% for (key in item) { %> <%= key %>="<%= item[key] %>"<% } %> defer></script>
+    <% } %>
+
+    <% for (key in dlls) { %>
+      <script src="<%= compilation.outputOptions.publicPath %><%= dlls[key] %>" defer></script>
+    <% } %>
+
+    <% for (index in chunks) { %>
+      <% for (key in chunks[index].files) { %>
+        <script src="<%= compilation.outputOptions.publicPath %><%= chunks[index].files[key] %>" defer></script>
+      <% } %>
+    <% } %>
+
+    <% if (options.devServer) { %>
+      <script src="<%= options.devServer %>/webpack-dev-server.js" defer></script>
+    <% } %>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "@sb/core-logger",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "author": "Norbert de Langen <ndelangen@me.com>",
+  "main": "main.js",
+  "scripts": {},
+  "dependencies": {
+    "chalk": "^2.3.2",
+    "log-symbols": "^2.2.0",
+    "loglevelnext": "^1.0.3",
+    "os-locale": "^2.1.0",
+    "pretty-hrtime": "^1.0.3",
+    "uuid": "^3.2.1"
+  },
+  "peerDependencies": {},
+  "engines": {
+    "node": ">=8.0.0",
+    "yarn": ">=1.0.0"
+  }
+}

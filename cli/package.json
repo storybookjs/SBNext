@@ -1,0 +1,28 @@
+{
+  "name": "@sb/cli",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "author": "Norbert de Langen <ndelangen@me.com>",
+  "bin": {
+    "sb": "./bin/sb"
+  },
+  "scripts": {},
+  "dependencies": {
+    "@sb/bundler": "1.0.0",
+    "@sb/core-logger": "1.0.0",
+    "@sb/core-messages": "1.0.0",
+    "chalk": "^2.3.2",
+    "commander": "^2.15.1",
+    "cosmiconfig": "^4.0.0",
+    "esm": "^3.0.16",
+    "os": "^0.1.1",
+    "os-locale": "^2.1.0",
+    "strip-ansi": "^4.0.0"
+  },
+  "peerDependencies": {},
+  "engines": {
+    "node": ">=8.0.0",
+    "yarn": ">=1.0.0"
+  }
+}

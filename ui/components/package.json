@@ -1,0 +1,34 @@
+{
+  "name": "@sb/components",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "author": "Norbert de Langen <ndelangen@me.com>",
+  "main": "src/main.js",
+  "scripts": {},
+  "dependencies": {
+    "@atlaskit/button": "^7.0.1",
+    "@atlaskit/checkbox": "^2.0.0",
+    "@atlaskit/field-text": "^5.0.0",
+    "@atlaskit/icon": "^11.0.0",
+    "@atlaskit/logo": "^7.0.0",
+    "@atlaskit/navigation": "^30.0.2",
+    "@atlaskit/page": "^6.0.0",
+    "@atlaskit/theme": "^3.0.0",
+    "@atlaskit/tooltip": "^9.1.1",
+    "@ndelangen/golden-layout": "^1.5.11",
+    "glamor": "^2.20.40",
+    "glamorous": "^4.12.1",
+    "global": "^4.3.2",
+    "json-stringify-safe": "^5.0.1",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
+    "react-lorem-component": "^0.13.0",
+    "ws": "^5.1.1"
+  },
+  "peerDependencies": {},
+  "engines": {
+    "node": ">=8.0.0",
+    "yarn": ">=1.0.0"
+  }
+}

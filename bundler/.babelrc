@@ -5,14 +5,9 @@
       "modules": "commonjs",
       "loose": true
     }],
-    "react", 
     "stage-2"
   ],
   "plugins": [
-    "babel-plugin-glamorous-displayname",
-    ["transform-runtime", {
-      "polyfill": false,
-      "regenerator": true
-    }]
+    "babel-plugin-transform-export-extensions"
   ]
 }
