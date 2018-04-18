@@ -39,16 +39,12 @@
   </head>
   <body>
     <style>
-      body, html {
+      body, html, #root {
         padding: 0;
         margin: 0;
         width: 100%;
         height: 100%;
-      }
-      textarea {
-        height: 100vh;
-        width: 100vw;
-        border: 0 none;
+        overflow: hidden;
       }
     </style>
 
@@ -87,7 +83,6 @@
       <%= files[options.inlineManifestWebpackName] %>
     <% } %>
 
-                
     <% for (item of options.scripts) { %>
     <% if (typeof item === 'string' || item instanceof String) { item = { src: item } } %>
       <script <% for (key in item) { %> <%= key %>="<%= item[key] %>"<% } %> defer></script>

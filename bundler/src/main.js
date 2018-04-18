@@ -173,7 +173,18 @@ export const run = (settings, flags) => {
 
         try {
           state.entries = toStore(compilation);
-          logger.debug(state.entries);
+
+          const data = {
+            type: 'broadcast',
+            data: {
+              type: 'push',
+              data: state.entries,
+            },
+          };
+
+          manager.socket.send(stringify(data));
+
+          // logger.debug(state.entries);
         } catch (err) {
           logger.error(err);
         }

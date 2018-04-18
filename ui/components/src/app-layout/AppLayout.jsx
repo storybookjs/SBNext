@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import glamorous from 'glamorous';
 import Content from './Content.jsx';
+import Test from '../test/Test.jsx';
 
 const Wrapper = glamorous.div({
   position: 'fixed',
@@ -66,7 +67,7 @@ const ContentPanel = glamorous.div({
   right: 0,
   zIndex: 2,
   boxSizing: 'border-box',
-  // padding: 15,
+  padding: 5,
 });
 
 class AppLayout extends Component {
@@ -86,14 +87,15 @@ class AppLayout extends Component {
         <link
           type="text/css"
           rel="stylesheet"
-          href="https://golden-layout.com/assets/css/goldenlayout-base.css"
+          href="https://rawgit.com/ndelangen/golden-layout/modern/src/css/goldenlayout-base.css"
         />
         <link
           type="text/css"
           rel="stylesheet"
-          href="https://golden-layout.com/assets/css/goldenlayout-light-theme.css"
+          href="https://rawgit.com/ndelangen/golden-layout/modern/src/css/goldenlayout-light-theme.css"
         />
 
+        <Test />
         <NavBar onClick={toggleExpanded} />
         <NavContent expanded={expanded}>nav content</NavContent>
         <LeftBar>Hello</LeftBar>
