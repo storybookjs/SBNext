@@ -12,13 +12,13 @@
   },
   "jest": {
     "roots": [
-      "bundler/",
-      "core/",
-      "demo/",
-      "server/",
-      "ui/"
-    ],
-    "testEnvironment": "node",
+      "bundler",
+      "cli",
+      "ui",
+      "core",
+      "examples",
+      "renderers"
+      ],
     "testPathIgnorePatterns": [
       "dist",
       "node_modules",

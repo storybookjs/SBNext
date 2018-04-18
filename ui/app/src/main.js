@@ -53,7 +53,7 @@ class App extends Component {
             `,
           }}
         />
-        <AppLayout>
+        <AppLayout examples={examples}>
           <div
             style={{
               height: '100%',

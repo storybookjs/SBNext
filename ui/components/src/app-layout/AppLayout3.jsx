@@ -21,7 +21,48 @@ import Page from '@atlaskit/page';
 import SearchDrawer from './SearchDrawer.jsx';
 import CreateDrawer from './CreateDrawer.jsx';
 
-export default class NavigationPanel extends Component<{}> {
+export const setOnPath = (obj, keyList, value) => {
+  const [head, ...tail] = keyList;
+
+  if (tail.length === 0) {
+    obj[head] = value;
+  } else if (obj[head]) {
+    obj[head] = Object.assign(obj[head], setOnPath(obj[head], tail, value));
+  } else {
+    obj[head] = setOnPath({}, tail, value);
+  }
+  return obj;
+};
+
+export const asChildren = obj =>
+  Object.keys(obj).map(
+    key =>
+      Array.isArray(obj[key])
+        ? {
+            text: key,
+            examples: obj[key],
+          }
+        : {
+            text: key,
+            children: obj[key] ? asChildren(obj[key]) : [],
+          }
+  );
+
+export const examplesToStack = examples =>
+  asChildren(
+    examples.reduce((acc, [key, value]) => {
+      const p = key.split('/').filter(i => !i.match(/\./));
+      setOnPath(acc, p, value.examples);
+
+      return acc;
+    }, {})
+  );
+
+export default class NavigationPanel extends Component {
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return { stack: [examplesToStack(nextProps.examples)] };
+  }
+
   constructor(props: {}) {
     super(props);
 
