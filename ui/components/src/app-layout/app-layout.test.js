@@ -11,7 +11,7 @@ test('setOnPath', () => {
 test('asChildren', () => {
   const input = [
     {
-      a: { b: ['boom'], f: ['foo'] },
+      a: { b: { examples: ['boom'] }, f: { examples: ['foo'] } },
     },
   ];
   const output = [
@@ -20,11 +20,11 @@ test('asChildren', () => {
       children: [
         {
           text: 'b',
-          examples: ['boom'],
+          value: { examples: ['boom'] },
         },
         {
           text: 'f',
-          examples: ['foo'],
+          value: { examples: ['foo'] },
         },
       ],
     },
@@ -40,11 +40,11 @@ test('examplesToStack', () => {
       children: [
         {
           text: 'b',
-          examples: ['boom'],
+          value: { examples: ['boom'], key: 'a/b' },
         },
         {
           text: 'f',
-          examples: ['foo'],
+          value: { examples: ['foo'], key: 'a/f' },
         },
       ],
     },

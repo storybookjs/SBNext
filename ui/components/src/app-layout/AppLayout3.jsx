@@ -37,10 +37,10 @@ export const setOnPath = (obj, keyList, value) => {
 export const asChildren = obj =>
   Object.keys(obj).map(
     key =>
-      Array.isArray(obj[key])
+      obj[key] && obj[key].examples
         ? {
             text: key,
-            examples: obj[key],
+            value: obj[key],
           }
         : {
             text: key,
@@ -52,7 +52,7 @@ export const examplesToStack = examples =>
   asChildren(
     examples.reduce((acc, [key, value]) => {
       const p = key.split('/').filter(i => !i.match(/\./));
-      setOnPath(acc, p, value.examples);
+      setOnPath(acc, p, { key, ...value });
 
       return acc;
     }, {})
@@ -60,7 +60,8 @@ export const examplesToStack = examples =>
 
 export default class NavigationPanel extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
-    return { stack: [examplesToStack(nextProps.examples)] };
+    const t = nextProps.examples[0];
+    return { stack: [examplesToStack(nextProps.examples)], selected: t ? t[0] : undefined };
   }
 
   constructor(props: {}) {
@@ -107,9 +108,12 @@ export default class NavigationPanel extends Component {
     };
   }
 
-  stackPush = (item: any) => {
+  stackPush = item => {
     const stack = [...this.state.stack, item];
     this.setState({ stack });
+  };
+  select = selected => {
+    this.setState({ selected });
   };
 
   stackPop = () => {
@@ -133,8 +137,15 @@ export default class NavigationPanel extends Component {
     return items;
   };
 
-  renderItem = (item: any) => {
-    const onClick = item.children && (() => this.stackPush(item.children));
+  renderItem = item => {
+    const onClick = () => {
+      console.log(item);
+      if (item.children) {
+        this.stackPush(item.children);
+      } else if (item.value.key) {
+        this.select(item.value.key);
+      }
+    };
 
     return <AkNavigationItem {...item} onClick={onClick} key={item.title} />;
   };
@@ -144,7 +155,7 @@ export default class NavigationPanel extends Component {
   openCreateDrawer = () => this.setState({ openDrawer: 'createDrawer' });
   closeDrawer = () => this.setState({ openDrawer: false });
 
-  handleResize = (pr: { isOpen: boolean, width: number }) => this.setState(pr);
+  handleResize = pr => this.setState(pr);
   toggleNavCollapse = () => this.setState({ isOpen: !this.state.isOpen });
 
   render() {
@@ -156,6 +167,7 @@ export default class NavigationPanel extends Component {
       width,
       globalThemeName,
       containerThemeName,
+      selected,
     } = this.state;
 
     const { children } = this.props;
@@ -214,7 +226,7 @@ export default class NavigationPanel extends Component {
           </Navigation>
         }
       >
-        {children}
+        {children({ selected })}
       </Page>
     );
   }

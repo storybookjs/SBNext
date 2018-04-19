@@ -54,32 +54,29 @@ class App extends Component {
           }}
         />
         <AppLayout examples={examples}>
-          <div
-            style={{
-              height: '100%',
-              width: '100%',
-              display: 'flex',
-            }}
-          >
-            {examples.length
-              ? examples.map(([key]) => (
-                  <div
-                    key={key}
-                    style={{
-                      position: 'relative',
-                      border: '0 none',
-                      margin: 10,
-                      boxShadow: '1px 1px 5px rgba(0,0,0,0.3)',
-                      padding: 0,
-                      flex: 1,
-                      width: 'auto',
-                    }}
-                  >
-                    <Preview url={`http://localhost:1337/${key}.html`} />
-                  </div>
-                ))
-              : 'loading...'}
-          </div>
+          {({ selected }) => (
+            <div
+              style={{
+                height: '100%',
+                width: '100%',
+                display: 'flex',
+              }}
+            >
+              <div
+                style={{
+                  position: 'relative',
+                  border: '0 none',
+                  margin: 10,
+                  boxShadow: '1px 1px 5px rgba(0,0,0,0.3)',
+                  padding: 0,
+                  flex: 1,
+                  width: 'auto',
+                }}
+              >
+                <Preview url={`http://localhost:1337/${selected}.html`} />
+              </div>
+            </div>
+          )}
         </AppLayout>
       </div>
     );
