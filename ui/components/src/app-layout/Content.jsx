@@ -1,100 +1,83 @@
 import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
-import GoldenLayout from '@ndelangen/golden-layout';
+import GoldenLayout from 'golden-layout';
 import { window } from 'global';
 
 const TestComponent = ({ label }) => <h1>{label}</h1>;
 
-const initial = {
-  settings: {
-    hasHeaders: true,
-    constrainDragToContainer: true,
-    reorderEnabled: true,
-    selectionEnabled: false,
-    popoutWholeStack: false,
-    blockedPopoutsThrowError: true,
-    closePopoutsOnUnload: true,
-    showPopoutIcon: true,
-    showMaximiseIcon: true,
-    showCloseIcon: true,
-  },
-  dimensions: {
-    borderWidth: 5,
-    minItemHeight: 10,
-    minItemWidth: 10,
-    headerHeight: 30,
-    dragProxyWidth: 200,
-    dragProxyHeight: 200,
-  },
-  labels: {
-    close: 'close',
-    maximise: 'maximise',
-    minimise: 'minimise',
-    popout: 'open in new window',
-  },
-  content: [
-    {
-      type: 'row',
-      content: [
-        {
-          type: 'react-component',
-          component: 'test-component',
-          props: { label: 'A' },
-        },
-        {
-          type: 'column',
-          content: [
-            {
-              type: 'react-component',
-              component: 'test-component',
-              props: { label: 'B' },
-            },
-            {
-              type: 'react-component',
-              component: 'test-component',
-              props: { label: 'C' },
-            },
-          ],
-        },
-      ],
-    },
-  ],
-};
+export default class GoldenLayoutComponent extends React.Component {
+  state = {};
+  containerRef = React.createRef();
 
-class Content extends Component {
-  static getDerivedStateFromProps = (nextProps, prevState) => null; // TODO
-  constructor(props) {
-    super(props);
-    this.state = {};
-    this.element = React.createRef();
-  }
-  componentDidMount() {
-    const { element } = this;
-
-    setTimeout(() => {
-      this.layout = new GoldenLayout(initial, element.current);
-      this.resizeListener = () => {
-        console.log('resized');
-        this.layout.updateSize();
-      };
-
-      this.layout.registerComponent('test-component', TestComponent);
-      this.layout.init();
-    }, 0);
-
-    window.addEventListener('resize', this.resizeListener);
-  }
-  shouldComponentUpdate() {
-    return false;
-  }
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.resizeListener);
-    this.layout = null;
-    this.resizeListener = null;
-  }
   render() {
-    return <div ref={this.element} style={{ height: '100%', width: '100%' }} />;
+    let panels = Array.from(this.state.renderPanels || []);
+    return (
+      <div ref={this.containerRef} {...this.props.htmlAttrs}>
+        {panels.map((panel, index) => {
+          return ReactDOM.createPortal(
+            panel._getReactComponent(),
+            panel._container.getElement()[0]
+          );
+        })}
+      </div>
+    );
+  }
+
+  componentRender(reactComponentHandler) {
+    this.setState(state => {
+      let newRenderPanels = new Set(state.renderPanels);
+      newRenderPanels.add(reactComponentHandler);
+      return { renderPanels: newRenderPanels };
+    });
+  }
+  componentDestroy(reactComponentHandler) {
+    this.setState(state => {
+      let newRenderPanels = new Set(state.renderPanels);
+      newRenderPanels.delete(reactComponentHandler);
+      return { renderPanels: newRenderPanels };
+    });
+  }
+
+  goldenLayoutInstance = undefined;
+
+  componentDidMount() {
+    this.goldenLayoutInstance = new GoldenLayout(
+      this.props.config || {},
+      this.containerRef.current
+    );
+    if (this.props.registerComponents instanceof Function)
+      this.props.registerComponents(this.goldenLayoutInstance);
+    this.goldenLayoutInstance.reactContainer = this;
+    this.goldenLayoutInstance.init();
   }
 }
 
-export default Content;
+
+//Patching internal GoldenLayout.__lm.utils.ReactComponentHandler:
+
+const ReactComponentHandler = GoldenLayout["__lm"].utils.ReactComponentHandler;
+
+class ReactComponentHandlerPatched extends ReactComponentHandler {
+  _render() {
+    var reactContainer = this._container.layoutManager.reactContainer; //Instance of GoldenLayoutComponent class
+    if (reactContainer && reactContainer.componentRender)
+      reactContainer.componentRender(this);
+  }
+  _destroy() {
+    //ReactDOM.unmountComponentAtNode( this._container.getElement()[ 0 ] );
+    this._container.off("open", this._render, this);
+    this._container.off("destroy", this._destroy, this);
+  }
+
+  _getReactComponent() {
+    //the following method is absolute copy of the original, provided to prevent depenency on window.React
+    var defaultProps = {
+      glEventHub: this._container.layoutManager.eventHub,
+      glContainer: this._container
+    };
+    var props = Object.assign({}, defaultProps, this._container._config.props);
+    return React.createElement(this._reactClass, props);
+  }
+}
+
+GoldenLayout["__lm"].utils.ReactComponentHandler = ReactComponentHandlerPatched;

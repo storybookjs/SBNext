@@ -31,8 +31,10 @@ class GeneratePagePlugin {
 
         Array.from(entrypoints).forEach(([, value]) => {
           const dlls = getDLLs(value);
+          const { chunks } = value;
+          const { appMountIds } = this.options;
 
-          const data = Object.assign({ options: this.options, compilation, dlls }, value);
+          const data = Object.assign({ options: { appMountIds }, compilation, dlls, chunks });
           const html = this.renderer(data);
 
           compilation.assets[`${value.name}.html`] = {

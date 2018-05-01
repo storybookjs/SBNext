@@ -59,14 +59,6 @@
       <%= options.bodyHtmlSnippet %>
     <% } %>
 
-    <% if (options.appMountId) { %>
-      <div id="<%= options.appMountId %>">	    
-        <% if (options.appMountHtmlSnippet) { %>
-          <%= options.appMountHtmlSnippet %>
-        <% } %>    
-      </div>
-    <% } %>
-
     <% for (item of options.appMountIds) { %>
       <div id="<%= item %>"></div>
     <% } %>
@@ -77,10 +69,6 @@
         window['<%= key %>'] = <%= JSON.stringify(options.window[key]) %>;
       <% } %>
     </script>
-    <% } %>
-
-    <% if (options.inlineManifestWebpackName) { %>
-      <%= files[options.inlineManifestWebpackName] %>
     <% } %>
 
     <% for (item of options.scripts) { %>
@@ -96,10 +84,6 @@
       <% for (key in chunks[index].files) { %>
         <script src="<%= compilation.outputOptions.publicPath %><%= chunks[index].files[key] %>" defer></script>
       <% } %>
-    <% } %>
-
-    <% if (options.devServer) { %>
-      <script src="<%= options.devServer %>/webpack-dev-server.js" defer></script>
     <% } %>
   </body>
 </html>

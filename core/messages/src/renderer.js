@@ -33,7 +33,7 @@ export const unloadable = ({ name }) => {
 };
 export const unknown = ({ obj }) => {
   logger.error(
-    boxen(
+    `\n${boxen(
       cleanIndent(`
         ${colors.red.bold('The object supplied does not match the interface of a renderer.')}
         Please check the storybook config; you're using something like:
@@ -48,7 +48,7 @@ export const unknown = ({ obj }) => {
         Learn more about renderers at ${documentation.link('/renderers')}
       `),
       { padding: 1, borderColor: 'yellow', borderStyle: 'round' }
-    )
+    )}`
   );
 };
 export const foundInAsset = ({ name, assets }) => {

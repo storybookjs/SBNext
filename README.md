@@ -55,7 +55,7 @@ Command Line interface that users use
 - [x] create cli package with multiple commands
 - [ ] create an interactive choose your command to run
       https://github.com/ruyadorno/ntl
-- [ ] write a awesome help command
+- [ ] write an awesome help command
 - [ ] write static build command
 - [ ] write start command
   - [ ] --public --port

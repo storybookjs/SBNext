@@ -17,13 +17,16 @@ test('asChildren', () => {
   const output = [
     {
       text: 'a',
+      key: 'a',
       children: [
         {
           text: 'b',
+          key: 'a/b',
           value: { examples: ['boom'] },
         },
         {
           text: 'f',
+          key: 'a/f',
           value: { examples: ['foo'] },
         },
       ],
@@ -37,13 +40,16 @@ test('examplesToStack', () => {
   const output = [
     {
       text: 'a',
+      key: 'a',
       children: [
         {
           text: 'b',
+          key: 'a/b',
           value: { examples: ['boom'], key: 'a/b' },
         },
         {
           text: 'f',
+          key: 'a/f',
           value: { examples: ['foo'], key: 'a/f' },
         },
       ],

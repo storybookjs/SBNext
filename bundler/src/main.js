@@ -135,7 +135,12 @@ export const run = (settings, flags) => {
               .split('\n')
               .filter(
                 m =>
-                  !(m.includes('delegated') || m.includes('hot-client') || m.includes('multi')) &&
+                  !(
+                    m.includes('delegated') ||
+                    m.includes('hot-client') ||
+                    m.includes('multi') ||
+                    m.includes('hot-update')
+                  ) &&
                   (m.includes('[built]') || m.includes('[emitted]'))
               )
               .sort((a, b) => {
