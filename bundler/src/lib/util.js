@@ -69,8 +69,10 @@ export const toStore = compilation => {
     const main = entryModules.find(m => m.chunks.find(c => c === k));
     const examples = main.providedExports;
 
+    const posixKey = k.replace(/\\/g, '/');
+
     return Object.assign(acc, {
-      [k]: {
+      [posixKey]: {
         modules,
         main,
         examples,
