@@ -1,2 +1,2 @@
-export const MAIN_APP_LAYOUT = 'main layout';
-export const PREVIEW = 'preview';
+export const MAIN_APP_LAYOUT = 'AppLayout';
+export const PREVIEW = 'Preview';

@@ -7,7 +7,8 @@
   "main": "src/main.js",
   "scripts": {},
   "dependencies": {
-    "@sb/components": "^1.0.0"
+    "@sb/components": "^1.0.0",
+    "react": "^16.3.0"
   },
   "peerDependencies": {},
   "engines": {

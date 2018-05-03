@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { document, WebSocket } from 'global';
 
-import { getComponent, MAIN_APP_LAYOUT, PREVIEW } from '@sb/ui-registry';
-
-const AppLayout = getComponent(MAIN_APP_LAYOUT);
-const Preview = getComponent(PREVIEW);
+import { StorybookContext } from '@sb/ui-registry';
 
 class App extends Component {
   state = {
@@ -36,7 +33,8 @@ class App extends Component {
       }
     });
   }
-  render() {
+
+  renderMain({ AppLayout, Preview }) {
     const { examples } = this.state;
 
     return (
@@ -81,6 +79,12 @@ class App extends Component {
           )}
         </AppLayout>
       </div>
+    );
+  }
+
+  render() {
+    return (
+      <StorybookContext.Consumer>{registry => this.renderMain(registry)}</StorybookContext.Consumer>
     );
   }
 }

@@ -7,3 +7,10 @@ export function registerComponent(key, component) {
 export function getComponent(key) {
   return components.get(key);
 }
+
+export function getComponentsMap() {
+  return Array.from(components).reduce((acc, [key, component]) => {
+    acc[key] = component;
+    return acc;
+  }, {});
+}
