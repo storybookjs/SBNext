@@ -8,7 +8,6 @@
   "scripts": {},
   "dependencies": {
     "@sb/ui-registry": "^1.0.0",
-    "@sb/components": "^1.0.0",
     "global": "^4.3.2",
     "json-stringify-safe": "^5.0.1",
     "react": "^16.3.0",
