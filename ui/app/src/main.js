@@ -1,9 +1,11 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { document, WebSocket } from 'global';
 
-import AppLayout from '@sb/components/src/app-layout/AppLayout3.jsx';
-import Preview from '@sb/components/src/preview/Preview.jsx';
+import { getComponent, MAIN_APP_LAYOUT, PREVIEW } from '@sb/ui-registry';
+
+const AppLayout = getComponent(MAIN_APP_LAYOUT);
+const Preview = getComponent(PREVIEW);
 
 class App extends Component {
   state = {

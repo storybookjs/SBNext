@@ -11,6 +11,7 @@
     "@sb/core-logger": "^1.0.0",
     "@sb/core-messages": "^1.0.0",
     "@sb/core-runtime": "^1.0.0",
+    "@sb/ui-registry": "^1.0.0",
     "babel-loader": "^7.1.4",
     "ejs-loader": "^0.3.1",
     "glob": "^7.1.2",
