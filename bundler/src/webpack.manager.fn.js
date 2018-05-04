@@ -10,7 +10,7 @@ const resolveLocal = dir => path.join(process.cwd(), dir);
 
 export default ({
   outputPath = resolveLocal('out'),
-  ui = ['@sb/app'],
+  ui = ['@sb/ui-registry/register', '@sb/app'],
   renderers = [],
   devTool = 'source-map',
   plugins = [],

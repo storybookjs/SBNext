@@ -1,9 +1,8 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { document, WebSocket } from 'global';
 
-import AppLayout from '@sb/components/src/app-layout/AppLayout3.jsx';
-import Preview from '@sb/components/src/preview/Preview.jsx';
+import { StorybookContext } from '@sb/ui-registry';
 
 class App extends Component {
   state = {
@@ -34,7 +33,8 @@ class App extends Component {
       }
     });
   }
-  render() {
+
+  renderMain({ AppLayout, Preview }) {
     const { examples } = this.state;
 
     return (
@@ -79,6 +79,12 @@ class App extends Component {
           )}
         </AppLayout>
       </div>
+    );
+  }
+
+  render() {
+    return (
+      <StorybookContext.Consumer>{registry => this.renderMain(registry)}</StorybookContext.Consumer>
     );
   }
 }

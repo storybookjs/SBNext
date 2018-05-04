@@ -1,5 +1,5 @@
 {
-  "name": "@sb/app",
+  "name": "@sb/ui-registry",
   "version": "1.0.0",
   "private": true,
   "license": "MIT",
@@ -7,12 +7,8 @@
   "main": "src/main.js",
   "scripts": {},
   "dependencies": {
-    "@sb/ui-registry": "^1.0.0",
-    "global": "^4.3.2",
-    "json-stringify-safe": "^5.0.1",
-    "react": "^16.3.0",
-    "react-dom": "^16.3.0",
-    "ws": "^5.1.1"
+    "@sb/components": "^1.0.0",
+    "react": "^16.3.0"
   },
   "peerDependencies": {},
   "engines": {
