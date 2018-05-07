@@ -132,7 +132,7 @@ The key new features sbnext introduces
 - [ ] multiple addons visisble
 
 ### Addon API
-- [ ] Override or wrap any component in component-registry
+- [x] Override or wrap any component in component-registry
 - [ ] basics
 - [ ] ability to add panel & content
 - [ ] add search
